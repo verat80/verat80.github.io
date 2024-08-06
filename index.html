@@ -44,9 +44,8 @@ margin-left: 20px;
 </head>
 <body>
    <p> I Know You Know </p>
-  <br>
-  <button onclick="gentext();">generate text</button>
-   
+  
+  
 
     <script>
         function gentext() {
@@ -54,6 +53,8 @@ margin-left: 20px;
         var para=document.querySelector('p');
         para.innerHTML=word[Math.floor(Math.random()*word.length)];
         }
+      <button onclick="gentext();">generate text</button>
+   
 
     </script>
 
