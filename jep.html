@@ -1,38 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-  
- <script>
-var url = document.location.href,
-  params = url.split('?')[1].split('&'),
-  data = {}, tmp;
-for (var i = 0, l = params.length; i < l; i++) {
-  tmp = params[i].split('=');
-  data[tmp[0]] = tmp[1];
-}
-var numTeams = parseInt(data.teams);
-var teams = new Array();
-for (i = 1; i <= numTeams; i++) {
-  teams[i] = ['Team ' + i, 0];
-}
-teams = teams.filter(function () { return true });
-   
-   ['Team 1',  0]
-['Team 2',  0]
-['Team 3',  0]
-['Team 4',  0]
-   
-   $('#questionModal').on('shown.bs.modal', function (event) {
-    var link = $(event.relatedTarget);
-    category = link.data('category');
-    money = link.data('money');
-    questionid = link.data('questionid');
-    var modal = $(this);
-    modal.find('.modal-title').text(categories[category] + ' for $' + money);
-    modal.find('.modal-body p').text(questions[category][questionid]);
-    }
-  });
- </script>         
+ <body>
+<table>
+<tr>
+<td colspan=5><h1>Biomedical Blazer!</h1> </td>
+</tr>
+<tr>
+        <td><h1> 1 </h1></td>
+        <td><h1> 2 </h1></td>
+        <td><h1> 3 </h1></td>
+        <td><h1> 4 </h1></td>
+        <td><h1> 5 </h1></td>
+</tr>
+<tr>
+        <td id="1cat500"><h1> $500 </h1></td>
+        <td id="2cat500"><h1> $500 </h1></td>
+        <td id="3cat500"><h1> $500 </h1></td>
+        <td id="4cat500"><h1> $500 </h1></td>
+        <td id="5cat500"><h1> $500 </h1></td>
+</tr>
+<tr>
+        <td id="1cat400"><h1> $400 </h1></td>
+        <td id="2cat400"><h1> $400 </h1></td>
+        <td id="3cat400"><h1> $400 </h1></td>
+        <td id="4cat400"><h1> $400 </h1></td>
+        <td id="5cat400"><h1> $400 </h1></td>
+</tr>
+<tr>
+        <td id="1cat300"><h1> $300 </h1></td>
+        <td id="2cat300"><h1> $300 </h1></td>
+        <td id="3cat300"><h1> $300 </h1></td>
+        <td id="4cat300"><h1> $300 </h1></td>
+        <td id="5cat300"><h1> $300 </h1></td>
+</tr>
+<tr>
+        <td id="1cat200"><h1> $200 </h1></td>
+        <td id="2cat200"><h1> $200 </h1></td>
+        <td id="3cat200"><h1> $200 </h1></td>
+        <td id="4cat200"><h1> $200 </h1></td>
+        <td id="5cat200"><h1> $200 </h1></td>
+</tr>
+<tr>
+        <td id="1cat100"><h1> $100 </h1></td>
+        <td id="2cat100"><h1> $100 </h1></td>
+        <td id="3cat100"><h1> $100 </h1></td>
+        <td id="4cat100"><h1> $100 </h1></td>
+        <td id="5cat100"><h1> $100 </h1></td>
+</tr>
+</table>
+ </body>
+       
       
 </head>     
 </html>
