@@ -1,259 +1,1575 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
-    <title>Jeopardy by Morgan Murrah</title>
-    <meta name="Jeopardy by Morgan Murrah" content="Web Development Questions">
-    <meta name="Morgan Murrah" content="Web Development Questions">
-    <meta name="description" content="Web Development Questions">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--   Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <!--   Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-    <![endif]-->
-</head>
 
-<div>
-    <div class="navbar-header">
-        <a class="navbar-brand" href="#">Home</a>
-        <a class="navbar-brand" href="https://github.com/airbr/webdev-jeopardy">Github Repository</a>
-        <button type="button" class="navbar-toggle" data-bs-toggle="collapse" data-bs-target="#myNavbar">
-            About / Music Control
-        </button>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-            <!-- <li><a href=""></a></li>-->
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <!-- Background music -->
-            <audio controls autoplay>
-                <source src="sounds/Jeopardy-theme-song.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
-            <audio id="buzzer">
-                <source src="sounds/Wrong-answer-sound-effect.mp3" type="audio/mpeg">
-                Your browser does not support HTML5 video.
-            </audio>
-            <audio id="chaching">
-                <source src="sounds/Cash-register-sound.wav" type="audio/mpeg">
-                Your browser does not support HTML5 video.
-            </audio>
-        </ul>
-    </div>
-</div>
-</nav>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Html &amp; Javascript Jeopardy Template</title>
+<meta name="description" content="A function to execute each time a mouse click is triggered., This method can get the value of a style property for the first element in the set of matched elements or set one or more CSS properties for every matched element.
+, This method can get the higher level element of the selected element., This method moves between show and hide between matched elements.
+" />
+<meta name="ROBOTS" content="NOODP" />
+<meta name="google-site-verification" content="UYS7arlGlbDobqQSsucWwkbZyiC-6_cCWlUn9Eb5b2M" />
+<link rel="shortcut icon" href="/static/1710817524/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="/static/1710817524/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+
+
+    
+
+
+    
+
+    
+        <link href="/static/1710817524/css/reboot.css" rel="stylesheet" type="text/css" media="screen" />
+        <link href="/static/1710817524/css/play.css" rel="stylesheet" type="text/css" />
+        <link href="/static/1710817524/css/board_mini.css" rel="stylesheet" type="text/css" media="screen" />
+        <script src="/static/1710817524/js/board.js"></script>
+    
+
+    <link rel="canonical" href="/play/html-javascript" />
+    <script>
+        var modal = function(){}
+
+        var game = {}
+        var mode = "play"
+        var grid = null;
+        var current_cell = null;
+        try {
+            var do_autoplay = parseInt(window.localStorage.getItem("autoplay"))
+        } catch (e) {
+        }
+        do_autoplay = isNaN(do_autoplay) ? true : do_autoplay;
+
+        function getCurrentState(){
+            var teams = [];
+            var teams_dom = document.querySelectorAll(".team");
+            for(var i = 0; i < teams_dom.length; i++){
+                var t = teams_dom[i];
+                var name = t.querySelectorAll(".name")[0].textContent;
+                var points = t.querySelectorAll(".points")[0].textContent;
+                teams[i] = {name: name, points: points}
+            }
+
+            var inerts = {};
+            var inert_dom = document.querySelectorAll(".grid-row-questions .inert");
+            for(var i = 0; i < inert_dom.length; i++){
+                var id = inert_dom[i].getAttribute("id");
+                inerts[id] = true;
+            }
+
+            return {
+                "teams": teams,
+                "inerts": inerts,
+            }
+        }
+
+        function getOldState(){
+            try {
+                var old_state = localStorage.getItem("game-2675082")
+            } catch (e) {
+                return null;
+
+            }
+            if(old_state){
+                return JSON.parse(old_state);
+            }
+            return null;
+        }
+
+        function clearState(){
+            try {
+                localStorage.removeItem("game-2675082");
+            } catch (e) {
+
+            }
+        }
+
+        function resize(){
+            var bbox_teams = getBoundingClientRect(document.getElementById("teams"))
+            var rows = document.querySelectorAll(".grid-row").length;
+            if(bbox_teams.height == 0){
+                var h = window.innerHeight;
+            } else {
+                var h = bbox_teams.top + ((window.innerHeight - bbox_teams.height) / (rows))/4
+            }
+
+            grid.style.height = h + "px";
+            minirender(grid, function(g){
+                g.style.opacity = 1;
+            }, .6);
+        }
+
+        ready(function(){
+            grid = document.querySelectorAll(".grid")[0];
+            window.addEventListener("resize", debounce(resize, 100, false));
+            resize();
+            renderState(initial_state);
+            document.getElementById("team-chooser").focus();
+
+            var active_team_number = 0;
+            var active_team = null;
+            /*
+            on("keyup", "body", function(e){
+            })*/
+
+            function deactiveTeamOnNextClick(e){
+                var t = closest(e.target, ".team");
+                if(t == null || t != active_team){
+                    deactiveTeam();
+                }
+            }
+
+            function deactiveTeam(){
+                var els = document.querySelectorAll(".active-team");
+                for(var i = 0; i < els.length; i++){
+                    els[i].classList.remove("active-team");
+                    els[i].querySelector(".minus").innerText = "-";
+                    els[i].querySelector(".plus").innerText = "+";
+                }
+                window.removeEventListener("click", deactiveTeamOnNextClick)
+                active_team_number = 0;
+                active_team = null;
+            }
+
+            function activateTeam(team){
+                active_team = team;
+                active_team.classList.add("active-team");
+                active_team.querySelector(".minus").innerHTML = "&#8595;";
+                active_team.querySelector(".plus").innerHTML = "&#8593;";
+                window.addEventListener("click", deactiveTeamOnNextClick);
+            }
+
+
+            window.addEventListener("keydown", function(e){
+                var ESC = 27
+                var SPACE = 32
+                var ENTER = 13;
+                var LEFT = 37;
+                var UP = 38;
+                var RIGHT = 39;
+                var DOWN = 40;
+                var on_cell = false;
+                var on_input = false;
+                if(document.activeElement){
+                    on_cell = matches(document.activeElement, ".grid-row-questions .grid-cell");
+                    on_input = matches(document.activeElement, "*[role='textbox']");
+                }
+                var clickable = on_cell && !document.activeElement.classList.contains('empty');
+
+                if(e.altKey && e.keyCode == 65){
+                    do_autoplay = !do_autoplay;
+                    alert("Autoplay is " + (do_autoplay ? "on" : "off"))
+                    try {
+                        window.localStorage.setItem("autoplay", do_autoplay ? "1" : "0")
+                    } catch (e) {
+
+                    }
+                }
+
+                if(!on_input && ((e.keyCode >= 96 && e.keyCode <= 105) || (e.keyCode >=48 && e.keyCode <= 57))){
+                    var n = e.keyCode >= 96 ? e.keyCode - 96 : e.keyCode - 48;
+                    //console.log(n);
+                    active_team_number *= 10;
+                    active_team_number += n;
+                    var tmp = active_team_number;
+                    console.log(active_team_number);
+                    var $teams = document.querySelectorAll("#teams .team");
+                    var $team = $teams[active_team_number - 1];
+                    if(active_team && active_team != $team){
+                        deactiveTeam();
+                        // this got reset by deactiveTeam, which we don't want
+                        active_team_number = tmp;
+                    }
+
+                    if($team){
+                        activateTeam($team)
+                    } else {
+                        active_team_number = 0;
+                    }
+                    //} else {
+                    //    deactiveTeam();
+                    //    active_team_number = 0;
+                    //    active_team = null;
+                    //}
+                }
+
+                if(active_team_number != 0){
+                    if(e.keyCode == ESC){
+                        //active_team_number = 0;
+                        deactiveTeam();
+                        //active_team = null;
+                        e.preventDefault();
+                    } else if(e.keyCode == 38){
+                        // add score
+                        handlePoints.call(active_team.querySelector(".plus"), e);
+                    } else if(e.keyCode == 40){
+                        // subtract score
+                        handlePoints.call(active_team.querySelector(".minus"), e);
+                    }
+                } else if(modal.is_open){
+                    if(e.keyCode == ESC){
+                        e.preventDefault();
+                        modal.hide();
+                    } else if(e.keyCode == SPACE){
+                        e.preventDefault();
+                        modal.reveal();
+                    }
+                } else if(on_cell){
+                    if((e.keyCode == ENTER || e.keyCode == SPACE) && clickable){
+                        e.preventDefault();
+                        var event = document.createEvent('HTMLEvents');
+                        event.initEvent('click', true, false);
+                        document.activeElement.dispatchEvent(event);
+                    } else if(e.keyCode == LEFT){
+                        e.preventDefault();
+                        // find the cell to the left and focus on it
+                        if(document.activeElement.previousElementSibling){
+                            document.activeElement.previousElementSibling.focus();
+                        }
+                    } else if(e.keyCode == RIGHT){
+                        e.preventDefault();
+                        if(document.activeElement.nextElementSibling){
+                            document.activeElement.nextElementSibling.focus();
+                        }
+                    } else if(e.keyCode == UP){
+                        e.preventDefault();
+                        var my_col = indexInParent(document.activeElement);
+                        var previous_row = document.activeElement.parentElement.previousElementSibling;
+                        if(previous_row && previous_row.children[my_col] && matches(previous_row.children[my_col], ".grid-row-questions .grid-cell")){
+                            previous_row.children[my_col].focus();
+                        }
+                    } else if(e.keyCode == DOWN){
+                        e.preventDefault();
+                        var my_col = indexInParent(document.activeElement);
+                        var next_row = document.activeElement.parentElement.nextElementSibling;
+                        if(next_row && next_row.children[my_col] && matches(next_row.children[my_col], ".grid-row-questions .grid-cell")){
+                            next_row.children[my_col].focus();
+                        }
+                    }
+                }
+            }, false);
+
+            var debouncedSaveState = debounce(function(){
+                try {
+                    localStorage.setItem("game-2675082", JSON.stringify(getCurrentState()))
+                } catch (e) {
+
+                }
+            }, 100, false)
+
+            on("keyup change input blur focus", "#teams .name, #teams .points", debouncedSaveState);
+
+            on("click", "#re-init", function(e){
+                e.preventDefault();
+                if(confirm("This will clear the scores and team names, and start a new game. Click OK if you want to do this")){
+                    clearState();
+                    game.init(true);
+                }
+            })
+
+            on("keyup", "#answer-button", function(e){
+                if(e.keyCode == 13){
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    modal.reveal();
+                }
+            });
+            on("click", "#answer-button", function(e){
+                modal.reveal();
+            })
+
+            on("keyup", "#continue-button", function(e){
+                if(e.keyCode == 13){
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    modal.hide();
+                }
+            });
+            on("click", "#continue-button", function(e){
+                modal.hide();
+            })
+
+            on("click", ".grid-row-questions .grid-cell", function(e){
+                current_cell = this;
+                modal.show(this);
+            });
+
+            // prevent the buttons from being highlighted
+            on("mousedown", ".minus, .plus", function(e){
+                e.preventDefault();
+            });
+
+            on("keydown", ".minus, .plus", function(e){
+                if(e.keyCode == 13){
+                    handlePoints.call(this, e);
+                }
+            })
+
+            function handlePoints(e){
+                var $team = closest(this, ".team");
+                var $points = $team.querySelectorAll(".points")[0];
+                var points = parseInt($points.innerText, 10);
+                if(isNaN(points)){
+                    alert("Error! The score for this team is not a number. You need to edit the score and change it to a number.");
+                    return
+                }
+                var active_question = document.querySelectorAll(".active-question .cell-inner")[0];
+                var fallback = document.querySelectorAll(".grid-row-questions .cell-inner")[0];
+                var val = parseInt(active_question ? active_question.innerText : fallback.innerText, 10);
+                if(this.classList.contains("minus")){
+                    val = -val;
+                }
+                $points.innerText = points + val;
+                if(active_question){
+                    document.querySelectorAll(".active-question")[0].classList.add("inert");
+                }
+                debouncedSaveState();
+
+            }
+
+            // handle points clicks
+            on("click", ".minus, .plus", handlePoints);
+        });
+
+    </script>
+
+
+    <style type="text/css">
+    
+
+    </style>
+
+    <script>
+
+    function clearLocalStorage(){
+        for(var i = localStorage.length-1; i >= 0 ; i--){
+            var key = localStorage.key(i);
+            //(key.indexOf("jeopardy-0-") == 0 && localStorage.getItem("jeopardy-0") == "2675082")){
+            if(key.indexOf("jeopardy-2675082") == 0){
+                localStorage.removeItem(key);
+            }
+        }
+    }
+
+    
+        initial_state = {"page": "menu"}
+    
+    try {
+        history.replaceState(initial_state, "JeopardyLabs")
+    } catch (e) {}
+
+    game.first_render = true;
+
+    game.initTeam = function(number_of_teams){
+        document.getElementById("teams").style.display = "flex";
+        var teams = document.querySelectorAll("#teams .team");
+        for(var i = 0; i < number_of_teams; i++){
+            var t = teams[i];
+        }
+    }
+
+    game.init = function(clear){
+        var val = document.querySelectorAll("#options select")[0].value;
+
+        if(isNaN(val)){
+            val = 0
+            do {
+                var n = prompt("Enter the number of teams you have");
+                val = parseInt(n, 10) || 0;
+            } while(val <= 0);
+        }
+
+        renderState({"page": "game"})
+        // add all the teams
+        document.getElementById("teams").style.display = "flex";
+        var teams = document.querySelectorAll("#teams .team");
+        for(var i = 0; i < teams.length; i++){
+            teams[i].style.display = "none";
+        }
+
+        for(var i = 0; i < val; i++){
+            var t = teams[i];
+            if(!t){
+                var t = teams[0].cloneNode(true)
+                teams[0].parentElement.appendChild(t);
+                t.querySelectorAll(".name")[0].textContent = "Team " + (i+1)
+                t.querySelectorAll(".points")[0].textContent = "0"
+            } else {
+                t = teams[i]
+            }
+            t.style.display = "block";
+        }
+
+        var teams = document.querySelectorAll("#teams .team");
+
+        if(game.first_render){
+            var old_state = getOldState();
+            if(old_state){
+                for(var i = 0; i < val; i++){
+                    var t = teams[i];
+                    if(old_state.teams[i]){
+                        var name = old_state.teams[i].name;
+                        var points = old_state.teams[i].points;
+                        t.querySelectorAll(".name")[0].textContent = name
+                        t.querySelectorAll(".points")[0].textContent = points
+                    }
+                }
+
+                // restore the inert questions
+                var inerts = old_state.inerts;
+                for(var id in inerts){
+                    try {
+                        document.getElementById(id).classList.add("inert");
+                        document.getElementById(id).setAttribute("aria-label", "Answered");
+                    } catch (e) {
+                        continue;
+                    }
+                }
+            }
+        } else if(clear){
+            for(var i = 0; i < val; i++){
+                var t = teams[i];
+                t.querySelectorAll(".name")[0].textContent = "Team " + (i+1)
+                t.querySelectorAll(".points")[0].textContent = "0"
+            }
+            removeClass(".inert", "inert");
+        } else { // coming just restore
+
+        }
+
+        resize()
+
+        try {
+            history.pushState({"page": "game"}, "JeopardyLabs");
+        } catch (e) {}
+
+        game.first_render = false;
+        try {
+            document.querySelectorAll(".grid-first-row .grid-cell")[0].focus();
+        } catch(e) {
+
+        }
+    }
+
+    function hideModal(){
+        modal.is_open = false;
+        var div = document.getElementById("question-modal");
+        div.style.display = "none";
+        div.classList.remove("expanded");
+        div.style.borderWidth = "3px";
+        div.querySelectorAll(".modal-inner")[0].innerHTML = "";
+    }
+
+    function renderMenu(){
+        var old_state = getOldState() || !game.first_render
+        if(!game.first_render){
+            document.querySelectorAll("#submit")[0].value = "Continue"
+            document.querySelectorAll("#reset-all")[0].style.display = ""
+        } else if(old_state){
+            document.querySelectorAll("#submit")[0].value = "Continue"
+            document.querySelectorAll("#reset-all")[0].style.display = ""
+            var teams = old_state.teams.length;
+            var chooser = document.getElementById("team-chooser")
+            if(teams > 10){
+                var opt = document.createElement("option");
+                opt.setAttribute("value", teams);
+                opt.textContent = teams + " teams"
+                chooser.insertBefore(opt, document.getElementById("last-option"));
+                //chooser.appendChild(opt);
+            }
+            document.getElementById("team-chooser").value = teams;
+        } else {
+            document.querySelectorAll("#submit")[0].value = "Start"
+            document.querySelectorAll("#reset-all")[0].style.display = "none"
+        }
+    }
+
+
+    function renderState(state){
+        document.querySelectorAll("#options")[0].style.display = "none";
+        document.querySelectorAll("#teams")[0].style.display = "none";
+        document.querySelectorAll("#gameplay")[0].style.filter = "";
+        hideModal();
+
+
+        if(state.page == "menu"){
+            document.querySelectorAll("#options")[0].style.display = "block";
+            renderMenu();
+        } else if(state.page == "game"){
+            document.getElementById("teams").style.display = "";
+            document.querySelectorAll("#gameplay")[0].style.filter = "blur(0px)";
+        } else if(state.page == "slide"){
+            document.getElementById("teams").style.display = "";
+            document.querySelectorAll("#gameplay")[0].style.filter = "blur(0px)";
+            modal.show(document.getElementById(state.cell), true);
+        }
+    }
+
+    window.onpopstate = function(event){
+        renderState(window.history.state);
+    }
+
+    function trimHTML(el){
+        var treeWalker = document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, null, false);
+        while(treeWalker.nextNode()){
+            var node = treeWalker.currentNode;
+        }
+        var nodes_to_delete = [];
+        do {
+            var node = treeWalker.currentNode;
+            if(node.nodeType == 3 && (node.data || "").trim() == ""){
+                nodes_to_delete.push(node);
+            } else if(node.tagName == "SCRIPT"){
+
+            } else if (node.tagName == "BR"){
+                nodes_to_delete.push(node);
+            } else if(node.tagName == "P" && (node.innerText || "").trim() == ""){
+                nodes_to_delete.push(node);
+            } else {
+                break;
+            }
+        } while(treeWalker.previousNode())
+        for(var i = 0; i < nodes_to_delete.length; i++){
+            try {
+                nodes_to_delete[i].parentElement.removeChild(nodes_to_delete[i]);
+            } catch (e) {
+                console.log("passing");
+            }
+        }
+    }
+
+    modal.reveal = function(){
+        var q = document.querySelectorAll("#question-modal .question")[0];
+        if(q.style.display == "block"){
+            return;
+        }
+        q.style.display = "block";
+        function scrollTo(element, to, duration) {
+            var start = element.scrollTop,
+                change = to - start,
+                currentTime = 0,
+                increment = 20;
+
+            var animateScroll = function(){
+                currentTime += increment;
+                var val = easeInOutQuad(currentTime, start, change, duration);
+                element.scrollTop = val;
+                if(currentTime < duration) {
+                    setTimeout(animateScroll, increment);
+                } else {
+                    q.focus()
+                }
+            };
+            animateScroll();
+        }
+
+        //t = current time
+        //b = start value
+        //c = change in value
+        //d = duration
+        function easeInOutQuad(t, b, c, d){
+          t /= d/2;
+            if (t < 1) return c/2*t*t + b;
+            t--;
+            return -c/2 * (t*(t-2) - 1) + b;
+        };
+
+        var modal_inner = document.querySelectorAll('#question-modal .modal-inner')[0]
+        var original_val = modal_inner.scrollTop;
+        var start_of_modal = getBoundingClientRect(modal_inner).top;
+        var start_of_question = getBoundingClientRect(q).top;
+        var val = start_of_question - start_of_modal;
+        scrollTo(modal_inner, val, 250)
+
+        setTimeout(function(){
+            q.classList.add("reveal");
+        }, 0)
+
+        document.querySelectorAll(".active-question")[0].classList.add("inert");
+        //document.querySelectorAll('#question-modal .question')[0].focus();
+
+        if(current_cell){
+            current_cell.setAttribute("aria-label", "Answered");
+        }
+
+        autoplay('#question-modal .question')
+    }
+
+    function autoplay(selector, then){
+        setTimeout(function(){
+            if(do_autoplay){
+                var q = document.querySelectorAll(selector)[0];
+                try {
+                    q.querySelectorAll("video, audio")[0].play();
+                } catch (e) {
+
+                }
+
+                try {
+                    var iframe = q.querySelectorAll("iframe")[0]
+                    var src = iframe.getAttribute("src") || "";
+                    var a = document.createElement("a");
+                    a.href = src
+                    if(a.hostname == "www.youtube.com"){
+                        a.search = (a.search || "?") + '&autoplay=1'
+                        var iframe_clone = iframe.cloneNode(true);
+                        //iframe.contentWindow.location.replace(a.toString());
+                        //debugger;
+                        var allow = iframe.getAttribute("allow") || ""
+                        iframe_clone.setAttribute("allow", allow + ";autoplay;fullscreen")
+                        iframe_clone.setAttribute('src', a.toString());
+                        iframe.parentElement.replaceChild(iframe_clone, iframe);
+                    }
+                } catch (e) {
+                    // ?
+                }
+            }
+            if(then){
+                then();
+            }
+        }, 500);
+    }
+
+    modal.show = function(cell, no_push_state){
+        removeClass(".active-question", "active-question");
+        cell.classList.add("active-question");
+
+        var row = cell.getAttribute("data-row");
+        var col = cell.getAttribute("data-col");
+        var category = document.querySelectorAll(".grid-row-cats .cat-cell")[col].innerText;
+        var points = cell.querySelectorAll(".cell-inner")[0].innerText;
+        document.querySelectorAll("#question-title")[0].innerText = category + " for " + points
+
+        var bbox = cell.getBoundingClientRect();
+        var div_modal = document.getElementById('question-modal')
+        div_modal.style.display = "block";
+        div_modal.style.opacity = 0;
+
+        var inner = document.querySelectorAll("#question-modal .modal-inner")[0];
+        inner.innerHTML = cell.querySelectorAll(".answer")[0].outerHTML + "\n" + cell.querySelectorAll(".question")[0].outerHTML;
+        var images = inner.querySelectorAll("img");
+        for(var i = 0; i < images.length; i++){
+            var img = images[i];
+            if(img.style.width == "" && img.style.height == ""){
+                img.style.width = "auto";
+                img.style.height = "auto";
+                img.style.maxWidth = "100%";
+                img.style.maxHeight = "100%";
+            }
+        }
+
+        if(!no_push_state){
+            try {
+                console.log("pre length", window.history.length);
+                history.pushState({"page": "slide", "cell": cell.getAttribute("id")}, "JeopardyLabs");
+                console.log("post length", window.history.length);
+            } catch (e) {
+
+            }
+        }
+
+        autoplay('#question-modal .answer', function(){
+            try {
+                document.querySelectorAll('#question-modal .answer')[0].focus();
+            } catch (e) {
+
+            }
+        })
+
+        document.querySelectorAll('#question-modal .modal-body .modal-inner')[0].scrollTop = 0;
+
+        trimHTML(document.querySelectorAll('#question-modal .answer')[0]);
+        trimHTML(document.querySelectorAll('#question-modal .question')[0]);
+
+        // the height of the contents of the modal should be...
+        /* [MODAL HEADER]
+         *     ^
+         *     |
+         *     |    <--- this tall
+         *     v
+         * [TEAMS BAR]
+         */
+        var content_bbox = getBoundingClientRect(document.querySelectorAll('#question-modal .modal-body')[0])
+        var position_of_top = content_bbox.top;
+        var teams = document.querySelectorAll("#teams")[0]
+        var position_of_bottom = getBoundingClientRect(teams).top || window.innerHeight;
+        var h = position_of_bottom - position_of_top - 20 // 20 pixels for some extra room
+
+        document.querySelectorAll('#question-modal .modal-inner')[0].style.maxHeight = h + "px";
+        document.querySelectorAll('#question-modal .modal-body')[0].style.height = h + "px";
+
+
+        var q = document.querySelectorAll("#question-modal .question")[0];
+        q.style.display = "block";
+        var content = document.querySelectorAll('#question-modal .modal-inner')[0];
+        var result = shrink_in_place(content, 100, 24);
+        q.style.display = "none";
+
+
+        div_modal.style.transform = "translate(" + bbox.left + "px, " + bbox.top  + "px) scale(" + (bbox.width/window.innerWidth) + ", " + (bbox.height / window.innerHeight) + ")"
+        div_modal.style.opacity = 1;
+
+        removeClass(".expanded", "expanded");
+
+        setTimeout(function(){
+            div_modal.classList.add("expanded");
+            div_modal.style.top = 0;
+            div_modal.style.left = 0;
+            div_modal.style.bottom = 0;
+            div_modal.style.right = 0;
+            div_modal.style.width = "100%";
+            div_modal.style.height = "100%";
+            div_modal.style.borderWidth = 0;
+            div_modal.style.transform = "translate(0px, 0px) scale(1)"
+        }, 50);
+        modal.is_open = true; // flag for the keyboard event
+        document.querySelectorAll(".grid")[0].setAttribute("aria-hidden", "true");
+
+    }
+
+    modal.hide = function(){
+        document.querySelectorAll(".grid")[0].setAttribute("aria-hidden", "false");
+        backToGame()
+        renderState({"page": "game"});
+        if(current_cell){
+            current_cell.focus()
+        }
+    }
+
+    function backToGame(){
+        var state = window.history.state;
+        if(state.page == "slide"){
+            window.history.go(-1);
+        }
+    }
+
+    function backToMenu(){
+        renderState({"page": "menu"});
+        var state = window.history.state;
+        if(state.page == "slide"){
+            window.history.go(-2);
+        } else if(state.page == "game"){
+            window.history.go(-1);
+        }
+        document.getElementById("team-chooser").focus();
+    }
+    </script>
+
+
+
+
+
+</head>
 
 <body>
 
-    <div class="logo">
-        <img src="css/images/Jeopardy.png" alt="Jeopardy Logo" id="topjlogo">
+    <div id="gameplay">
+        <div class="grid grid-play " style="height:100vh; " role="table" aria-label="Game Board">
+    <div class="grid-row grid-row-cats" style="" role="row">
+        
+            <div class="grid-cell " data-row="0" data-col="0">
+                <div class="cell">
+                    <div class="cell-inner cat-cell" role="columnheader">jQuery</div>
+                </div>
+            </div>
+        
+            <div class="grid-cell " data-row="0" data-col="1">
+                <div class="cell">
+                    <div class="cell-inner cat-cell" role="columnheader">Languages</div>
+                </div>
+            </div>
+        
+            <div class="grid-cell " data-row="0" data-col="2">
+                <div class="cell">
+                    <div class="cell-inner cat-cell" role="columnheader">Html</div>
+                </div>
+            </div>
+        
+            <div class="grid-cell " data-row="0" data-col="3">
+                <div class="cell">
+                    <div class="cell-inner cat-cell" role="columnheader">CSS</div>
+                </div>
+            </div>
+        
+            <div class="grid-cell " data-row="0" data-col="4">
+                <div class="cell">
+                    <div class="cell-inner cat-cell" role="columnheader">Flow Control</div>
+                </div>
+            </div>
+        
     </div>
 
-    <div>
+    
+        <div class="grid-row grid-row-questions  grid-first-row"
+             role="row"
 
-        <div id="main-board">
-            <!--MODAL HTML - Dynamically changed withquestions-->
-            <div>
-                <div class="bs-example">
-                    <!-- Modal HTML -->
-                    <div id="myModal" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Modal Window</h4>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-hidden="true"></button>
-                                </div>
-                                <div class="modal-body body-spacing">
-                                </div>
-                                <div class="modal-footer">
-                                    <button id="closesubmit" type="button" class="btn btn-primary clickable"
-                                        onclick="">Submit
-                                    </button>
-                                </div>
+            >
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383217"
+                tabindex="0"
+                
+                    aria-label="100"
+                
+                data-row="1" data-col="0">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="jQuery">100</div>
+                                <div class="front answer" tabindex="0">A function to execute each time a mouse click is triggered.</div>
+                                <div class="back question" tabindex="0">What is .click()?
+</div>
                             </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383222"
+                tabindex="0"
+                
+                    aria-label="100"
+                
+                data-row="1" data-col="1">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Languages">100</div>
+                                <div class="front answer" tabindex="0">In JavaScript, this is the keyword you use to declare a function.
+</div>
+                                <div class="back question" tabindex="0">What is function?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383227"
+                tabindex="0"
+                
+                    aria-label="100"
+                
+                data-row="1" data-col="2">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Html">100</div>
+                                <div class="front answer" tabindex="0">This tag defines a paragraph.
+</div>
+                                <div class="back question" tabindex="0">What is a 'p' tag?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383232"
+                tabindex="0"
+                
+                    aria-label="100"
+                
+                data-row="1" data-col="3">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="CSS">100</div>
+                                <div class="front answer" tabindex="0">These CSS properties define the space between the element border and the element content.
+</div>
+                                <div class="back question" tabindex="0">What is padding?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383237"
+                tabindex="0"
+                
+                    aria-label="100"
+                
+                data-row="1" data-col="4">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Flow Control">100</div>
+                                <div class="front answer" tabindex="0">If this statement evaluates to false and an else clause exists, the statement associated with the else clause runs. If the test statement evaluates to true, the statement following the expression runs and the else clause is ignored.
+</div>
+                                <div class="back question" tabindex="0">What is an 'if statement'?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+        </div>
+    
+        <div class="grid-row grid-row-questions  "
+             role="row"
+
+            >
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383218"
+                tabindex="0"
+                
+                    aria-label="200"
+                
+                data-row="2" data-col="0">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="jQuery">200</div>
+                                <div class="front answer" tabindex="0">This method can get the value of a style property for the first element in the set of matched elements or set one or more CSS properties for every matched element.
+</div>
+                                <div class="back question" tabindex="0">What is .css()?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383223"
+                tabindex="0"
+                
+                    aria-label="200"
+                
+                data-row="2" data-col="1">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Languages">200</div>
+                                <div class="front answer" tabindex="0">This language is a loosely-typed, interpreted, scripting language.
+</div>
+                                <div class="back question" tabindex="0">What is JavaScript?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383228"
+                tabindex="0"
+                
+                    aria-label="200"
+                
+                data-row="2" data-col="2">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Html">200</div>
+                                <div class="front answer" tabindex="0">This tag defines an image in an HTML page.</div>
+                                <div class="back question" tabindex="0">What is a 'img' tag?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383233"
+                tabindex="0"
+                
+                    aria-label="200"
+                
+                data-row="2" data-col="3">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="CSS">200</div>
+                                <div class="front answer" tabindex="0">These properties define the space around elements.
+</div>
+                                <div class="back question" tabindex="0">What is margin?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383238"
+                tabindex="0"
+                
+                    aria-label="200"
+                
+                data-row="2" data-col="4">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Flow Control">200</div>
+                                <div class="front answer" tabindex="0">This is a control statement which allows code to be repeatedly executed. Unlike many other kinds of flow controls this one is often distinguished by an explicit loop counter or loop variable.
+</div>
+                                <div class="back question" tabindex="0">What is a 'for statement'?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+        </div>
+    
+        <div class="grid-row grid-row-questions  "
+             role="row"
+
+            >
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383219"
+                tabindex="0"
+                
+                    aria-label="300"
+                
+                data-row="3" data-col="0">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="jQuery">300</div>
+                                <div class="front answer" tabindex="0">This method can get the higher level element of the selected element.</div>
+                                <div class="back question" tabindex="0">What is .parent()?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383224"
+                tabindex="0"
+                
+                    aria-label="300"
+                
+                data-row="3" data-col="1">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Languages">300</div>
+                                <div class="front answer" tabindex="0">JavaScript requires you to use this keyword to declare a local variable.
+</div>
+                                <div class="back question" tabindex="0">What is var?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383229"
+                tabindex="0"
+                
+                    aria-label="300"
+                
+                data-row="3" data-col="2">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Html">300</div>
+                                <div class="front answer" tabindex="0">This tag defines a division or a section in an HTML document.
+</div>
+                                <div class="back question" tabindex="0">What is a 'div' tag?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383234"
+                tabindex="0"
+                
+                    aria-label="300"
+                
+                data-row="3" data-col="3">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="CSS">300</div>
+                                <div class="front answer" tabindex="0">This is the CSS selector that is used to identify a class.
+</div>
+                                <div class="back question" tabindex="0">What is a dot?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383239"
+                tabindex="0"
+                
+                    aria-label="300"
+                
+                data-row="3" data-col="4">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Flow Control">300</div>
+                                <div class="front answer" tabindex="0">This flow control statement allows code to be executed repeatedly based on a given boolean condition. The condition is evaluated before the code is executed, and executes only if the condition is true.
+</div>
+                                <div class="back question" tabindex="0">What is a 'while statement'?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+        </div>
+    
+        <div class="grid-row grid-row-questions  "
+             role="row"
+
+            >
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383220"
+                tabindex="0"
+                
+                    aria-label="400"
+                
+                data-row="4" data-col="0">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="jQuery">400</div>
+                                <div class="front answer" tabindex="0">This method moves between show and hide between matched elements.
+</div>
+                                <div class="back question" tabindex="0">What is .toggle()?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383225"
+                tabindex="0"
+                
+                    aria-label="400"
+                
+                data-row="4" data-col="1">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Languages">400</div>
+                                <div class="front answer" tabindex="0">This is the language that your paging styling should use.
+</div>
+                                <div class="back question" tabindex="0">What is CSS?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383230"
+                tabindex="0"
+                
+                    aria-label="400"
+                
+                data-row="4" data-col="2">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Html">400</div>
+                                <div class="front answer" tabindex="0">This tag is used to group inline-elements in a document.
+</div>
+                                <div class="back question" tabindex="0">What is a 'span' tag?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383235"
+                tabindex="0"
+                
+                    aria-label="400"
+                
+                data-row="4" data-col="3">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="CSS">400</div>
+                                <div class="front answer" tabindex="0">This is the CSS selector that identifies an id.
+</div>
+                                <div class="back question" tabindex="0">What is a hash (#)?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383240"
+                tabindex="0"
+                
+                    aria-label="400"
+                
+                data-row="4" data-col="4">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Flow Control">400</div>
+                                <div class="front answer" tabindex="0">This flow control statement allows code to be executed repeatedly based on a given boolean condition. The condition is evaluated after the code is executed once, and executes repeatedly until the condition is false.
+</div>
+                                <div class="back question" tabindex="0">What is a 'do-while statement'?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+        </div>
+    
+        <div class="grid-row grid-row-questions grid-last-row "
+             role="row"
+
+            >
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383221"
+                tabindex="0"
+                
+                    aria-label="500"
+                
+                data-row="5" data-col="0">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="jQuery">500</div>
+                                <div class="front answer" tabindex="0">This method binds one or two handlers to the matched elements, to be executed when the mouse pointer enters and leaves the elements.
+</div>
+                                <div class="back question" tabindex="0">What is .hover()?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383226"
+                tabindex="0"
+                
+                    aria-label="500"
+                
+                data-row="5" data-col="1">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Languages">500</div>
+                                <div class="front answer" tabindex="0">This is the intrinsic type that all objects inherit from in JavaScript
+</div>
+                                <div class="back question" tabindex="0">What is Object?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383231"
+                tabindex="0"
+                
+                    aria-label="500"
+                
+                data-row="5" data-col="2">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Html">500</div>
+                                <div class="front answer" tabindex="0">This tag defines a hyperlink, which is used to link from one page to another.
+</div>
+                                <div class="back question" tabindex="0">What is an 'a' tag?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383236"
+                tabindex="0"
+                
+                    aria-label="500"
+                
+                data-row="5" data-col="3">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="CSS">500</div>
+                                <div class="front answer" tabindex="0">This is the meaning of the CSS acronym.
+</div>
+                                <div class="back question" tabindex="0">What is Cascading Style Sheet?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+                <div class="
+                    cell-group
+                    grid-cell
+                    
+                "
+                role="cell"
+                id="cell-41383241"
+                tabindex="0"
+                
+                    aria-label="500"
+                
+                data-row="5" data-col="4">
+                    
+                        
+                            <div class="cell points" >
+                                <div class="cell-inner" data-category="Flow Control">500</div>
+                                <div class="front answer" tabindex="0">This flow control statement is used to allow the value of a variable or expression to change the control flow of program execution via a multiway branch.
+</div>
+                                <div class="back question" tabindex="0">What is a switch statement'?
+</div>
+                            </div>
+                        
+                    
+                </div>
+            
+        </div>
+    
+
+    
+</div>
+
+
+        <div id="question-modal" class="modal-wrapper" role="dialog" aria-label="Prompt" aria-modal="true">
+            <div id="modal-header">
+                <div tabindex="0" role="button" aria-label="Close prompt (escape)" id="continue-button"><div>Continue <kbd>ESC</kbd></div></div>
+                <div id="question-title"></div>
+                <div tabindex="0" role="button" aria-label="Reveal answer (spacebar)" id="answer-button" tabindex="0"><div>Reveal Correct Response <kbd>Spacebar</kbd></div></div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-inner"></div>
+            </div>
+        </div>
+
+        <div id="teams">
+            <a role="button" class="menu-picker" href="javascript:backToMenu('menu')" aria-label="Menu Button">
+                M<br>e<br>n<br>u
+            </a>
+            <div style="display:flex; margin-left:auto; margin-right:auto; overflow:auto;">
+                
+                    <div class="team" style="display:none">
+                        <div class="name" role="textbox" contenteditable="true">Team 1</div>
+                        <div class="points" role="textbox" contenteditable="true">0</div>
+                        <div class="pointer">
+                            <span tabindex="0" aria-label="Add points" role="button" class="plus">+</span>
+                            <span tabindex="0" aria-label="Subtract points" role="button" class="minus">-</span>
                         </div>
                     </div>
-                </div>
+                
+            </div>
+        </div>
+
+    </div>
+
+    <div id="options" class="modal-wrapper" role="dialog" aria-label="Menu" aria-modal="true">
+        <div class="modal">
+            
+            <h1>Html &amp; Javascript</h1>
+
+            <div id="team-chooser-wrapper">
+                <select id="team-chooser">
+                    <option value="0">No teams</option>
+                    <option value="1">1 team</option>
+                    <option value="2">2 teams</option>
+                    <option value="3" selected="true">3 teams</option>
+                    <option value="4">4 teams</option>
+                    <option value="5">5 teams</option>
+                    <option value="6">6 teams</option>
+                    <option value="7">7 teams</option>
+                    <option value="8">8 teams</option>
+                    <option value="9">9 teams</option>
+                    <option value="10">10 teams</option>
+                    <option id="last-option" value="more">Custom</option>
+                </select>
+                <input class="submit" type="button" id="submit" value="Start" onclick="game.init()" />
+                <span id="reset-all">
+                    <input type="button" id="re-init" value="Reset" />
+                </span>
             </div>
 
-            <div class="panel-heading">
-                <div class="qcategory-title text-center">
-                    <h5>HTML</h5>
-                </div>
-                <div class="qcategory-title text-center">
-                    <h5>CSS</h5>
-                </div>
-                <div class="qcategory-title text-center">
-                    <h5>JS</h5>
-                </div>
-                <div class="qcategory-title text-center">
-                    <h5>UNIX</h5>
-                </div>
-                <div class="qcategory-title text-center">
-                    <h5>BONUS</h5>
-                </div>
-            </div>
+            <p id="fullscreen" style="display:none" align="center"><span id="windows" style="display:none">Press <kbd >F11</kbd></span> <span id="mac" style="display:none">Select menu option <kbd >View &gt; Enter Fullscreen</kbd></span> for full-screen mode</p>
+            <script>
+                if(window.navigator.platform.indexOf("Mac") == 0){
+                    document.getElementById("fullscreen").style.display = "block";
+                    document.getElementById("mac").style.display = "inline";
+                } else if(window.navigator.platform.indexOf("Win") == 0){
+                    document.getElementById("fullscreen").style.display = "block";
+                    document.getElementById("windows").style.display = "inline";
+                }
+            </script>
 
-            <div class="gridstyling" id="gridstyling">
-                <!-- Category 1 , Questions 1-5 -->
+            <div align="center" id="menu-links">
+                
+                    <a href="/edit/html-javascript" rel="nofollow">Edit</a> &bull;
+                    <a href="/print/html-javascript" target="_blank">Print</a> &bull;
+                    <a href="/compile/html-javascript" rel="nofollow">Download</a> &bull;
+                    
+                        <a href="/embed/?jeopardy_id=2675082" target="_blank">Embed</a> &bull;
+                    
+                    
 
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn ten" data-bs-toggle="modal" data-bs-target="#myModal"
-                        data-num="0">$10
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn fifty" data-bs-toggle="modal" data-bs-target="#myModal"
-                        data-num="1">$50
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn onehundred" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="2">$100
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn fivehundred" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="3">$500
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn onethousand" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="4">$1000
-                    </button>
-                </div>
-
-                <!-- Category 2 ; rinse, repeat -->
-
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn ten" data-bs-toggle="modal" data-bs-target="#myModal"
-                        data-num="5">$10
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn fifty" data-bs-toggle="modal" data-bs-target="#myModal"
-                        data-num="6">$50
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn onehundred" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="7">$100
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn fivehundred" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="8">$500
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn onethousand" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="9">$1000
-                    </button>
-                </div>
-
-                <!-- Category 3 -->
-
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn ten" data-bs-toggle="modal" data-bs-target="#myModal"
-                        data-num="10">$10
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn fifty" data-bs-toggle="modal" data-bs-target="#myModal"
-                        data-num="11">$50
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn onehundred" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="12">$100
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn fivehundred" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="13">$500
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn onethousand" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="14">$1000
-                    </button>
-                </div>
-
-                <!-- Category 4 -->
-
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn ten" data-bs-toggle="modal" data-bs-target="#myModal"
-                        data-num="15">$10
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn fifty" data-bs-toggle="modal" data-bs-target="#myModal"
-                        data-num="16">$50
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn onehundred" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="17">$100
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn fivehundred" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="18">$500
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn onethousand" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="19">$1000
-                    </button>
-                </div>
-
-                <!-- Category 5 -->
-
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn ten" data-bs-toggle="modal" data-bs-target="#myModal"
-                        data-num="20">$10
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn fifty" data-bs-toggle="modal" data-bs-target="#myModal"
-                        data-num="21">$50
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn onehundred" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="22">$100
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn fivehundred" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="23">$500
-                    </button>
-                </div>
-                <div class="question">
-                    <button type="button" class="btn btn-info gridbtn onethousand" data-bs-toggle="modal"
-                        data-bs-target="#myModal" data-num="24">$1000
-                    </button>
-                </div>
-            </div>
-            <!-- Footer & Dynamic scoreboard -->
-            <div class="panel-footer">
-                <div class="scoretally pull-right">
-                    <h4>Score:<span id="score1">$ 0</span></h4>
-                </div>
-                <div class="clearfix"></div>
+                    
+                        <a target="_blank" href="https://www.addtoany.com/share#url=https%3A//jeopardylabs.com/play/html-javascript&title=Html%20%26%20Javascript">Share</a>
+                    
+                    <div style="margin-top:20px"><a href="/">JeopardyLabs</a></div>
+                
             </div>
         </div>
     </div>
-    <script src="js/jquery-3.6.3.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script type="module" src="js/main.js"></script>
+    
+    <!--
+    <div class="points-instructions">
+        Use the up/down arrow to add or remove points from the highlighted team. Then press <kbd>ESC</kbd>
+    </div>-->
+
+
+
+
+    
+        
+
+    
+
+
 
 </body>
-
 </html>
