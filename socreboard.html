@@ -1,152 +1,3 @@
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-
-  <link rel="stylesheet" href="stopwatch-styles.css">
-</head>
-<body>
-  <div class="stopwatch">
-    <span id="minutes" class="time">00</span>
-    <span>:</span>
-    <span id="seconds" class="time">00</span>
-    <span>:</span>
-    <span id="milliseconds" class="time">000</span>
-    <div class="buttons">
-      <button id="startStopBtn">Start</button>
-      <button id="resetBtn">Reset</button>
-    </div>
-  </div>
-<script>const minutesElement = document.getElementById("minutes");
-const secondsElement = document.getElementById("seconds");
-const millisecondsElement = document.getElementById("milliseconds");
-const startStopBtn = document.getElementById("startStopBtn");
-const resetBtn = document.getElementById("resetBtn");
-
-let timer;
-let running = false;
-let milliseconds = 0;
-let seconds = 0;
-let minutes = 0;
-
-
-function updateDisplay() {
-  millisecondsElement.textContent = milliseconds.toString().padStart(3, '0');
-  secondsElement.textContent = seconds.toString().padStart(2, '0');
-  minutesElement.textContent = minutes.toString().padStart(2, '0');
-}
-
-
-function reset() {
-  clearInterval(timer);
-  running = false;
-  milliseconds = 0;
-  seconds = 0;
-  minutes = 0;
-  updateDisplay();
-  startStopBtn.textContent = 'Start';
-}
-
-
-function toggleStartStop() {
-  if (running) {
-    clearInterval(timer);
-    startStopBtn.textContent = 'Start';
-  } else {
-    timer = setInterval(() => {
-      milliseconds += 10;
-      if (milliseconds >= 1000) {
-        milliseconds = 0;
-        seconds++;
-      }
-      if (seconds >= 60) {
-        seconds = 0;
-        minutes++;
-      }
-      updateDisplay();
-    }, 10);
-    startStopBtn.textContent = 'Stop';
-  }
-  running = !running;
-}
-
-
-startStopBtn.addEventListener('click', toggleStartStop);
-resetBtn.addEventListener('click', reset);
-
-updateDisplay();
-</script>
-  <style>
-    body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f2f2f2;
-  margin: 0;
-}
-
-
-.stopwatch {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-
-.time {
-  font-size: 48px;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  padding: 0 10px;
-}
-
-
-.stopwatch span:nth-child(even) {
-  font-size: 48px;
-}
-
-
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-
-  </style>
-</body>
-</html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-
-  
-
-
-
-
-
 <!DOCTYPE html>
 <html>
   
@@ -620,4 +471,152 @@ header {
 
   </style>
 </html>
+
+
+
+
+
+  <!DOCTYPE html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" href="stopwatch-styles.css">
+</head>
+<body>
+  <div class="stopwatch">
+    <span id="minutes" class="time">00</span>
+    <span>:</span>
+    <span id="seconds" class="time">00</span>
+    <span>:</span>
+    <span id="milliseconds" class="time">000</span>
+    <div class="buttons">
+      <button id="startStopBtn">Start</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+  </div>
+<script>const minutesElement = document.getElementById("minutes");
+const secondsElement = document.getElementById("seconds");
+const millisecondsElement = document.getElementById("milliseconds");
+const startStopBtn = document.getElementById("startStopBtn");
+const resetBtn = document.getElementById("resetBtn");
+
+let timer;
+let running = false;
+let milliseconds = 0;
+let seconds = 0;
+let minutes = 0;
+
+
+function updateDisplay() {
+  millisecondsElement.textContent = milliseconds.toString().padStart(3, '0');
+  secondsElement.textContent = seconds.toString().padStart(2, '0');
+  minutesElement.textContent = minutes.toString().padStart(2, '0');
+}
+
+
+function reset() {
+  clearInterval(timer);
+  running = false;
+  milliseconds = 0;
+  seconds = 0;
+  minutes = 0;
+  updateDisplay();
+  startStopBtn.textContent = 'Start';
+}
+
+
+function toggleStartStop() {
+  if (running) {
+    clearInterval(timer);
+    startStopBtn.textContent = 'Start';
+  } else {
+    timer = setInterval(() => {
+      milliseconds += 10;
+      if (milliseconds >= 1000) {
+        milliseconds = 0;
+        seconds++;
+      }
+      if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+      }
+      updateDisplay();
+    }, 10);
+    startStopBtn.textContent = 'Stop';
+  }
+  running = !running;
+}
+
+
+startStopBtn.addEventListener('click', toggleStartStop);
+resetBtn.addEventListener('click', reset);
+
+updateDisplay();
+</script>
+  <style>
+    body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f2f2f2;
+  margin: 0;
+}
+
+
+.stopwatch {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+
+.time {
+  font-size: 48px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  padding: 0 10px;
+}
+
+
+.stopwatch span:nth-child(even) {
+  font-size: 48px;
+}
+
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+
+  </style>
+</body>
+</html>
+
 
