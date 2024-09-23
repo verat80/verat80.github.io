@@ -1,119 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Music Player</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-<link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-  <div class="music-player">
-
+<div class="player">
+  <audio src="https://example.com/tunes/song.mp3" id="music" preload="auto"></audio>
   <div class="info">
-
     <div class="left">
-      <a href="javascript:;" class="icon-shuffle"></a>
-      <a href="javascript:;" class="icon-heart"></a>
+      <span class="artist">Artist Name</span>
+      <span class="title">Song Title</span>
     </div>
-
-    <div class="center">
-      <div class="jp-playlist">
-        <ul>
-          <li></li>
-        </ul>
-      </div>
-    </div>
-
     <div class="right">
-      <a href="javascript:;" class="icon-repeat"></a>
-      <a href="javascript:;" class="icon-share"></a>
+      <span class="time">00:00</span>
     </div>
-
-    <div class="progress"></div>
-
   </div>
-
   <div class="controls">
-    <div class="current jp-current-time">00:00</div>
-    <div class="play-controls">
-      <a href="javascript:;" class="icon-previous jp-previous" title="previous"></a>
-      <a href="javascript:;" class="icon-play jp-play" title="play"></a>
-      <a href="javascript:;" class="icon-pause jp-pause" title="pause"></a>
-      <a href="javascript:;" class="icon-next jp-next" title="next"></a>
-    </div>
-    <div class="volume-level">
-      <a href="javascript:;" class="icon-volume-up" title="max volume"></a>
-      <a href="javascript:;" class="icon-volume-down" title="mute"></a>
-    </div>
+    <div class="play">&#9654;</div>
+    <div class="pause">||</div>
   </div>
-
-  <div id="jquery_jplayer" class="jp-jplayer"></div>
-
 </div>
+<style>
+	.player {
+  width: 250px;
+  padding: 10px;
+  background: #444;
+  margin: 10px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.6.4/jquery.jplayer/jquery.jplayer.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.6.4/add-on/jplayer.playlist.min.js"></script>
-<script src="script.js"></script>
-  </body>
-</html>
+.info {
+  position: relative;
+  font-size: 14px;
+  padding: 10px;
+  color: #ccc;
+  line-height: 1;
+  text-align: center;
+}
 
-  </head>
-  <body>
-  <div class="music-player">
+.left span {
+  display: block;
+}
 
-  <div class="info">
+.time {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
 
-    <div class="left">
-      <a href="javascript:;" class="icon-shuffle"></a>
-      <a href="javascript:;" class="icon-heart"></a>
-    </div>
+.controls {
+  padding: 10px 0;
+  text-align: center;
+}
 
-    <div class="center">
-      <div class="jp-playlist">
-        <ul>
-          <li></li>
-        </ul>
-      </div>
-    </div>
+.controls div {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 24px;
+}
+</style>
+<script>
+	// Cache DOM
+var audio = document.getElementById("music");
+var time = document.querySelector(".time");
 
-    <div class="right">
-      <a href="javascript:;" class="icon-repeat"></a>
-      <a href="javascript:;" class="icon-share"></a>
-    </div>
-
-    <div class="progress"></div>
-
-  </div>
-
-  <div class="controls">
-    <div class="current jp-current-time">00:00</div>
-    <div class="play-controls">
-      <a href="javascript:;" class="icon-previous jp-previous" title="previous"></a>
-      <a href="javascript:;" class="icon-play jp-play" title="play"></a>
-      <a href="javascript:;" class="icon-pause jp-pause" title="pause"></a>
-      <a href="javascript:;" class="icon-next jp-next" title="next"></a>
-    </div>
-    <div class="volume-level">
-      <a href="javascript:;" class="icon-volume-up" title="max volume"></a>
-      <a href="javascript:;" class="icon-volume-down" title="mute"></a>
-    </div>
-  </div>
-
-  <div id="jquery_jplayer" class="jp-jplayer"></div>
-
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.6.4/jquery.jplayer/jquery.jplayer.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.6.4/add-on/jplayer.playlist.min.js"></script>
-<script src="script.js"></script>
-  
-	  
-  </body>
-</html>
+// Bind events
+document.querySelector(".play").addEventListener("click", play);
+document.querySelector(".pause").addEventListener("click", pause
+</script>
