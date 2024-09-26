@@ -119,19 +119,35 @@ text-align: center;
         <h1>Bad Habits</h1>
         <p>Ed Sheeran</p>
 
-        <audio controls>
+        <audio controls id="song">
           <source src="Go-NEFFEX.mp3" type="audio/mpeg">
         </audio> 
         <input type="range" value="0" id="progress">
 
         <div class="controls">
           <div><i class="fa-solid fa-backward"></i></div>
-          <div><i class="fa-solid fa-play"></i></div>
+          <div><i class="fa-solid fa-play" id="ctrlIcon"></i></div>
           <div><i class="fa-solid fa-forward"></i></div>
 
 
         
       </div>
     </div>
+
+<scrpit>
+
+let progress = document.getElementById("progress");
+let song = document.getElementById("song");
+let ctrlIcon = document.getElementById("ctrlIcon");
+  
+  
+  song.onloadedmetadata = function(){
+     progress.max = song.duration;
+  }
+  
+  
+</scrpit>
+
+      
   </body>
 </html>
