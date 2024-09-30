@@ -1,1 +1,29 @@
+<DOCTYPE html>
+  <html>
+    <head>
+      <style>
+        
+      </style>
+      <body>
+        <h1>Age Guesser</h1>
+        
+<button onclick="typeWriter()">Click me!</button>
 
+<p id="demo"></p>
+
+<script>
+var i = 0;
+var txt = 'I can guess Your age.';
+var speed = 50;
+
+function typeWriter() {
+  if (i < txt.length) {
+    document.getElementById("demo").innerHTML += txt.charAt(i);
+    i++;
+    setTimeout(typeWriter, speed);
+  }
+}
+</script>
+      </body>
+    </head>
+  </html>
