@@ -210,15 +210,13 @@ text-align: center;
         <img src="picture.jpg" class="song-img" width="200" height="200">
         <h1>Bad Habits</h1>
         <p>Ed Sheeran</p>
-          <h1>Bad Habits</h1>
-        <p>Ed Sheeran</p>
-
         <audio  id="song">
           <source src="Go-NEFFEX.mp3" type="audio/mpeg">
         </audio> 
         <input type="range" value="0" id="progress">
 
         <div class="controls">
+          <a href="#" onclick="jQuery('#wonderpluginaudio-55').data('object').forward(10);return false;"><button>Forward 10 Seconds</button></a>
          <button class="player__button next">
           <div><i class="fa-solid fa-backward"></i></div>
           <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrlIcon"></i></div>
