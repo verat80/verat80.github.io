@@ -1,68 +1,108 @@
 <!DOCTYPE html>
 <html>
-<head>
-   <style>
-      div {
-         display: flex;
-         margin: 4%;
-         padding: 2%;
-         box-shadow: inset 0 0 12px blue;
-      }
-      p {
-         font-family: "Courier Monospace";
-         font-size: 2em;
-         color: red;
-      }
-      p:last-of-type {
-         animation: type 0.33s infinite;
-      }
-      @keyframes type{
-         to { opacity: .0; }
-      }
-   </style>
-</head>
-<body>
-   <div>
-      <p id="text"></p>
-      <p>|</p>
-   </div>
-   <script>
-      const words = ["Nulla", "facilisi", "Cras sed odio sed leo laoreet molestie id non purus.."];
-      let i = 0;
-      let counter;
-      function typeNow() {
-         let word = words[i].split("");
-         var loopTyping = function() {
-            if (word.length > 0) {
-               document.getElementById('text').innerHTML += word.shift();
-            } else {
-               deleteNow();
-               return false;
-            };
-            counter = setTimeout(loopTyping, 200);
-         };
-         loopTyping();
-      };
-      function deleteNow() {
-         let word = words[i].split("");
-         var loopDeleting = function() {
-            if (word.length > 0) {
-               word.pop();
-               document.getElementById('text').innerHTML = word.join("");
-            } else {
-               if (words.length > (i + 1)) {
-                  i++;
-               } else {
-                  i = 0;
-               };
-               typeNow();
-               return false;
-            };
-            counter = setTimeout(loopDeleting, 200);
-         };
-         loopDeleting();
-      };
-      typeNow();
-   </script>
+   <head>
+      
+      <style>
+         $black: #2b2b2b;
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque&display=swap');
+$size: 42px;
+
+body {
+  background-color: $black;
+  color: white;
+  font-size: $size;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Darker Grotesque', sans-serif;
+
+  .typing-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+    #feature-text {
+      margin-left: 8px;
+    }
+    .input-cursor {
+      display: inline-block;
+      width: 2px;
+      height: $size;
+      background-color: white;
+      margin-left: 8px;
+      animation: blink .6s linear infinite alternate;
+    }
+  }
+  
+  @keyframes blink {
+    0% {opacity: 1;}
+    40% {opacity: 1;}
+    60% {opacity: 0;}
+    100% {opacity: 0;}
+  }
+}
+      </style>
+      <body>
+  <div class="typing-container">
+    <span id="sentence" class="sentence">Here, take this </span>
+    <span id="feature-text"></span>
+    <span class="input-cursor"></span>
+  </div>
+         <script>
+            const carouselText = [
+  {text: "Apple", color: "red"},
+  {text: "Orange", color: "orange"},
+  {text: "Lemon", color: "yellow"}
+]
+
+$( document ).ready(async function() {
+  carousel(carouselText, "#feature-text")
+});
+
+async function typeSentence(sentence, eleRef, delay = 100) {
+  const letters = sentence.split("");
+  let i = 0;
+  while(i < letters.length) {
+    await waitForMs(delay);
+    $(eleRef).append(letters[i]);
+    i++
+  }
+  return;
+}
+
+async function deleteSentence(eleRef) {
+  const sentence = $(eleRef).html();
+  const letters = sentence.split("");
+  let i = 0;
+  while(letters.length > 0) {
+    await waitForMs(100);
+    letters.pop();
+    $(eleRef).html(letters.join(""));
+  }
+}
+
+async function carousel(carouselList, eleRef) {
+    var i = 0;
+    while(true) {
+      updateFontColor(eleRef, carouselList[i].color)
+      await typeSentence(carouselList[i].text, eleRef);
+      await waitForMs(1500);
+      await deleteSentence(eleRef);
+      await waitForMs(500);
+      i++
+      if(i >= carouselList.length) {i = 0;}
+    }
+}
+
+function updateFontColor(eleRef, color) {
+  $(eleRef).css('color', color);
+}
+
+function waitForMs(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+         </script>
 </body>
+   </head>
 </html>
