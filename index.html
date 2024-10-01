@@ -1,46 +1,39 @@
 <DOCTYPE html>
   <html>
     <head>
+      <div class="typing-container">
+    <span id="sentence" class="sentence"></span>
+    <span class="input-cursor"></span>
+  </div>
+
       <style>
-        body {
-  background: #333;
-  padding-top: 5em;
-  display: flex;
-  justify-content: center;
+   .typing-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
 }
-
-/* DEMO-SPECIFIC STYLES */
-.typewriter h1 {
-  color: #fff;
-  font-family: monospace;
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: .15em solid orange; /* The typwriter cursor */
-  white-space: nowrap; /* Keeps the content on a single line */
-  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  letter-spacing: .15em; /* Adjust as needed */
-  animation: 
-    typing 3.5s steps(30, end),
-    blink-caret .5s step-end infinite;
+ .input-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 42px;
+      background-color: white;
+      margin-left: 8px;
 }
-
-/* The typing effect */
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-/* The typewriter cursor effect */
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: orange }
+         blink {
+    0% {opacity: 1;}
+    40% {opacity: 1;}
+    60% {opacity: 0;}
+    100% {opacity: 0;}
+  }
+// Then, inside .input-cursor:
+.input-cursor { 
+  animation: blink .6s linear infinite alternate;
 }
       </style>
     <body>
-     <div class="typewriter">
-  <h1>I can guess your age.</h1>
-</div>
-      <script>
-        async function typeSentence(sentence, eleRef, delay = 100) {
+     
+    <script>
+      async function typeSentence(sentence, eleRef, delay = 100) {
   const letters = sentence.split("");
   let i = 0;
   while(i < letters.length) {
@@ -55,8 +48,22 @@
 function waitForMs(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
-        ypeSentence("Dont believe me?",)
-      </script>
+      async function deleteSentence(eleRef) {
+  const sentence = $(eleRef).html();
+  const letters = sentence.split("");
+  let i = 0;
+  while(letters.length > 0) {
+    await waitForMs(100);
+    letters.pop();
+    $(eleRef).html(letters.join(""));
+  }
+}
+      $( document ).ready(async function() {
+  await typeSentence("Mr. Stark, I don't feel so good..", "#sentence");
+  await waitForMs(2000);
+  deleteSentence("#sentence");
+});
+    </script>
       </body>
     </head>
   </html>
