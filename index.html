@@ -1,44 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    #container {
-	text-align: center;
-}
-
-#text {
-	display: inline-block;
-	vertical-align: middle;
-	color: orange;
-	letter-spacing: 2px;
-}
-
-#cursor {
-	display: inline-block;
-	vertical-align: middle;
-	width: 3px;
-	height: 50px;
-	background-color: orange;
-	animation: blink .75s step-end infinite;
-}
-
-@keyframes blink {
-	from, to { 
-		background-color: transparent 
-	}
-	50% { 
-		background-color: orange; 
-	}
-}
-  </style>
-    
-</head>
-<body>
-<div id="container"> 	<div id="I can guess your age 
-				dont believe me? "></div><div id="cursor"></div> </div>
-<script>
-	// List of sentences var _CONTENT = [ "I can guess your age 
-				dont believe me? " ]; // Current sentence being processed var _PART = 0; // Character number of the current sentence being processed var _PART_INDEX = 0; // Holds the handle returned from setInterval var _INTERVAL_VAL; // Element that holds the text var _ELEMENT = document.querySelector("#text"); // Cursor element var _CURSOR = document.querySelector("#cursor"); // Implements typing effect function Type() { 	// Get substring with 1 characater added 	var text = _CONTENT[_PART].substring(0, _PART_INDEX + 1); 	_ELEMENT.innerHTML = text; 	_PART_INDEX++; 	// If full sentence has been displayed then start to delete the sentence after some time 	if(text === _CONTENT[_PART]) { 		// Hide the cursor 		_CURSOR.style.display = 'none'; 		clearInterval(_INTERVAL_VAL); 		setTimeout(function() { 			_INTERVAL_VAL = setInterval(Delete, 50); 		}, 1000); 	} } // Implements deleting effect function Delete() { 	// Get substring with 1 characater deleted 	var text = _CONTENT[_PART].substring(0, _PART_INDEX - 1); 	_ELEMENT.innerHTML = text; 	_PART_INDEX--; 	// If sentence has been deleted then start to display the next sentence 	if(text 
-</script>
-</body>
-</html>
+<DOCTYPE html>
+	<html>
+	<head>
+	<style>
+		body { background-color:#ce3635; text-align: center; color:#fff; padding-top:10em; } * { color:#fff; text-decoration: none;}
+	</style>	
+	<body>
+		<h1> <a href="" class="typewrite" data-period="2000" data-type='[ "Hi, Im Si.", "I am Creative.", "I Love Design.", "I Love to Develop." ]'> <span class="wrap"></span> </a> </h1>
+	</body>
+	</head>	
+	</html>
