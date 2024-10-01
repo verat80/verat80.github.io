@@ -1,10 +1,7 @@
 <DOCTYPE html>
   <html>
     <head>
-      <div class="typing-container">
-    <span id="sentence" class="sentence"></span>
-    <span class="input-cursor"></span>
-  </div>
+      
 
       <style>
    .typing-container {
@@ -31,7 +28,10 @@
 }
       </style>
     <body>
-     
+     <div class="typing-container">
+    <span id="sentence" class="sentence"></span>
+    <span class="input-cursor"></span>
+  </div>
     <script>
       async function typeSentence(sentence, eleRef, delay = 100) {
   const letters = sentence.split("");
