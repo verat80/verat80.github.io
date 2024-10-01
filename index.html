@@ -1,112 +1,68 @@
-<DOCTYPE html>
-  <html>
-    <head>
-      <style>
-        #container {
-	text-align: center;
-}
-
-#text {
-	display: inline-block;
-	vertical-align: middle;
-	color: orange;
-	letter-spacing: 2px;
-}
-
-#cursor {
-	display: inline-block;
-	vertical-align: middle;
-	width: 3px;
-	height: 50px;
-	background-color: orange;
-	animation: blink .75s step-end infinite;
-}
-
-@keyframes blink {
-	from, to { 
-		background-color: transparent 
-	}
-	50% { 
-		background-color: orange; 
-	}
-}
-      </style>
-      <script>
-        var _CONTENT = [ 
-	"Twinkle, twinkle, little star", 
-	"How I wonder what you are", 
-	"Up above the world so high", 
-	"Like a diamond in the sky"
-];
-
-// Current sentence being processed
-var _PART = 0;
-
-// Character number of the current sentence being processed 
-var _PART_INDEX = 0;
-
-// Holds the handle returned from setInterval
-var _INTERVAL_VAL;
-
-// Element that holds the text
-var _ELEMENT = document.querySelector("#text");
-
-// Cursor element 
-var _CURSOR = document.querySelector("#cursor");
-
-// Implements typing effect
-function Type() { 
-	// Get substring with 1 characater added
-	var text =  _CONTENT[_PART].substring(0, _PART_INDEX + 1);
-	_ELEMENT.innerHTML = text;
-	_PART_INDEX++;
-
-	// If full sentence has been displayed then start to delete the sentence after some time
-	if(text === _CONTENT[_PART]) {
-		// Hide the cursor
-		_CURSOR.style.display = 'none';
-
-		clearInterval(_INTERVAL_VAL);
-		setTimeout(function() {
-			_INTERVAL_VAL = setInterval(Delete, 50);
-		}, 1000);
-	}
-}
-
-// Implements deleting effect
-function Delete() {
-	// Get substring with 1 characater deleted
-	var text =  _CONTENT[_PART].substring(0, _PART_INDEX - 1);
-	_ELEMENT.innerHTML = text;
-	_PART_INDEX--;
-
-	// If sentence has been deleted then start to display the next sentence
-	if(text === '') {
-		clearInterval(_INTERVAL_VAL);
-
-		// If current sentence was last then display the first one, else move to the next
-		if(_PART == (_CONTENT.length - 1))
-			_PART = 0;
-		else
-			_PART++;
-		
-		_PART_INDEX = 0;
-
-		// Start to display the next sentence after some time
-		setTimeout(function() {
-			_CURSOR.style.display = 'inline-block';
-			_INTERVAL_VAL = setInterval(Type, 100);
-		}, 200);
-	}
-}
-
-// Start the typing effect on load
-_INTERVAL_VAL = setInterval(Type, 100);
-      </script>
-      <body>
-        <div id="container">
-	<div id="text"></div><div id="cursor"></div>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+   <style>
+      div {
+         display: flex;
+         margin: 4%;
+         padding: 2%;
+         box-shadow: inset 0 0 12px blue;
+      }
+      p {
+         font-family: "Courier Monospace";
+         font-size: 2em;
+         color: red;
+      }
+      p:last-of-type {
+         animation: type 0.33s infinite;
+      }
+      @keyframes type{
+         to { opacity: .0; }
+      }
+   </style>
+</head>
+<body>
+   <div>
+      <p id="text"></p>
+      <p>|</p>
+   </div>
+   <script>
+      const words = ["Nulla", "facilisi", "Cras sed odio sed leo laoreet molestie id non purus.."];
+      let i = 0;
+      let counter;
+      function typeNow() {
+         let word = words[i].split("");
+         var loopTyping = function() {
+            if (word.length > 0) {
+               document.getElementById('text').innerHTML += word.shift();
+            } else {
+               deleteNow();
+               return false;
+            };
+            counter = setTimeout(loopTyping, 200);
+         };
+         loopTyping();
+      };
+      function deleteNow() {
+         let word = words[i].split("");
+         var loopDeleting = function() {
+            if (word.length > 0) {
+               word.pop();
+               document.getElementById('text').innerHTML = word.join("");
+            } else {
+               if (words.length > (i + 1)) {
+                  i++;
+               } else {
+                  i = 0;
+               };
+               typeNow();
+               return false;
+            };
+            counter = setTimeout(loopDeleting, 200);
+         };
+         loopDeleting();
+      };
+      typeNow();
+   </script>
 </body>
-    </head>
-  </html>
+</html>
