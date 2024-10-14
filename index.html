@@ -1,379 +1,248 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>CodePen - Responsive Music Player || Music Player com responsividade </title>
-  <link rel="stylesheet" href="./style.css">
-
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<html lang="pt-br">
-<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player Design - GreatStack</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/28d9a85d09.js" crossorigin="anonymous"></script>
   <style>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./style.css">
-  <title>Music Player</title>
-
-  * {
+    {
   margin: 0;
   padding: 0;
+  font-family: 'Poppins', sans-serif;
   box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
-body {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1549%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='url(%23SvgjsLinearGradient1550)'%3e%3c/rect%3e%3cuse xlink:href='%23SvgjsSymbol1557' x='0' y='0'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsSymbol1557' x='720' y='0'%3e%3c/use%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1549'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3clinearGradient x1='15.28%25' y1='139.29%25' x2='84.72%25' y2='-39.29%25' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1550'%3e%3cstop stop-color='%230e2a47' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(0%2c 7%2c 213%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3cpath d='M-1 0 a1 1 0 1 0 2 0 a1 1 0 1 0 -2 0z' id='SvgjsPath1556'%3e%3c/path%3e%3cpath d='M-3 0 a3 3 0 1 0 6 0 a3 3 0 1 0 -6 0z' id='SvgjsPath1554'%3e%3c/path%3e%3cpath d='M-5 0 a5 5 0 1 0 10 0 a5 5 0 1 0 -10 0z' id='SvgjsPath1551'%3e%3c/path%3e%3cpath d='M2 -2 L-2 2z' id='SvgjsPath1552'%3e%3c/path%3e%3cpath d='M6 -6 L-6 6z' id='SvgjsPath1553'%3e%3c/path%3e%3cpath d='M30 -30 L-30 30z' id='SvgjsPath1555'%3e%3c/path%3e%3c/defs%3e%3csymbol id='SvgjsSymbol1557'%3e%3cuse xlink:href='%23SvgjsPath1551' x='30' y='30' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='30' y='90' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='30' y='150' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='30' y='210' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='30' y='270' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='30' y='330' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='30' y='390' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='30' y='450' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='30' y='510' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1554' x='30' y='570' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='90' y='30' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1554' x='90' y='90' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='90' y='150' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='90' y='210' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='90' y='270' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='90' y='330' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='90' y='390' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='90' y='450' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='90' y='510' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='90' y='570' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='150' y='30' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='150' y='90' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='150' y='150' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='150' y='210' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='150' y='270' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='150' y='330' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1555' x='150' y='390' stroke='rgba(11%2c 102%2c 200%2c 1)' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='150' y='450' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='150' y='510' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1554' x='150' y='570' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='210' y='30' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='210' y='90' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='210' y='150' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='210' y='210' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='210' y='270' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='210' y='330' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='210' y='390' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='210' y='450' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='210' y='510' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='210' y='570' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='270' y='30' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='270' y='90' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='270' y='150' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='270' y='210' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='270' y='270' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='270' y='330' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='270' y='390' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='270' y='450' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='270' y='510' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1555' x='270' y='570' stroke='rgba(11%2c 102%2c 200%2c 1)' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='330' y='30' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='330' y='90' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='330' y='150' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='330' y='210' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='330' y='270' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='330' y='330' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='330' y='390' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='330' y='450' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='330' y='510' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='330' y='570' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='390' y='30' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='390' y='90' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1554' x='390' y='150' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1555' x='390' y='210' stroke='rgba(11%2c 102%2c 200%2c 1)' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1554' x='390' y='270' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='390' y='330' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='390' y='390' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='390' y='450' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='390' y='510' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='390' y='570' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='450' y='30' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1554' x='450' y='90' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='450' y='150' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='450' y='210' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='450' y='270' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='450' y='330' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='450' y='390' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='450' y='450' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='450' y='510' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='450' y='570' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='510' y='30' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='510' y='90' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='510' y='150' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='510' y='210' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='510' y='270' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1555' x='510' y='330' stroke='rgba(11%2c 102%2c 200%2c 1)' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='510' y='390' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='510' y='450' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='510' y='510' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='510' y='570' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='570' y='30' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='570' y='90' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='570' y='150' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='570' y='210' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='570' y='270' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='570' y='330' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='570' y='390' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='570' y='450' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='570' y='510' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1554' x='570' y='570' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='630' y='30' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='630' y='90' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='630' y='150' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1552' x='630' y='210' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='630' y='270' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='630' y='330' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='630' y='390' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='630' y='450' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='630' y='510' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='630' y='570' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='690' y='30' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='690' y='90' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='690' y='150' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1555' x='690' y='210' stroke='rgba(11%2c 102%2c 200%2c 1)' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='690' y='270' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='690' y='330' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1556' x='690' y='390' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='690' y='450' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1551' x='690' y='510' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1553' x='690' y='570' stroke='rgba(11%2c 102%2c 200%2c 1)'%3e%3c/use%3e%3c/symbol%3e%3c/svg%3e");
- 
-}
-
-body * {
-  font-family: 'Roboto', sans-serif;
-}
-
-#boxes * {
-  border: 1px solid transparent;
-}
-
-#boxes {
-  display: grid;
-  grid-template-columns: max-content max-content;
-  grid-template-areas: 
-  'A B'
-  'A C';
-  gap: 32px;
-  place-content: center;
+.container{
+  width: 100%;
   height: 100vh;
-}
-
-#player01 {
-  grid-area: A;
-  padding: 50px 38px;
-}
-
-#player01 .wrapper{
-  width: 190px;
-}
-
-
-#player01 img{
-  width: 190px;
-  height: 190px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-#player01 .info {
-  padding-top: 28px;
-}
-
-#player02 {
-  grid-area: B;
-  height: fit-content;
-}
-
-#player02 .controls {
-  display: flex;
-  justify-content: space-around;
-}
-
-#player03 {
-  grid-area: C;
-}
-
-#player03 .controls {
-  display: flex;
-  justify-content: space-around;
-}
-
-.player {
-  background-color: #080747;
-  padding: 28px;
-  border-radius: 20px;
-}
-
-.player img {
-  width: 84px;
-  height: 84px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-
-.info {
- color: #E1E1E6;
-}
-
-.info p {
-  opacity: 0.68;
-  font-size: 19px;
-}
-
-.info-wrapper {
+  background: #333;
   display: flex;
   align-items: center;
-  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
-
-.player h1 {
-  font-size: 27px;
-  color: #E1E1E6;
-  padding-bottom: 7px;
+.music-player{
+  background: #ffe0e5;
+  width: 400px;
+  padding: 25px 35px;
+  text-align: center;
 }
-
-
-.controls {
+nav{
   display: flex;
   justify-content: space-between;
-  padding-top: 20px;
+  margin-bottom: 30px;
 }
-
-.track {
-  padding-top: 28px;
- position: relative;
-
+nav .circle{
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background: #fff;
+  color: #f53192;
+  box-shadow: 0 5px 10px rgba(255, 26, 26, 0.22);
 }
-
-.track::before {
-content: '';
-height: 6px;
-width: 100%;
-display: block;
-background: #D9D9D9;
-opacity: 0.3;
-border-radius: 10px;
-position: absolute;
+.song-img{
+  width: 220px;
+  border-radius: 50%;
+  border: 8px solid #fff;
+  box-shadow: 0 10px 60px rgba(255, 26, 26, 0.22);
 }
-
-.track::after { 
-  content: '';
-height: 6px;
-width: 85%;
-display: block;
-background: #D9D9D9;
-border-radius: 10px;
-
-
+.music-player h1{
+  font-size: 20px;
+  font-weight: 400;
+  color: #333;
+  margin-top: 20px;
 }
-
-.time {
-  opacity: 0.7;
+.music-player p{
   font-size: 14px;
-  color: gainsboro;
-
+  color: #333;
+}
+#progress{
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #f53192;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 40px 0;
+}
+#progress::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  background: #f53192;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 8px solid #fff;
+  box-shadow: 0 5px 5px rgba(255, 26, 26, 0.22);
+}
+.controls{
   display: flex;
-  justify-content: space-between;
-  padding-top: 9.6px;
+  justify-content: center;
+  align-items: center;
 }
-
-@media (max-width: 670px) {
-  #boxes {
-    display:flex;
-    flex-direction: column;
-
-    max-width: 270px;
-    margin: auto;
-
-
-    height: auto;
-    padding-block: 60px;
-  }
-
-
-
+.controls div{
+  width: 60px;
+  height: 60px;
+  margin: 20px;
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #f53192;
+  box-shadow: 0 10px 20px rgba(255, 26, 26, 0.22);
+  cursor: pointer;
 }
-    </style>
+.controls div:nth-child(2){
+  transform: scale(1.5);
+  background: #f53192;
+  color: #fff;
+}
+  </style>
 </head>
 <body>
-  
-      <div id="boxes">
-    
-        <div id="player01"  class="player">
-         <div class="wrapper">
-          <a  target="_blank" href="https://www.instagram.com/correiamendsss/">
-           <img src="https://cdn.pixabay.com/photo/2022/12/24/09/26/bridge-7675585_1280.jpg" alt="LogoMusicImage">
-          </a>
-          <div class="info">
-             <h1>Code<br>PodCast</h1>
-            <p>Banda OneBitMusic</p>
-          </div>
-    
-          <div class="controls">
-            <div class="prev">
-    
-    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2.33917 13.7397L12.9664 7.38149C13.2293 7.22152 13.5303 7.13509 13.8381 7.13123C14.1458 7.12737 14.4489 7.20622 14.7157 7.35955C15.0053 7.52815 15.245 7.77036 15.4107 8.0616C15.5763 8.35284 15.6619 8.68272 15.6588 9.01775V13.4657L25.8274 7.3798C26.0903 7.21983 26.3914 7.13341 26.6991 7.12955C27.0068 7.12568 27.3099 7.20454 27.5768 7.35786C27.8663 7.52646 28.1061 7.76867 28.2717 8.05991C28.4373 8.35115 28.5229 8.68103 28.5198 9.01606V21.4512C28.5231 21.7863 28.4376 22.1163 28.2719 22.4077C28.1063 22.699 27.8664 22.9413 27.5768 23.1099C27.3099 23.2632 27.0068 23.3421 26.6991 23.3382C26.3914 23.3344 26.0903 23.2479 25.8274 23.088L15.6588 16.9993V21.4489C15.6625 21.7844 15.5771 22.1149 15.4114 22.4067C15.2458 22.6985 15.0057 22.9411 14.7157 23.1099C14.4489 23.2632 14.1458 23.3421 13.8381 23.3382C13.5303 23.3344 13.2293 23.2479 12.9664 23.088L2.33917 16.7298C2.08653 16.5715 1.87825 16.3516 1.73386 16.0908C1.58948 15.83 1.51373 15.5368 1.51373 15.2387C1.51373 14.9406 1.58948 14.6473 1.73386 14.3865C1.87825 14.1257 2.08653 13.9058 2.33917 13.7476V13.7397Z" fill="#E1E1E6"/>
-    </svg>
-    
-
-    
-            </div>
-            <div class="play">
-    
-    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M8.32137 25.586C7.9759 25.5853 7.63655 25.4948 7.33669 25.3232C6.66148 24.9406 6.24173 24.1978 6.24173 23.3915V7.07398C6.24173 6.26542 6.66148 5.52494 7.33669 5.14232C7.64369 4.96589 7.99244 4.87516 8.3465 4.87961C8.70056 4.88407 9.04692 4.98354 9.34938 5.16764L23.2952 13.5155C23.5859 13.6977 23.8255 13.9508 23.9916 14.251C24.1577 14.5511 24.2448 14.8886 24.2448 15.2316C24.2448 15.5747 24.1577 15.9121 23.9916 16.2123C23.8255 16.5125 23.5859 16.7655 23.2952 16.9478L9.34713 25.2979C9.0376 25.485 8.68307 25.5846 8.32137 25.586V25.586Z" fill="#E1E1E6"/>
-    </svg>
-  
-              
-            </div>
-            <div class="next">
-    <svg width="29" height="30" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clip-path="url(#clip0_42_51)">
-    <path d="M27.1426 13.7397L16.5154 7.38149C16.2525 7.22152 15.9514 7.13509 15.6437 7.13123C15.336 7.12737 15.0329 7.20622 14.766 7.35955C14.4765 7.52815 14.2368 7.77036 14.0711 8.0616C13.9055 8.35284 13.8199 8.68272 13.823 9.01775V13.4657L3.65435 7.3798C3.39144 7.21983 3.0904 7.13341 2.78268 7.12955C2.47495 7.12568 2.17183 7.20454 1.905 7.35786C1.61547 7.52646 1.37571 7.76867 1.21008 8.05991C1.04445 8.35115 0.958845 8.68103 0.961955 9.01606V21.4512C0.958745 21.7863 1.0443 22.1163 1.20994 22.4076C1.37558 22.699 1.61538 22.9413 1.905 23.1099C2.17183 23.2632 2.47495 23.3421 2.78268 23.3382C3.0904 23.3344 3.39144 23.2479 3.65435 23.088L13.823 16.9993V21.4489C13.8194 21.7844 13.9048 22.1149 14.0704 22.4066C14.2361 22.6984 14.4761 22.9411 14.766 23.1099C15.0329 23.2632 15.336 23.3421 15.6437 23.3382C15.9514 23.3344 16.2525 23.2479 16.5154 23.088L27.1426 16.7298C27.3953 16.5715 27.6035 16.3516 27.7479 16.0908C27.8923 15.83 27.968 15.5368 27.968 15.2387C27.968 14.9406 27.8923 14.6473 27.7479 14.3865C27.6035 14.1257 27.3953 13.9058 27.1426 13.7476V13.7397Z" fill="#E1E1E6"/>
-    </g>
-    <defs>
-    <clipPath id="clip0_42_51">
-    <rect width="28.8089" height="28.8089" fill="white" transform="translate(0.0612183 0.828369)"/>
-    </clipPath>
-    </defs>
-    </svg>
-    
-  
-    
-            </div>
-          </div>
-          
-          <div class="track-time">
-            <div class="track"></div>
-            <div class="time">
-              <div class="total-time">03:20</div>
-              <div class="last-time">00:12</div>
-            </div>
-          </div>
-    
-             
-         </div>
+<div class="container">
+    <div class="music-player">
+    <nav>
+        <div class="circle">
+            <i class="fa-solid fa-angle-left"></i>
         </div>
-      
-    
-        <div id="player02"  class="player horizontal">
-         <div class="wrapper">
-          
-          <div class="info-wrapper">
-    
-          <img src="https://cdn.pixabay.com/photo/2016/03/26/13/09/cup-of-coffee-1280537_1280.jpg" alt="LogoMusicImage">
-    
-          <div class="info">
-             <h1>Code<br>PodCast</h1>
-            <p>Banda OneBitMusic</p>
-          </div>
-    
-          </div>
-
-          <div class="controls">
-            <div class="prev">
-    
-    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2.33917 13.7397L12.9664 7.38149C13.2293 7.22152 13.5303 7.13509 13.8381 7.13123C14.1458 7.12737 14.4489 7.20622 14.7157 7.35955C15.0053 7.52815 15.245 7.77036 15.4107 8.0616C15.5763 8.35284 15.6619 8.68272 15.6588 9.01775V13.4657L25.8274 7.3798C26.0903 7.21983 26.3914 7.13341 26.6991 7.12955C27.0068 7.12568 27.3099 7.20454 27.5768 7.35786C27.8663 7.52646 28.1061 7.76867 28.2717 8.05991C28.4373 8.35115 28.5229 8.68103 28.5198 9.01606V21.4512C28.5231 21.7863 28.4376 22.1163 28.2719 22.4077C28.1063 22.699 27.8664 22.9413 27.5768 23.1099C27.3099 23.2632 27.0068 23.3421 26.6991 23.3382C26.3914 23.3344 26.0903 23.2479 25.8274 23.088L15.6588 16.9993V21.4489C15.6625 21.7844 15.5771 22.1149 15.4114 22.4067C15.2458 22.6985 15.0057 22.9411 14.7157 23.1099C14.4489 23.2632 14.1458 23.3421 13.8381 23.3382C13.5303 23.3344 13.2293 23.2479 12.9664 23.088L2.33917 16.7298C2.08653 16.5715 1.87825 16.3516 1.73386 16.0908C1.58948 15.83 1.51373 15.5368 1.51373 15.2387C1.51373 14.9406 1.58948 14.6473 1.73386 14.3865C1.87825 14.1257 2.08653 13.9058 2.33917 13.7476V13.7397Z" fill="#E1E1E6"/>
-    </svg>
-    
-
-    
-            </div>
-            <div class="play">
-    
-    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M8.32137 25.586C7.9759 25.5853 7.63655 25.4948 7.33669 25.3232C6.66148 24.9406 6.24173 24.1978 6.24173 23.3915V7.07398C6.24173 6.26542 6.66148 5.52494 7.33669 5.14232C7.64369 4.96589 7.99244 4.87516 8.3465 4.87961C8.70056 4.88407 9.04692 4.98354 9.34938 5.16764L23.2952 13.5155C23.5859 13.6977 23.8255 13.9508 23.9916 14.251C24.1577 14.5511 24.2448 14.8886 24.2448 15.2316C24.2448 15.5747 24.1577 15.9121 23.9916 16.2123C23.8255 16.5125 23.5859 16.7655 23.2952 16.9478L9.34713 25.2979C9.0376 25.485 8.68307 25.5846 8.32137 25.586V25.586Z" fill="#E1E1E6"/>
-    </svg>
-  
-              
-            </div>
-            <div class="next">
-    <svg width="29" height="30" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clip-path="url(#clip0_42_51)">
-    <path d="M27.1426 13.7397L16.5154 7.38149C16.2525 7.22152 15.9514 7.13509 15.6437 7.13123C15.336 7.12737 15.0329 7.20622 14.766 7.35955C14.4765 7.52815 14.2368 7.77036 14.0711 8.0616C13.9055 8.35284 13.8199 8.68272 13.823 9.01775V13.4657L3.65435 7.3798C3.39144 7.21983 3.0904 7.13341 2.78268 7.12955C2.47495 7.12568 2.17183 7.20454 1.905 7.35786C1.61547 7.52646 1.37571 7.76867 1.21008 8.05991C1.04445 8.35115 0.958845 8.68103 0.961955 9.01606V21.4512C0.958745 21.7863 1.0443 22.1163 1.20994 22.4076C1.37558 22.699 1.61538 22.9413 1.905 23.1099C2.17183 23.2632 2.47495 23.3421 2.78268 23.3382C3.0904 23.3344 3.39144 23.2479 3.65435 23.088L13.823 16.9993V21.4489C13.8194 21.7844 13.9048 22.1149 14.0704 22.4066C14.2361 22.6984 14.4761 22.9411 14.766 23.1099C15.0329 23.2632 15.336 23.3421 15.6437 23.3382C15.9514 23.3344 16.2525 23.2479 16.5154 23.088L27.1426 16.7298C27.3953 16.5715 27.6035 16.3516 27.7479 16.0908C27.8923 15.83 27.968 15.5368 27.968 15.2387C27.968 14.9406 27.8923 14.6473 27.7479 14.3865C27.6035 14.1257 27.3953 13.9058 27.1426 13.7476V13.7397Z" fill="#E1E1E6"/>
-    </g>
-    <defs>
-    <clipPath id="clip0_42_51">
-    <rect width="28.8089" height="28.8089" fill="white" transform="translate(0.0612183 0.828369)"/>
-    </clipPath>
-    </defs>
-    </svg>
-    
-  
-    
-            </div>
-          </div>
-          
-          <div class="track-time">
-            <div class="track"></div>
-            <div class="time">
-              <div class="total-time">03:20</div>
-              <div class="last-time">00:12</div>
-            </div>
-          </div>
-          
-          
-         </div>
+        <div class="circle">
+            <i class="fa-solid fa-bars"></i>
         </div>
-    
-    
-        <div id="player03"  class="player horizontal">
-         <div class="wrapper">
-           
+    </nav>
+    <img src="" class="song-img" id="thumbnail">
+    <h1 id="title">title</h1>
+    <p id="description">desc</p>
 
-          <div class="info-wrapper">
+    <audio id="song">
+        <source type="audio/mpeg">
+    </audio>
+    <input type="range" value="0" id="progress">
+
+    <div class="controls">
+        <div onclick="previousSong()"><i class="fa-solid fa-backward"></i></div>
+        <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrlIcon"></i></div>
+        <div onclick="nextSong()"><i class="fa-solid fa-forward"></i></div>
+    </div>
+
+    </div>
+</div>
+
+<script>
+
+    let songData = [
+        {
+            name: 'Song name 1',
+            desc: 'Song description 1',
+            audio: 'media/Go-NEFFEX.mp3',
+            thumbnail: 'media/thumbnail-1.png'
+         },
+        {
+            name: 'Song name 2',
+            desc: 'Song description 2',
+            audio: 'media/Book-The-Rental-Wit-It-RAGE.mp3',
+            thumbnail: 'media/thumbnail-2.jpg'
+         },
+        {
+            name: 'Song name 3',
+            desc: 'Song description 3',
+            audio: 'media/Danger -Snow-Dan-Henig.mp3',
+            thumbnail: 'media/thumbnail-3.jpg'
+         },
+        {
+            name: 'Song name 4',
+            desc: 'Song description 4',
+            audio: 'media/Icelandic-Arpeggios-DivKid.mp3',
+            thumbnail: 'media/thumbnail-4.jpg'
+         },
+        {
+            name: 'Song name 5',
+            desc: 'Song description 5',
+            audio: 'media/Liquid-Time-Aakash-Gandhi.mp3',
+            thumbnail: 'media/thumbnail-5.jpg'
+         },
+
+]
+
+ let progress = document.getElementById("progress");
+ let song = document.getElementById("song");
+ let ctrlIcon = document.getElementById("ctrlIcon");
+ let title = document.getElementById("title");
+ let description = document.getElementById("description");
+ let thumbnail = document.getElementById("thumbnail");
+
+ song.onloadedmetadata = function(){
+    progress.max = song.duration;
+    progress.value = song.currentTime;
+ }
+
+
+function loadSong(songNumber){
+    title.innerHTML = songData[songNumber].name;
+    description.innerHTML = songData[songNumber].desc;
+    thumbnail.src = songData[songNumber].thumbnail;
+    song.src = songData[songNumber].audio;
+ }
+
+ let songNumber = 0;
+ window.onload = loadSong(songNumber);
+
+ function nextSong(){
+    if(songNumber < songData.length-1){
+        songNumber++;
+    }else{
+        songNumber = 0;
+    }
+        loadSong(songNumber);
+        song.play();
+        ctrlIcon.classList.add("fa-pause");
+        ctrlIcon.classList.remove("fa-play");
     
-            <img src="https://cdn.pixabay.com/photo/2017/08/05/22/29/gorilla-2586193_1280.jpg" alt="LogoMusicImage">
-      
-            <div class="info">
-               <h1>Code<br>PodCast</h1>
-              <p>Banda OneBitMusic</p>
-            </div>
-      
-            </div>
-  
-            <div class="controls">
-              <div class="prev">
-      
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2.33917 13.7397L12.9664 7.38149C13.2293 7.22152 13.5303 7.13509 13.8381 7.13123C14.1458 7.12737 14.4489 7.20622 14.7157 7.35955C15.0053 7.52815 15.245 7.77036 15.4107 8.0616C15.5763 8.35284 15.6619 8.68272 15.6588 9.01775V13.4657L25.8274 7.3798C26.0903 7.21983 26.3914 7.13341 26.6991 7.12955C27.0068 7.12568 27.3099 7.20454 27.5768 7.35786C27.8663 7.52646 28.1061 7.76867 28.2717 8.05991C28.4373 8.35115 28.5229 8.68103 28.5198 9.01606V21.4512C28.5231 21.7863 28.4376 22.1163 28.2719 22.4077C28.1063 22.699 27.8664 22.9413 27.5768 23.1099C27.3099 23.2632 27.0068 23.3421 26.6991 23.3382C26.3914 23.3344 26.0903 23.2479 25.8274 23.088L15.6588 16.9993V21.4489C15.6625 21.7844 15.5771 22.1149 15.4114 22.4067C15.2458 22.6985 15.0057 22.9411 14.7157 23.1099C14.4489 23.2632 14.1458 23.3421 13.8381 23.3382C13.5303 23.3344 13.2293 23.2479 12.9664 23.088L2.33917 16.7298C2.08653 16.5715 1.87825 16.3516 1.73386 16.0908C1.58948 15.83 1.51373 15.5368 1.51373 15.2387C1.51373 14.9406 1.58948 14.6473 1.73386 14.3865C1.87825 14.1257 2.08653 13.9058 2.33917 13.7476V13.7397Z" fill="#E1E1E6"/>
-      </svg>
-      
-  
-      
-              </div>
-              <div class="play">
-      
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8.32137 25.586C7.9759 25.5853 7.63655 25.4948 7.33669 25.3232C6.66148 24.9406 6.24173 24.1978 6.24173 23.3915V7.07398C6.24173 6.26542 6.66148 5.52494 7.33669 5.14232C7.64369 4.96589 7.99244 4.87516 8.3465 4.87961C8.70056 4.88407 9.04692 4.98354 9.34938 5.16764L23.2952 13.5155C23.5859 13.6977 23.8255 13.9508 23.9916 14.251C24.1577 14.5511 24.2448 14.8886 24.2448 15.2316C24.2448 15.5747 24.1577 15.9121 23.9916 16.2123C23.8255 16.5125 23.5859 16.7655 23.2952 16.9478L9.34713 25.2979C9.0376 25.485 8.68307 25.5846 8.32137 25.586V25.586Z" fill="#E1E1E6"/>
-      </svg>
+ }
+ function previousSong(){
+    if(songNumber > 0){
+        songNumber--;
+    }
+    else{
+        songNumber = songData.length -1;
+    }
+        loadSong(songNumber);
+        song.play();
+        ctrlIcon.classList.add("fa-pause");
+        ctrlIcon.classList.remove("fa-play");
     
-                
-              </div>
-              <div class="next">
-      <svg width="29" height="30" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clip-path="url(#clip0_42_51)">
-      <path d="M27.1426 13.7397L16.5154 7.38149C16.2525 7.22152 15.9514 7.13509 15.6437 7.13123C15.336 7.12737 15.0329 7.20622 14.766 7.35955C14.4765 7.52815 14.2368 7.77036 14.0711 8.0616C13.9055 8.35284 13.8199 8.68272 13.823 9.01775V13.4657L3.65435 7.3798C3.39144 7.21983 3.0904 7.13341 2.78268 7.12955C2.47495 7.12568 2.17183 7.20454 1.905 7.35786C1.61547 7.52646 1.37571 7.76867 1.21008 8.05991C1.04445 8.35115 0.958845 8.68103 0.961955 9.01606V21.4512C0.958745 21.7863 1.0443 22.1163 1.20994 22.4076C1.37558 22.699 1.61538 22.9413 1.905 23.1099C2.17183 23.2632 2.47495 23.3421 2.78268 23.3382C3.0904 23.3344 3.39144 23.2479 3.65435 23.088L13.823 16.9993V21.4489C13.8194 21.7844 13.9048 22.1149 14.0704 22.4066C14.2361 22.6984 14.4761 22.9411 14.766 23.1099C15.0329 23.2632 15.336 23.3421 15.6437 23.3382C15.9514 23.3344 16.2525 23.2479 16.5154 23.088L27.1426 16.7298C27.3953 16.5715 27.6035 16.3516 27.7479 16.0908C27.8923 15.83 27.968 15.5368 27.968 15.2387C27.968 14.9406 27.8923 14.6473 27.7479 14.3865C27.6035 14.1257 27.3953 13.9058 27.1426 13.7476V13.7397Z" fill="#E1E1E6"/>
-      </g>
-      <defs>
-      <clipPath id="clip0_42_51">
-      <rect width="28.8089" height="28.8089" fill="white" transform="translate(0.0612183 0.828369)"/>
-      </clipPath>
-      </defs>
-      </svg>
-      
-    
-      
-              </div>
-            </div>
+ }
+
+function playPause(){
+    if(ctrlIcon.classList.contains("fa-pause")){
+        song.pause();
+        ctrlIcon.classList.remove("fa-pause");
+        ctrlIcon.classList.add("fa-play");
+    }
+    else{
+        song.play();
+        ctrlIcon.classList.add("fa-pause");
+        ctrlIcon.classList.remove("fa-play");
+    }
+}
+
+if(song.play()){
+    setInterval(()=>{
+        progress.value = song.currentTime;
+    },500);
+}
+
+progress.onchange = function(){
+    song.play();
+    song.currentTime = progress.value;
+    ctrlIcon.classList.add("fa-pause");
+    ctrlIcon.classList.remove("fa-play");
+}
 
 
+</script>
 
-         </div>
-        </div>    
-      </div>
 
-    </body>
-    </html>
-</body>
-</html>
-<!-- partial -->
-  
 </body>
 </html>
