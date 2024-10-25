@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IKUK - Main Page</title>
-    <link rel="icon" type="image/png" href="favicon.zip" sizes="48x48" />
-<link rel="icon" type="image/svg+xml" href="favicon.zip" />
-<link rel="shortcut icon" href="favicon.zip" />
-<link rel="apple-touch-icon" sizes="180x180" href="favicon.zip" />
-<link rel="manifest" href="favicon.zip" />
-
-    <script src="https://kit.fontawesome.com/28d9a85d09.js" crossorigin="anonymous"></script>
- <!-- Font Awesome Icons -->
+<html lang="en">
+  <head>
+     <meta charset="UTF-8">
+  <meta name="description" content="IKUK.org">
+  <meta name="keywords" content="randomizes good and authentic songs,  IKUK">
+  <meta name="author" content="Vera Titus and Genesis Erahbor">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IKUK.org</title>
+<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <!-- Font Awesome Icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -24,12 +22,13 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-      
+
     <header>
       <nav>
-          <img src="favicon.png" alt="Girl in a jacket" width="100" height="100">
+        <img src="favicon.png" alt="Girl in a jacket" width="100" height="100">
         <i class="fas fa-bars" id="ham-menu"></i>
         <ul id="nav-bar">
+          <p> >About site, IKUK, is a little project that randomizes good and authentic songs from you favourite artist and musician. d</p>
           <li>
             <a href="Music .html"><h1>Music</h1> </a>
           </li>
@@ -46,23 +45,26 @@
             <a href="Contact.html"><h1>Contact</h1></a>
           </li>
         </ul>
+
       </nav>
     </header>
- <section id="home">
-      <h1>IKUK</h1>
+    <section id="home">
+      <h1></h1>
     </section>
     <!-- Script -->
     <script src="script.js"></script>
       
-  <style>
-img {
+      <style>
+       
+  img {
   border-radius: 50%;
 }
 p {
   font: 
 }
-      
-    * {
+
+        
+          * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -165,14 +167,19 @@ nav ul.active {
     height: calc(100vh - 65.18px);
   }
 }
-      
-  
-  </style>
-</head>
-<body>
+         body { 
+  background-color: #0000FF;
+  background-image: url("WhatsApp_Image_2024-10-23_at_12.27.09_AM-removebg-preview.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; 
+  background-size: auto ;
+  background-stylewidth:100%;
+}
+      </style>
+      <script>
 
-<script>
-    let hamMenuIcon = document.getElementById("ham-menu");
+          let hamMenuIcon = document.getElementById("ham-menu");
 let navBar = document.getElementById("nav-bar");
 let navLinks = navBar.querySelectorAll("li");
 
@@ -186,11 +193,6 @@ navLinks.forEach((navLinks) => {
     hamMenuIcon.classList.toggle("fa-times");
   });
 });
-
-   
-
-</script>
-
-
-</body>
+      </script>
+  </body>
 </html>
