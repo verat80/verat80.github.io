@@ -10,7 +10,7 @@
 <div class="player">
     <div class="wrapper">
         <div class="details">
-            <div class="now-playing">PLAYING x OF y</div>
+            <div class="now-playing">PLAYING 1 OF 20</div>
             <div class="track-art"></div>
             <div class="track-name">Track Name</div>
             <div class="track-artist">Track Artist</div>
@@ -800,7 +800,7 @@ function loadTrack(track_index){
     curr_track.src = music_list[track_index].music;
     curr_track.load();
 
-    track_art.style.backgroundImage = "url(" + music_list[track_index].img + ")";
+    track_art.style.backgroundImage = " favicon.png";
     track_name.textContent = music_list[track_index].name;
     track_artist.textContent = music_list[track_index].artist;
     now_playing.textContent = "Playing music " + (track_index + 1) + " of " + music_list.length;
