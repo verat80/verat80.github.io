@@ -302,30 +302,470 @@ let isRandom = false;
 let updateTimer;
 
 const music_list = [
-    {
-        img : 'images/stay.png',
-        name : 'Stay',
-        artist : 'The Kid LAROI, Justin Bieber',
-        music : 'music/stay.mp3'
-    },
-    {
-        img : 'images/fallingdown.jpg',
-        name : 'Falling Down',
-        artist : 'Wid Cards',
-        music : 'music/fallingdown.mp3'
-    },
-    {
-        img : 'images/faded.png',
-        name : 'Faded',
-        artist : 'Alan Walker',
-        music : 'music/Faded.mp3'
-    },
-    {
-        img : 'images/ratherbe.jpg',
-        name : 'Rather Be',
-        artist : 'Clean Bandit',
-        music : 'music/Rather Be.mp3'
-    }
+   {
+            name: 'Do It Again',
+            desc: 'Elevation Worship',
+            audio: 'Do It Again _ Live _ Elevation Worship.mp3',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'We Believe',
+            desc: 'Elevation Worship ',
+            audio: 'Elevation - We Believe.mp3',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'Jehovah (feat. Chris Brown) ',
+            desc: 'Elevation Worship',
+            audio: 'Jehovah (feat. Chris Brown) _ Elevation Worship.mp3',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'Jireh',
+            desc: 'Elevation Worship',
+            audio: 'Jireh _ Elevation Worship & Maverick City.mp3',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'Praise ',
+            desc: 'Elevation Worship',
+            audio: 'Praise (feat. Brandon Lake, Chris Brown & Chandler Moore) _ Elevation Worship.mp3',
+            thumbnail: 'favicon.png'
+         },
+        
+         {
+            name: 'What A Miracle ',
+            desc: 'Elevation Worship',
+            audio: ' What A Miracle (Chris Brown & Leeland) _ Elevation Worship (1).mp3',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Hold On To Me',
+            desc: 'Lauren Daigle',
+            audio: 'Lauren Daigle - Hold On To Me (Official Music Video).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Look Up Child',
+            desc: 'Lauren Daigle',
+            audio: 'Lauren Daigle - Look Up Child (Audio).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Rescue',
+            desc: 'Lauren Daigle',
+            audio: 'Lauren Daigle - Rescue (Official Music Video).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+ {
+            name: 'You Say',
+            desc: 'Lauren Daigle ',
+            audio: 'Lauren Daigle - You Say (Official Music Video).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'At The Cross',
+            desc: 'Chris Tomlin',
+            audio: ' Chris Tomlin - At The Cross (Love Ran Red) (Lyrics & Chords).mp3',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'Good Good Father',
+            desc: 'Chris Tomlin',
+            audio: 'Chris Tomlin - Good Good Father (Audio).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+            {
+            name: 'Holy Forever',
+            desc: 'Chris Tomlin ',
+            audio: 'Chris Tomlin - Holy Forever (Lyric Video).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Hosanna ',
+            desc: 'Hillsong Worship',
+            audio: 'Hosanna - Hillsong Worship.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'How Great Is Our God',
+            desc: ' Chris Tomlin ',
+            audio: ' Chris Tomlin - How Great Is Our God (Lyrics And Chords).mp3',
+            thumbnail: 'favicon.png'
+         },
+       
+          {
+            name: 'In Control',
+            desc: 'Hillsong Worship',
+            audio: ' In Control - Hillsong Worship.mp3',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'What A Beautiful Name ',
+            desc: 'Hillsong Worship',
+            audio: ' What A Beautiful Name - Hillsong Worship.mp3',
+            thumbnail: 'favicon.png'
+         },
+           {
+            name: 'Seasons (Live)',
+            desc: ' Hillsong Worship',
+            audio: 'Seasons (Live) - Hillsong Worship.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'The Jesus Way',
+            desc: ' Phil Wickham',
+            audio: ' Phil Wickham - The Jesus Way (Official Music Video).mp3',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'This Is Amazing Grace',
+            desc: 'Phil Wickham',
+            audio: 'Phil Wickham - This Is Amazing Grace (Official Music Video).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'This Is Our God',
+            desc: 'Phil Wickham ',
+            audio: 'Phil Wickham - This Is Our God (Official Music Video).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+       {
+            name: 'Battle Belongs',
+            desc: 'Phil Wickham',
+            audio: ' Phil Wickham - Battle Belongs (Official Music Video).mp3',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: ' City of God ',
+            desc: 'Leeland',
+            audio: ' Leeland - City of God (Official Live Video).mp3',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Wait for You',
+            desc: 'Leeland ',
+            audio: ' Leeland - Wait for You (Official Live Video).mp3',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'Way Maker',
+            desc: 'Leeland',
+            audio: 'Leeland - Way Maker (Official Live Video).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'Where You Are',
+            desc: 'Leeland',
+            audio: ' Leeland - Where You Are (Official Live Video).mp3',
+            thumbnail: 'favicon.png'
+         },
+       {
+            name: 'Place In This World ',
+            desc: ' KING + COUNTRY & Michael ',
+            audio: 'for KING + COUNTRY & Michael W. Smith _ Place In This World (Recorded Live In Nashville) [ ezmp3.cc ].mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'God Only Knows',
+            desc: ' KING + COUNTRY ',
+            audio: 'for KING + COUNTRY - God Only Knows (Official Music Video) [ ezmp3.cc ].mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'burn the ships',
+            desc: 'KING + COUNTRY',
+            audio: 'for KING + COUNTRY - burn the ships (Official Music Video) [ ezmp3.cc ].mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'The Proof Of Your Love',
+            desc: 'KING + COUNTRY',
+            audio: ' for KING + COUNTRY - The Proof Of Your Love (Official Music Video) [ ezmp3.cc ].mp3',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Crazy People',
+            desc: ' Casting Crowns',
+            audio: ' Casting Crowns - Crazy People (Official Lyric Video) [ ezmp3.cc ].mp3',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Nobody',
+            desc: 'Casting Crowns ',
+            audio: ' Casting Crowns - Nobody (Official Music Video) ft. Matthew West.mp3',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Praise You In This Storm',
+            desc: 'Casting Crowns',
+            audio: 'Casting Crowns - Praise You In This Storm (Live from YouTube Space New York).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Who Am I',
+            desc: 'Casting Crowns',
+            audio: 'Casting Crowns - Who Am I (Official Lyric Video).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'I Am Mountain',
+            desc: 'Gungor',
+            audio: 'Gungor - I Am Mountain (Official Music Video).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Beautiful Thing',
+            desc: 'Gungor',
+            audio: 'Gungor Beautiful Things.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Please Be My Strength',
+            desc: 'Gungor',
+            audio: 'Gungor Please Be My Strength.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Yahweh',
+            desc: 'The Brilliance',
+            audio: 'The Brilliance - Yahweh [LYRICS].mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Breathe',
+            desc: 'The Brilliance',
+            audio: 'Breathe - The Brilliance w_ Lyrics.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Our God Alone',
+            desc: 'The Brilliance',
+            audio: 'Our God Alone _ The Brilliance.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Show Us the King',
+            desc: 'The Brilliance',
+            audio: 'Show Us the King.mp3',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'I ll Keep On',
+            desc: ' NF ',
+            audio: 'NF - I ll Keep On (Audio) ft. Jeremiah Carlson.mp3',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Oh Lord',
+            desc: 'NF',
+            audio: 'NF - Oh Lord (Audio).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Wake Up',
+            desc: 'NF',
+            audio: 'NF - Wake Up.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Start Over',
+            desc: 'NF',
+            audio: 'Start Over - FLAME feat. NF - Official Video.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Dead Man',
+            desc: 'Jeremy Camp',
+            audio: ' Jeremy Camp - Dead Man Walking.mp3',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Getting Started',
+            desc: 'Jeremy Camp ',
+            audio: ' Jeremy Camp - Getting Started (Music Video).mp3',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'I Still Believe ',
+            desc: 'Jeremy Camp',
+            audio: ' Jeremy Camp - I Still Believe (Music Video).mp3',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Whatever May Come',
+            desc: 'Jeremy Camp',
+            audio: 'Jeremy Camp, Adrienne Camp - Whatever May Come.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: ' Feel It',
+            desc: 'TobyMac',
+            audio: ' TobyMac - Feel It ft. Mr. TalkBox.mp3',
+            thumbnail: 'favicon.png'
+         },
+                  {
+            name: 'Help Is On The Way',
+            desc: 'TobyMac',
+            audio: 'TobyMac - Help Is On The Way (Maybe Midnight).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: ' I just need U',
+            desc: 'TobyMac ',
+            audio: 'TobyMac - I just need U..mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Made To Love',
+            desc: 'TobyMac',
+            audio: 'TobyMac - Made To Love (Lyric Video).mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Glorious Day',
+            desc: ' Kristian Stanfill',
+            audio: 'Passion - Glorious Day (Live) ft. Kristian Stanfill.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Even So Come',
+            desc: ' Kristian Stanfill',
+            audio: ' Passion ft. Kristian Stanfill - Even So Come (Live).mp3',
+            thumbnail: 'favicon.png'
+         },
+                  {
+            name: ' God, Youre So Good',
+            desc: 'Kristian Stanfill',
+            audio: ' Passion, Kristian Stanfill - God, Youre So Good (Live) ft. Melodie Malone.mp3',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Did You Feel the Mountains Tremble',
+            desc: 'Kristian Stanfill ',
+            audio: 'Did You Feel the Mountains Tremble_  Kristian Stanfill  Worship Circle FOUNDATIONS.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Abide With Me',
+            desc: 'Audrey Assad',
+            audio: 'Abide With Me - Audrey Assad.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Be Thou My Vision',
+            desc: 'Audrey Assad',
+            audio: 'Be Thou My Vision - Audrey Assad.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'It Is Well With My Soul',
+            desc: 'Audrey Assad',
+            audio: ' noname.mp3',
+            thumbnail: 'favicon.png'
+         },
+                  {
+            name: 'I Shall Not Want',
+            desc: 'Audrey Assad',
+            audio: 'I Shall Not Want.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Fall On Me',
+            desc: 'NEEDTOBREATHE',
+            audio: 'NEEDTOBREATHE - Fall On Me (feat. Carly Pearce) [Official Music Video].mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Multiplied',
+            desc: 'NEEDTOBREATHE',
+            audio: ' NEEDTOBREATHE - Multiplied [Official Video].mp3',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'The Heart',
+            desc: 'NEEDTOBREATHE',
+            audio: 'NEEDTOBREATHE - The Heart [Official Video].mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Who Am I',
+            desc: 'NEEDTOBREATHE',
+            audio: 'NEEDTOBREATHE - Who Am I [Official Video].mp3 ',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'Jerusalem',
+            desc: 'Aaron Shust',
+            audio: 'Jerusalem [Official Lyric Video].mp3 ',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Shadow of Shaddai',
+            desc: 'Aaron Shust',
+            audio: ' Aaron Shust - Shadow of Shaddai (Psalm 91) [Audio Video].mp3',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'ZION',
+            desc: 'Aaron Shust',
+            audio: 'ZION [Official Lyric Video].mp3 ',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'Majestic',
+            desc: 'Aaron Shust',
+            audio: ' Majestic (Psalm 8) [Official Lyric Video].mp3',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Heart Wont Stop  Stand By Me',
+            desc: 'John Mark McMillan',
+            audio: ' John Mark McMillan - Heart Wont Stop  Stand By Me (MedleyLive).mp3',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Christ Jesus ',
+            desc: ' John Mark McMillan',
+            audio: ' Christ Jesus  John Mark McMillan  Official Homemade Lyric Video.mp3',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: 'How He Loves',
+            desc: 'John Mark McMillan',
+            audio: ' How He Loves - Live Performance Video.mp3',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: ' Death In His Grave',
+            desc: 'John Mark McMillan',
+            audio: ' John Mark McMillan - Death In His Grave (Live) ft. Bryan Torwalt.mp3',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: 'Father',
+            desc: 'Jason Lavik',
+            audio: 'Jason Lavik - Father.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+        {
+            name: ' I have decided to follow Jesus',
+            desc: 'Jadon Lavik',
+            audio: 'Jadon Lavik - I have decided to follow Jesus  - Music Video.mp3',
+            thumbnail: 'favicon.png'
+         },
+         {
+            name: 'Come Thou Fount',
+            desc: 'Jadon Lavik',
+            audio: 'Come Thou Fount.mp3 ',
+            thumbnail: 'favicon.png'
+         },
+          {
+            name: ' I Surrender All.',
+            desc: 'Jadon Lavik',
+            audio: ' I Surrender All.mp3',
+            thumbnail: 'favicon.png'
+         },
 ];
 
 loadTrack(track_index);
