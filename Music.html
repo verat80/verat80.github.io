@@ -6,908 +6,359 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IKUK - Music Player</title>
     <script src="https://kit.fontawesome.com/28d9a85d09.js" crossorigin="anonymous"></script>
-    
-<div class="player">
-    <div class="wrapper">
-        <div class="details">
-            <div class="now-playing">PLAYING 1 OF 20</div>
-            <div class="track-art"></div>
-            <div class="track-name">Track Name</div>
-            <div class="track-artist">Track Artist</div>
+    <div class="player">
+        <div class="cover">
+            <img src="https://hosseinghanbari.ir/other/music-player/autumn.jpg" alt="">
         </div>
-
-        <div class="slider_container">
-            <div class="current-time">00:00</div>
-
-            <div class="total-duration">00:00</div>
+        <div class="info">
+            <div class="title">Autumn</div>
+            <div class="singer">Instrumental Music</div>
         </div>
-
-        <div class="slider_container">
-            <i class="fa fa-volume-down"></i>
-
-            <i class="fa fa-volume-up"></i>
+        <div class="volume-box">
+            <span class="volume-down"><i class="material-icons">remove</i></span>
+            <input type="range" class="volume-range" step="1" value="80" min="0" max="100"
+                oninput="music.volume = this.value/100">
+            <span class="volume-up"><i class="material-icons">add</i></span>
         </div>
-
-        <div class="buttons">
-            <div class="random-track">
-                <i class="fas fa-random fa-2x" title="random"></i>
-            </div>
-            <div class="prev-track">
-                <i class="fa fa-step-backward fa-2x"></i>
-            </div>
-            <div class="playpause-track">
-                <i class="fa fa-play-circle fa-5x"></i>
-            </div>
-            <div class="next-track">
-                <i class="fa fa-step-forward fa-2x"></i>
-            </div>
-            <div class="repeat-track">
-                <i class="fa fa-repeat fa-2x" title="repeat"></i>
-            </div>
+        <div class="btn-box">
+            <i class="material-icons repeat" onclick="handleRepeat()">repeat</i>
+            <i class="material-icons favorite active" onclick="handleFavorite()">favorite</i>
+            <i class="material-icons volume" onclick="handleVolume()">volume_up</i>
         </div>
+        <div class="music-box">
+            <input type="range" step="1" class="seekbar" value="0" min="0" max="100" oninput="handleSeekBar()">
 
-        <div id="wave">
-            <span class="stroke"></span>
-            <span class="stroke"></span>
-            <span class="stroke"></span>
-            <span class="stroke"></span>
-            <span class="stroke"></span>
-            <span class="stroke"></span>
-            <span class="stroke"></span>
+            <audio class="music-element">
+                <source src="https://hosseinghanbari.ir/other/music-player/autumn.mp3" type="audio/mp3">
+            </audio>
+            <span class="current-time">0:0</span><span class="duration">0:0</span>
+            <span class="play" onclick="handlePlay()">
+                <i class="material-icons">play_arrow</i>
+            </span>
         </div>
     </div>
-</div>
-  
-  <style>
-* {
+
+    <style>
+        html,
+body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-
+  height: 100%;
+  background-color: #f5e0e5;
+  background-image: linear-gradient(45deg, #ff9b9c 0%, #ffd4a7 100%);
+  position: relative;
+  font-family: "Roboto", sans-serif;
 }
-
-body {
-
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  background-color: gray;
+*::selection {
+  background-color: unset;
 }
 
 .player {
-  height: 95vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-}
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 330px;
+  height: 530px;
+  border-radius: 15px;
+  background-color: #fff6e7;
+  box-shadow: 0 15px 20px 0 #c58371;
 
-.wrapper {
-  border: 1px solid transparent;
-  padding: 30px;
-  border-radius: 20px;
-  background-color: #ddd;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-  background: transparent;
-  /* opacity: .9; */
-}
-
-.details {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.track-art {
-  margin: 25px;
-  height: 250px;
-  width: 250px;
-  border: 2px solid #FFFAFA;
-  background-size: cover;
-  background-position: center;
-  border-radius: 50%;
-  -moz-box-shadow: 0px 6px 5px black;
-  -webkit-box-shadow: 0px 6px 5px black;
-  box-shadow: 0px 6px 5px black;
-  -moz-border-radius: 190px;
-  -webkit-border-radius: 190px;
-  border-radius: 190px;
-}
-
-.now-playing {
-  font-size: 1rem;
-}
-
-.track-name {
-  font-size: 2.5rem;
-}
-
-.track-artist {
-  margin-top: 5px;
-  font-size: 1.5rem;
-}
-
-.buttons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.active {
-  color: black;
-}
-
-.repeat-track,
-.random-track,
-.playpause-track,
-.prev-track,
-.next-track {
-  padding: 25px;
-  opacity: 0.8;
-  transition: opacity .2s;
-}
-
-.repeat-track:hover,
-.random-track:hover,
-.playpause-track:hover,
-.prev-track:hover,
-.next-track:hover {
-  opacity: 1.0;
-}
-
-.slider_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.seek_slider,
-.volume_slider {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  height: 5px;
-  background: #83A9FF;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-.seek_slider::-webkit-slider-thumb,
-.volume_slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 15px;
-  height: 15px;
-  background: white;
-  border: 3px solid #3774FF;
-  cursor: grab;
-  border-radius: 100%;
-}
-
-.seek_slider:hover,
-.volume_slider:hover {
-  opacity: 1.0;
-}
-
-.seek_slider {
-  width: 60%;
-}
-
-.volume_slider {
-  width: 30%;
-}
-
-.current-time,
-.total-duration {
-  padding: 10px;
-}
-
-i.fa-volume-down,
-i.fa-volume-up {
-  padding: 10px;
-}
-
-i,
-i.fa-play-circle,
-i.fa-pause-circle,
-i.fa-step-forward,
-i.fa-step-backward,
-p {
-  cursor: pointer;
-}
-
-.randomActive {
-  color: black;
-}
-
-.rotate {
-  animation: rotation 8s infinite linear;
-}
-
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
+  input[type="range"] {
+    -webkit-appearance: none !important;
+    margin: 0px;
+    padding: 0px;
+    background: #f2eae4;
+    height: 5px;
+    width: 150px;
+    outline: none;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 5px;
   }
 
-  to {
-    transform: rotate(359deg);
-  }
-}
-
-.loader {
-  height: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loader .stroke {
-  background: #f1f1f1;
-  height: 150%;
-  width: 10px;
-  border-radius: 50px;
-  margin: 0 5px;
-  animation: animate 1.4s linear infinite;
-}
-
-@keyframes animate {
-  50% {
-    height: 20%;
-    background: #4286f4;
+  input[type="range"]::-ms-fill-lower {
+    background: #f2eae4;
   }
 
-  100% {
-    background: #4286f4;
-    height: 100%;
+  input[type="range"]::-ms-fill-upper {
+    background: #f2eae4;
   }
-}
 
-.stroke:nth-child(1) {
-  animation-delay: 0s;
-}
+  input[type="range"]::-moz-range-track {
+    border: none;
+    background: #f2eae4;
+  }
 
-.stroke:nth-child(2) {
-  animation-delay: 0.3s;
-}
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    background: #ff3677;
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    box-shadow: -100vw 0 0 100vw #f7d9b9;
+  }
 
-.stroke:nth-child(3) {
-  animation-delay: 0.6s;
-}
+  input[type="range"]::-moz-range-thumb {
+    background: #ff3677;
+    height: 8px;
+    width: 8px;
+    border-radius: 100%;
+  }
 
-.stroke:nth-child(4) {
-  animation-delay: 0.9s;
-}
+  input[type="range"]::-ms-thumb {
+    -webkit-appearance: none !important;
+    background: #ff3677;
+    height: 8px;
+    width: 8px;
+    border-radius: 100%;
+  }
 
-.stroke:nth-child(5) {
-  animation-delay: 0.6s;
-}
+  .cover {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    top: 50px;
+    transform: translateX(-50%);
+    box-shadow: 0 5px 20px 0 #d56c006d;
 
-.stroke:nth-child(6) {
-  animation-delay: 0.3s;
-}
-
-.stroke:nth-child(7) {
-  animation-delay: 0s;
-}
-
-  </style>
-</head>
-<body>
-
-    
-
-    <script>
-
-   let now_playing = document.querySelector('.now-playing');
-let track_art = document.querySelector('.track-art');
-let track_name = document.querySelector('.track-name');
-let track_artist = document.querySelector('.track-artist');
-
-let playpause_btn = document.querySelector('.playpause-track');
-let next_btn = document.querySelector('.next-track');
-let prev_btn = document.querySelector('.prev-track');
-
-let seek_slider = document.querySelector('.seek_slider');
-let volume_slider = document.querySelector('.volume_slider');
-let curr_time = document.querySelector('.current-time');
-let total_duration = document.querySelector('.total-duration');
-let wave = document.getElementById('wave');
-let randomIcon = document.querySelector('.fa-random');
-let curr_track = document.createElement('audio');
-
-let track_index = 0;
-let isPlaying = false;
-let isRandom = false;
-let updateTimer;
-
-const music_list = [
-    {
-            name: 'Do It Again',
-            desc: 'Elevation Worship',
-            audio: 'Do It Again _ Live _ Elevation Worship.mp3',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'We Believe',
-            desc: 'Elevation Worship ',
-            audio: 'Elevation - We Believe.mp3',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'Jehovah (feat. Chris Brown) ',
-            desc: 'Elevation Worship',
-            audio: 'Jehovah (feat. Chris Brown) _ Elevation Worship.mp3',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'Jireh',
-            desc: 'Elevation Worship',
-            audio: 'Jireh _ Elevation Worship & Maverick City.mp3',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'Praise ',
-            desc: 'Elevation Worship',
-            audio: 'Praise (feat. Brandon Lake, Chris Brown & Chandler Moore) _ Elevation Worship.mp3',
-            thumbnail: 'favicon.png'
-         },
-        
-         {
-            name: 'What A Miracle ',
-            desc: 'Elevation Worship',
-            audio: ' What A Miracle (Chris Brown & Leeland) _ Elevation Worship (1).mp3',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Hold On To Me',
-            desc: 'Lauren Daigle',
-            audio: 'Lauren Daigle - Hold On To Me (Official Music Video).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Look Up Child',
-            desc: 'Lauren Daigle',
-            audio: 'Lauren Daigle - Look Up Child (Audio).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Rescue',
-            desc: 'Lauren Daigle',
-            audio: 'Lauren Daigle - Rescue (Official Music Video).mp3 ',
-            thumbnail: 'favicon.png'
-         },
- {
-            name: 'You Say',
-            desc: 'Lauren Daigle ',
-            audio: 'Lauren Daigle - You Say (Official Music Video).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'At The Cross',
-            desc: 'Chris Tomlin',
-            audio: ' Chris Tomlin - At The Cross (Love Ran Red) (Lyrics & Chords).mp3',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'Good Good Father',
-            desc: 'Chris Tomlin',
-            audio: 'Chris Tomlin - Good Good Father (Audio).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-            {
-            name: 'Holy Forever',
-            desc: 'Chris Tomlin ',
-            audio: 'Chris Tomlin - Holy Forever (Lyric Video).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Hosanna ',
-            desc: 'Hillsong Worship',
-            audio: 'Hosanna - Hillsong Worship.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'How Great Is Our God',
-            desc: ' Chris Tomlin ',
-            audio: ' Chris Tomlin - How Great Is Our God (Lyrics And Chords).mp3',
-            thumbnail: 'favicon.png'
-         },
-       
-          {
-            name: 'In Control',
-            desc: 'Hillsong Worship',
-            audio: ' In Control - Hillsong Worship.mp3',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'What A Beautiful Name ',
-            desc: 'Hillsong Worship',
-            audio: ' What A Beautiful Name - Hillsong Worship.mp3',
-            thumbnail: 'favicon.png'
-         },
-           {
-            name: 'Seasons (Live)',
-            desc: ' Hillsong Worship',
-            audio: 'Seasons (Live) - Hillsong Worship.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'The Jesus Way',
-            desc: ' Phil Wickham',
-            audio: ' Phil Wickham - The Jesus Way (Official Music Video).mp3',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'This Is Amazing Grace',
-            desc: 'Phil Wickham',
-            audio: 'Phil Wickham - This Is Amazing Grace (Official Music Video).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'This Is Our God',
-            desc: 'Phil Wickham ',
-            audio: 'Phil Wickham - This Is Our God (Official Music Video).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-       {
-            name: 'Battle Belongs',
-            desc: 'Phil Wickham',
-            audio: ' Phil Wickham - Battle Belongs (Official Music Video).mp3',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: ' City of God ',
-            desc: 'Leeland',
-            audio: ' Leeland - City of God (Official Live Video).mp3',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Wait for You',
-            desc: 'Leeland ',
-            audio: ' Leeland - Wait for You (Official Live Video).mp3',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'Way Maker',
-            desc: 'Leeland',
-            audio: 'Leeland - Way Maker (Official Live Video).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'Where You Are',
-            desc: 'Leeland',
-            audio: ' Leeland - Where You Are (Official Live Video).mp3',
-            thumbnail: 'favicon.png'
-         },
-       {
-            name: 'Place In This World ',
-            desc: ' KING + COUNTRY & Michael ',
-            audio: 'for KING + COUNTRY & Michael W. Smith _ Place In This World (Recorded Live In Nashville) [ ezmp3.cc ].mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'God Only Knows',
-            desc: ' KING + COUNTRY ',
-            audio: 'for KING + COUNTRY - God Only Knows (Official Music Video) [ ezmp3.cc ].mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'burn the ships',
-            desc: 'KING + COUNTRY',
-            audio: 'for KING + COUNTRY - burn the ships (Official Music Video) [ ezmp3.cc ].mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'The Proof Of Your Love',
-            desc: 'KING + COUNTRY',
-            audio: ' for KING + COUNTRY - The Proof Of Your Love (Official Music Video) [ ezmp3.cc ].mp3',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Crazy People',
-            desc: ' Casting Crowns',
-            audio: ' Casting Crowns - Crazy People (Official Lyric Video) [ ezmp3.cc ].mp3',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Nobody',
-            desc: 'Casting Crowns ',
-            audio: ' Casting Crowns - Nobody (Official Music Video) ft. Matthew West.mp3',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Praise You In This Storm',
-            desc: 'Casting Crowns',
-            audio: 'Casting Crowns - Praise You In This Storm (Live from YouTube Space New York).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Who Am I',
-            desc: 'Casting Crowns',
-            audio: 'Casting Crowns - Who Am I (Official Lyric Video).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'I Am Mountain',
-            desc: 'Gungor',
-            audio: 'Gungor - I Am Mountain (Official Music Video).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Beautiful Thing',
-            desc: 'Gungor',
-            audio: 'Gungor Beautiful Things.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Please Be My Strength',
-            desc: 'Gungor',
-            audio: 'Gungor Please Be My Strength.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Yahweh',
-            desc: 'The Brilliance',
-            audio: 'The Brilliance - Yahweh [LYRICS].mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Breathe',
-            desc: 'The Brilliance',
-            audio: 'Breathe - The Brilliance w_ Lyrics.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Our God Alone',
-            desc: 'The Brilliance',
-            audio: 'Our God Alone _ The Brilliance.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Show Us the King',
-            desc: 'The Brilliance',
-            audio: 'Show Us the King.mp3',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'I ll Keep On',
-            desc: ' NF ',
-            audio: 'NF - I ll Keep On (Audio) ft. Jeremiah Carlson.mp3',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Oh Lord',
-            desc: 'NF',
-            audio: 'NF - Oh Lord (Audio).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Wake Up',
-            desc: 'NF',
-            audio: 'NF - Wake Up.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Start Over',
-            desc: 'NF',
-            audio: 'Start Over - FLAME feat. NF - Official Video.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Dead Man',
-            desc: 'Jeremy Camp',
-            audio: ' Jeremy Camp - Dead Man Walking.mp3',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Getting Started',
-            desc: 'Jeremy Camp ',
-            audio: ' Jeremy Camp - Getting Started (Music Video).mp3',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'I Still Believe ',
-            desc: 'Jeremy Camp',
-            audio: ' Jeremy Camp - I Still Believe (Music Video).mp3',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Whatever May Come',
-            desc: 'Jeremy Camp',
-            audio: 'Jeremy Camp, Adrienne Camp - Whatever May Come.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: ' Feel It',
-            desc: 'TobyMac',
-            audio: ' TobyMac - Feel It ft. Mr. TalkBox.mp3',
-            thumbnail: 'favicon.png'
-         },
-                  {
-            name: 'Help Is On The Way',
-            desc: 'TobyMac',
-            audio: 'TobyMac - Help Is On The Way (Maybe Midnight).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: ' I just need U',
-            desc: 'TobyMac ',
-            audio: 'TobyMac - I just need U..mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Made To Love',
-            desc: 'TobyMac',
-            audio: 'TobyMac - Made To Love (Lyric Video).mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Glorious Day',
-            desc: ' Kristian Stanfill',
-            audio: 'Passion - Glorious Day (Live) ft. Kristian Stanfill.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Even So Come',
-            desc: ' Kristian Stanfill',
-            audio: ' Passion ft. Kristian Stanfill - Even So Come (Live).mp3',
-            thumbnail: 'favicon.png'
-         },
-                  {
-            name: ' God, Youre So Good',
-            desc: 'Kristian Stanfill',
-            audio: ' Passion, Kristian Stanfill - God, Youre So Good (Live) ft. Melodie Malone.mp3',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Did You Feel the Mountains Tremble',
-            desc: 'Kristian Stanfill ',
-            audio: 'Did You Feel the Mountains Tremble_  Kristian Stanfill  Worship Circle FOUNDATIONS.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Abide With Me',
-            desc: 'Audrey Assad',
-            audio: 'Abide With Me - Audrey Assad.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Be Thou My Vision',
-            desc: 'Audrey Assad',
-            audio: 'Be Thou My Vision - Audrey Assad.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'It Is Well With My Soul',
-            desc: 'Audrey Assad',
-            audio: ' noname.mp3',
-            thumbnail: 'favicon.png'
-         },
-                  {
-            name: 'I Shall Not Want',
-            desc: 'Audrey Assad',
-            audio: 'I Shall Not Want.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Fall On Me',
-            desc: 'NEEDTOBREATHE',
-            audio: 'NEEDTOBREATHE - Fall On Me (feat. Carly Pearce) [Official Music Video].mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Multiplied',
-            desc: 'NEEDTOBREATHE',
-            audio: ' NEEDTOBREATHE - Multiplied [Official Video].mp3',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'The Heart',
-            desc: 'NEEDTOBREATHE',
-            audio: 'NEEDTOBREATHE - The Heart [Official Video].mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Who Am I',
-            desc: 'NEEDTOBREATHE',
-            audio: 'NEEDTOBREATHE - Who Am I [Official Video].mp3 ',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'Jerusalem',
-            desc: 'Aaron Shust',
-            audio: 'Jerusalem [Official Lyric Video].mp3 ',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Shadow of Shaddai',
-            desc: 'Aaron Shust',
-            audio: ' Aaron Shust - Shadow of Shaddai (Psalm 91) [Audio Video].mp3',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'ZION',
-            desc: 'Aaron Shust',
-            audio: 'ZION [Official Lyric Video].mp3 ',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'Majestic',
-            desc: 'Aaron Shust',
-            audio: ' Majestic (Psalm 8) [Official Lyric Video].mp3',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Heart Wont Stop  Stand By Me',
-            desc: 'John Mark McMillan',
-            audio: ' John Mark McMillan - Heart Wont Stop  Stand By Me (MedleyLive).mp3',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Christ Jesus ',
-            desc: ' John Mark McMillan',
-            audio: ' Christ Jesus  John Mark McMillan  Official Homemade Lyric Video.mp3',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: 'How He Loves',
-            desc: 'John Mark McMillan',
-            audio: ' How He Loves - Live Performance Video.mp3',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: ' Death In His Grave',
-            desc: 'John Mark McMillan',
-            audio: ' John Mark McMillan - Death In His Grave (Live) ft. Bryan Torwalt.mp3',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: 'Father',
-            desc: 'Jason Lavik',
-            audio: 'Jason Lavik - Father.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-        {
-            name: ' I have decided to follow Jesus',
-            desc: 'Jadon Lavik',
-            audio: 'Jadon Lavik - I have decided to follow Jesus  - Music Video.mp3',
-            thumbnail: 'favicon.png'
-         },
-         {
-            name: 'Come Thou Fount',
-            desc: 'Jadon Lavik',
-            audio: 'Come Thou Fount.mp3 ',
-            thumbnail: 'favicon.png'
-         },
-          {
-            name: ' I Surrender All.',
-            desc: 'Jadon Lavik',
-            audio: ' I Surrender All.mp3',
-            thumbnail: 'favicon.png'
-         },
-
-
-];
-
-loadTrack(track_index);
-
-function loadTrack(track_index){
-    clearInterval(updateTimer);
-    reset();
-
-    curr_track.src = music_list[track_index].music;
-    curr_track.load();
-
-    track_art.style.backgroundImage = " favicon.png";
-    track_name.textContent = music_list[track_index].name;
-    track_artist.textContent = music_list[track_index].artist;
-    now_playing.textContent = "Playing music " + (track_index + 1) + " of " + music_list.length;
-
-    updateTimer = setInterval(setUpdate, 1000);
-
-    curr_track.addEventListener('ended', nextTrack);
-    random_bg_color();
-}
-
-function random_bg_color(){
-    let hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e'];
-    let a;
-
-    function populate(a){
-        for(let i=0; i&lt;6; i++){
-            let x = Math.round(Math.random() * 14);
-            let y = hex[x];
-            a += y;
-        }
-        return a;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-    let Color1 = populate(&#039;#&#039;);
-    let Color2 = populate(&#039;#&#039;);
-    var angle = &#039;to right&#039;;
+  }
 
-    let gradient = &#039;linear-gradient(&#039; + angle + &#039;,&#039; + Color1 + &#039;, &#039; + Color2 + &quot;)&quot;;
-    document.body.style.background = gradient;
-}
-function reset(){
-    curr_time.textContent = &quot;00:00&quot;;
-    total_duration.textContent = &quot;00:00&quot;;
-    seek_slider.value = 0;
-}
-function randomTrack(){
-    isRandom ? pauseRandom() : playRandom();
-}
-function playRandom(){
-    isRandom = true;
-    randomIcon.classList.add(&#039;randomActive&#039;);
-}
-function pauseRandom(){
-    isRandom = false;
-    randomIcon.classList.remove(&#039;randomActive&#039;);
-}
-function repeatTrack(){
-    let current_index = track_index;
-    loadTrack(current_index);
-    playTrack();
-}
-function playpauseTrack(){
-    isPlaying ? pauseTrack() : playTrack();
-}
-function playTrack(){
-    curr_track.play();
-    isPlaying = true;
-    track_art.classList.add(&#039;rotate&#039;);
-    wave.classList.add(&#039;loader&#039;);
-    playpause_btn.innerHTML = &#039;<i class="fa fa-pause-circle fa-5x"></i>';
-}
-function pauseTrack(){
-    curr_track.pause();
-    isPlaying = false;
-    track_art.classList.remove('rotate');
-    wave.classList.remove('loader');
-    playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
-}
-function nextTrack(){
-    if(track_index &lt; music_list.length - 1 &amp;&amp; isRandom === false){
-        track_index += 1;
-    }else if(track_index  0){
-        track_index -= 1;
-    }else{
-        track_index = music_list.length -1;
+  .info {
+    position: absolute;
+    left: 50%;
+    top: 240px;
+    transform: translateX(-50%);
+    text-align: center;
+
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #444;
+      margin-bottom: 2px;
     }
-    loadTrack(track_index);
-    playTrack();
-}
-function seekTo(){
-    let seekto = curr_track.duration * (seek_slider.value / 100);
-    curr_track.currentTime = seekto;
-}
-function setVolume(){
-    curr_track.volume = volume_slider.value / 100;
-}
-function setUpdate(){
-    let seekPosition = 0;
-    if(!isNaN(curr_track.duration)){
-        seekPosition = curr_track.currentTime * (100 / curr_track.duration);
-        seek_slider.value = seekPosition;
 
-        let currentMinutes = Math.floor(curr_track.currentTime / 60);
-        let currentSeconds = Math.floor(curr_track.currentTime - currentMinutes * 60);
-        let durationMinutes = Math.floor(curr_track.duration / 60);
-        let durationSeconds = Math.floor(curr_track.duration - durationMinutes * 60);
+    .singer {
+      font-size: 12px;
+      color: #72646f;
+    }
+  }
 
-        if(currentSeconds &lt; 10) {currentSeconds = &quot;0&quot; + currentSeconds; }
-        if(durationSeconds &lt; 10) { durationSeconds = &quot;0&quot; + durationSeconds; }
-        if(currentMinutes &lt; 10) {currentMinutes = &quot;0&quot; + currentMinutes; }
-        if(durationMinutes &lt; 10) { durationMinutes = &quot;0&quot; + durationMinutes; }
+  .btn-box {
+    position: absolute;
+    top: 330px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 
-        curr_time.textContent = currentMinutes + &quot;:&quot; + currentSeconds;
-        total_duration.textContent = durationMinutes + &quot;:&quot; + durationSeconds;
+    i {
+      font-size: 24px;
+      color: #72646f;
+      margin: 0 30px;
+      cursor: pointer;
+    }
+    i.active {
+      color: #ff3677;
+    }
+  }
+
+  .volume-box {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 295px;
+    transform: translateX(-50%);
+    z-index: 1;
+    padding: 0 20px;
+
+    .volume-down {
+      position: absolute;
+      left: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #72646f;
+    }
+
+    .volume-up {
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #72646f;
+    }
+
+    .volume-up::selection {
+      background-color: unset;
+    }
+
+    input[type="range"] {
+      height: 5px;
+      width: 150px;
+      margin: 0 0 15px 0;
+    }
+  }
+  .volume-box.active {
+    display: block;
+  }
+  .music-box {
+    position: absolute;
+    left: 50%;
+    top: 385px;
+    transform: translateX(-50%);
+
+    input[type="range"] {
+      height: 5px;
+      width: 230px;
+      margin: 0 0 10px 0;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      height: 5px;
+      width: 7px;
+    }
+    .current-time {
+      position: absolute;
+      left: -35px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      color: #72646f;
+    }
+    .duration {
+      position: absolute;
+      right: -35px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      color: #72646f;
+    }
+    .play,
+    .pause {
+      position: absolute;
+      left: 50%;
+      top: 55px;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      background-color: #fff6e7;
+      cursor: pointer;
+      transition: all 0.4s;
+
+      i {
+        font-size: 36px;
+        color: #72646f;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-48%, -50%);
+      }
+    }
+    .pause {
+      i {
+        font-size: 32px;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}
+
+    </style>     
+
+
+<script>
+    // player
+var music = document.querySelector('.music-element')
+var playBtn = document.querySelector('.play')
+var seekbar = document.querySelector('.seekbar')
+var currentTime = document.querySelector('.current-time')
+var duration = document.querySelector('.duration')
+
+function handlePlay() {
+    if (music.paused) {
+        music.play();
+        playBtn.className = 'pause'
+        playBtn.innerHTML = '<i class="material-icons">pause</i>'
+    } else {
+        music.pause();
+        playBtn.className = 'play'
+        playBtn.innerHTML = '<i class="material-icons">play_arrow</i>'
+    }
+    music.addEventListener('ended', function () {
+        playBtn.className = 'play'
+        playBtn.innerHTML = '<i class="material-icons">play_arrow</i>'
+        music.currentTime = 0
+    });
+}
+
+music.onloadeddata = function () {
+    seekbar.max = music.duration
+    var ds = parseInt(music.duration % 60)
+    var dm = parseInt((music.duration / 60) % 60)
+    duration.innerHTML = dm + ':' + ds
+}
+music.ontimeupdate = function () { seekbar.value = music.currentTime }
+handleSeekBar = function () { music.currentTime = seekbar.value }
+music.addEventListener('timeupdate', function () {
+    var cs = parseInt(music.currentTime % 60)
+    var cm = parseInt((music.currentTime / 60) % 60)
+    currentTime.innerHTML = cm + ':' + cs
+}, false)
+
+
+// like
+var favIcon = document.querySelector('.favorite')
+function handleFavorite() {
+    favIcon.classList.toggle('active');
+}
+
+
+// repeat
+var repIcon = document.querySelector('.repeat')
+function handleRepeat() {
+    if (music.loop == true) {
+        music.loop = false
+        repIcon.classList.toggle('active')
+    }
+    else {
+        music.loop = true
+        repIcon.classList.toggle('active')
     }
 }
 
+// volume
+var volIcon = document.querySelector('.volume')
+var volBox = document.querySelector('.volume-box')
+var volumeRange = document.querySelector('.volume-range')
+var volumeDown = document.querySelector('.volume-down')
+var volumeUp = document.querySelector('.volume-up')
 
+function handleVolume() {
+    volIcon.classList.toggle('active')
+    volBox.classList.toggle('active')
+}
+
+volumeDown.addEventListener('click', handleVolumeDown);
+volumeUp.addEventListener('click', handleVolumeUp);
+
+function handleVolumeDown() {
+    volumeRange.value = Number(volumeRange.value) - 20
+    music.volume = volumeRange.value / 100
+}
+function handleVolumeUp() {
+    volumeRange.value = Number(volumeRange.value) + 20
+    music.volume = volumeRange.value / 100
+}
 </script>
 
 
