@@ -6,7 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IKUK - Music Player</title>
     <script src="https://kit.fontawesome.com/28d9a85d09.js" crossorigin="anonymous"></script>
-   
+   <div class="player">
+        <div class="cover">
+            <img src="https://hosseinghanbari.ir/other/music-player/autumn.jpg" alt="">
+        </div>
+        <div class="info">
+            <div class="title">Autumn</div>
+            <div class="singer">Instrumental Music</div>
+        </div>
+        <div class="volume-box">
+            <span class="volume-down"><i class="material-icons">remove</i></span>
+            <input type="range" class="volume-range" step="1" value="80" min="0" max="100"
+                oninput="music.volume = this.value/100">
+            <span class="volume-up"><i class="material-icons">add</i></span>
+        </div>
+        <div class="btn-box">
+            <i class="material-icons repeat" onclick="handleRepeat()">repeat</i>
+            <i class="material-icons favorite active" onclick="handleFavorite()">favorite</i>
+            <i class="material-icons volume" onclick="handleVolume()">volume_up</i>
+        </div>
+        <div class="music-box">
+            <input type="range" step="1" class="seekbar" value="0" min="0" max="100" oninput="handleSeekBar()">
+
+            <audio class="music-element">
+                <source src="https://hosseinghanbari.ir/other/music-player/autumn.mp3" type="audio/mp3">
+            </audio>
+            <span class="current-time">0:0</span><span class="duration">0:0</span>
+            <span class="play" onclick="handlePlay()">
+                <i class="material-icons">play_arrow</i>
+            </span>
+        </div>
+    </div>
 
 
   
@@ -251,37 +281,7 @@ body {
 <body>
 
     
-<div class="player">
-        <div class="cover">
-            <img src="https://hosseinghanbari.ir/other/music-player/autumn.jpg" alt="">
-        </div>
-        <div class="info">
-            <div class="title">Autumn</div>
-            <div class="singer">Instrumental Music</div>
-        </div>
-        <div class="volume-box">
-            <span class="volume-down"><i class="material-icons">remove</i></span>
-            <input type="range" class="volume-range" step="1" value="80" min="0" max="100"
-                oninput="music.volume = this.value/100">
-            <span class="volume-up"><i class="material-icons">add</i></span>
-        </div>
-        <div class="btn-box">
-            <i class="material-icons repeat" onclick="handleRepeat()">repeat</i>
-            <i class="material-icons favorite active" onclick="handleFavorite()">favorite</i>
-            <i class="material-icons volume" onclick="handleVolume()">volume_up</i>
-        </div>
-        <div class="music-box">
-            <input type="range" step="1" class="seekbar" value="0" min="0" max="100" oninput="handleSeekBar()">
 
-            <audio class="music-element">
-                <source src="https://hosseinghanbari.ir/other/music-player/autumn.mp3" type="audio/mp3">
-            </audio>
-            <span class="current-time">0:0</span><span class="duration">0:0</span>
-            <span class="play" onclick="handlePlay()">
-                <i class="material-icons">play_arrow</i>
-            </span>
-        </div>
-    </div>
     <script>
 
     
