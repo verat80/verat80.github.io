@@ -24,6 +24,32 @@
 
     <style>
 
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+#searchBar {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#results {
+    margin-top: 20px;
+}
+
+.result-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+
+         
+
         body {
     font-family: Arial, Helvetica, sans-serif;
     background: linear-gradient(to right,#9a1d86, #1595be);
@@ -233,6 +259,13 @@
     </style>
     </head>
    <body>
+
+ <h1>Catalog Search</h1>
+    <input type="text" id="searchBar" placeholder="Search catalog...">
+    <div id="results"></div>
+    <script src="script.js"></script>
+        
+        
         <div class="player">
        <div class="wrapper">
            <div class="details">
@@ -284,6 +317,39 @@
        </div>
    </div>
   <script>
+const catalog = [
+    { id: 1, name: 'Product 1', description: 'Description of Product 1' },
+    { id: 2, name: 'Product 2', description: 'Description of Product 2' },
+    { id: 3, name: 'Product 3', description: 'Description of Product 3' },
+    // Add more catalog items here
+];
+
+document.getElementById('searchBar').addEventListener('input', function(event) {
+    const query = event.target.value.toLowerCase();
+    const results = catalog.filter(item => 
+        item.name.toLowerCase().includes(query) || 
+        item.description.toLowerCase().includes(query)
+    );
+
+    displayResults(results);
+});
+
+function displayResults(results) {
+    const resultsContainer = document.getElementById('results');
+    resultsContainer.innerHTML = '';
+
+    results.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'result-item';
+        div.textContent = `${item.name}: ${item.description}`;
+        resultsContainer.appendChild(div);
+    });
+}
+
+
+
+
+       
       let now_playing = document.querySelector('.now-playing');
 let track_art = document.querySelector('.track-art');
 let track_name = document.querySelector('.track-name');
