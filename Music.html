@@ -285,7 +285,7 @@ form.example::after {
 
 <!-- The form -->
 <form class="example" action="action_page.php">
-  <input type="text" placeholder="Search.." name="search">
+  <input type="text" placeholder="Search for song" name="search">
   <button type="submit"><i class="fa fa-search"></i></button>
 </form>
 
@@ -1043,6 +1043,65 @@ function displayResults(results) {
         div.textContent = `${item.name}: ${item.description}`;
         resultsContainer.appendChild(div);
     });
+}
+
+
+
+
+const searchInput = document.getElementById('search-input');
+
+const searchForm = document.getElementById('search-form');
+
+const resultsContainer = document.getElementById('results'); // Element to display results
+
+
+
+let data = [ // Your data array (e.g., list of items to search through)
+
+  { name: "Apple", category: "Fruit" },
+
+  { name: "Banana", category: "Fruit" },
+
+  { name: "Car", category: "Vehicle" },
+
+];
+
+
+
+searchForm.addEventListener('submit', (event) => {
+
+  event.preventDefault(); // Prevent page reload
+
+  const searchQuery = searchInput.value.toLowerCase();
+
+  
+
+  const filteredData = data.filter(item => item.name.toLowerCase().includes(searchQuery));
+
+  
+
+  // Display results in resultsContainer (implementation depends on your design)
+
+  displayResults(filteredData);
+
+});
+
+
+
+function displayResults(results) {
+
+  resultsContainer.innerHTML = ""; // Clear previous results
+
+  results.forEach(item => {
+
+    let resultElement = document.createElement('div');
+
+    resultElement.textContent = item.name;
+
+    resultsContainer.appendChild(resultElement);
+
+  });
+
 }
 
        
