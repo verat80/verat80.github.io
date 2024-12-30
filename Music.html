@@ -255,199 +255,90 @@ p {
 }
 
     
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IKUK Music Player</title>
-    <link rel="shortcut icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(to right, #9a1d86, #1595be);
-            color: #fff;
-            margin: 0;
-            font-family: 'Comic Sans MS', 'Comic', Helvetica, sans-serif;
-            font-weight: bold;
-        }
-        .player {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: center;
-            height: 95vh;
-        }
-        .wrapper {
-            padding: 30px;
-            border-radius: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0px 19px 38px rgba(0, 0, 0, 0.3), 0px 15px 12px rgba(0, 0, 0, 0.22);
-            text-align: center;
-        }
-        .details {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .track-art {
-            margin: 25px;
-            height: 250px;
-            width: 250px;
-            border: 2px solid #FFFAFA;
-            background-size: cover;
-            background-position: center;
-            border-radius: 50%;
-            box-shadow: 0px 6px 5px black;
-            animation: rotation 8s infinite linear;
-        }
-        .now-playing {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-        .track-name {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        .track-artist {
-            font-size: 1.5rem;
-            color: #ddd;
-        }
-        .slider_container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 80%;
-            margin-bottom: 20px;
-        }
-        .seek_slider, .volume_slider {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            height: 5px;
-            background: #83A9FF;
-            transition: opacity 0.2s;
-            margin: 0 10px;
-            border-radius: 5px;
-        }
-        .seek_slider::-webkit-slider-thumb,
-        .volume_slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            width: 15px;
-            height: 15px;
-            background: white;
-            border: 3px solid #3774FF;
-            cursor: grab;
-            border-radius: 50%;
-        }
-        .seek_slider:hover,
-        .volume_slider:hover {
-            opacity: 1.0;
-        }
-        .seek_slider {
-            width: 60%;
-        }
-        .volume_slider {
-            width: 30%;
-        }
-        .current-time,
-        .total-duration {
-            padding: 10px;
-            font-size: 1rem;
-        }
-        .buttons {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            margin-bottom: 30px;
-        }
-        .buttons div {
-            padding: 20px;
-            opacity: 0.8;
-            transition: opacity 0.2s;
-        }
-        .buttons div:hover {
-            opacity: 1.0;
-        }
-        .randomActive {
-            color: black;
-        }
-        #wave {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
-        .stroke {
-            background: #f1f1f1;
-            height: 150%;
-            width: 10px;
-            border-radius: 50px;
-            margin: 0 5px;
-            animation: animate 1.4s linear infinite;
-        }
-        @keyframes rotation {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(359deg);
-            }
-        }
-        @keyframes animate {
-            50% {
-                height: 20%;
-                background: #4286f4;
-            }
-            100% {
-                background: #4286f4;
-                height: 100%;
-            }
-        }
-        .stroke:nth-child(1) { animation-delay: 0s; }
-        .stroke:nth-child(2) { animation-delay: 0.3s; }
-        .stroke:nth-child(3) { animation-delay: 0.6s; }
-        .stroke:nth-child(4) { animation-delay: 0.9s; }
-        .stroke:nth-child(5) { animation-delay: 0.6s; }
-        .stroke:nth-child(6) { animation-delay: 0.3s; }
-        .stroke:nth-child(7) { animation-delay: 0s; }
     </style>
-</head>
-<body>
-    <div class="player">
-        <div class="wrapper">
-            <div class="details">
-                <div class="now-playing">PLAYING x OF y</div>
-                <div class="track-art"></div>
-                <div class="track-name">Track Name</div>
-                <div class="track-artist">Track Artist</div>
-            </div>
+    </head>
+   <body>
 
-            <div class="slider_container">
-                <div class="current-time">00:00</div>
+
+        
+        
+        
+        <div class="player">
+       <div class="wrapper">
+           <div class="details">
+               <div class="now-playing">PLAYING x OF y</div>
+               <div class="track-art"></div>
+               <div class="track-name">Track Name</div>
+               <div class="track-artist">Track Artist</div>
+           </div>
+
+           <div class="slider_container">
+               <div class="current-time">00:00</div>
                 <input type="range" min="1" max="100" value="0" class="seek_slider" onchange="seekTo()">
                 <div class="total-duration">00:00</div>
-            </div>
+           </div>
 
-            <div class="slider_container">
-                <i class="fa fa-volume-down"></i>
+           <div class="slider_container">
+               <i class="fa fa-volume-down"></i>
                 <input type="range" min="1" max="100" value="99" class="volume_slider" onchange="setVolume()">
                 <i class="fa fa-volume-up"></i>
-            </div>
+           </div>
 
-            <div class="buttons">
-                <div class="random-track" onclick="randomTrack()">
-                    <i class="fas fa-random fa-2x" title="random"></i>
+           <div class="buttons">
+               <div class="random-track" onclick="randomTrack()">
+                   <i class="fas fa-random fa-2x" title="random"></i>
+               </div>
+               <div class="prev-track" onclick="prevTrack()">
+                    <i class="fa fa-step-backward fa-2x"></i>
                 </div>
-                <div class="prev-track" onclick="prevTrack()">
+                <div class="playpause-track" onclick="playpauseTrack()">
+                    <i class="fa fa-play-circle fa-5x"></i>
+                </div>
+                <div class="next-track" onclick="nextTrack()">
+                    <i class="fa fa-step-forward fa-2x"></i>
+                </div>
+                <div class="repeat-track" onclick="repeatTrack()">
+                    <i class="fa fa-repeat fa-2x" title="repeat"></i>
+                </div>
+           </div>
 
+            <div id="wave">
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+            </div>  
+       </div>
+   </div>
+  
+       
+
+<script>
+       
+      let now_playing = document.querySelector('.now-playing');
+let track_art = document.querySelector('.track-art');
+let track_name = document.querySelector('.track-name');
+let track_artist = document.querySelector('.track-artist');
+
+let playpause_btn = document.querySelector('.playpause-track');
+let next_btn = document.querySelector('.next-track');
+let prev_btn = document.querySelector('.prev-track');
+
+let seek_slider = document.querySelector('.seek_slider');
+let volume_slider = document.querySelector('.volume_slider');
+let curr_time = document.querySelector('.current-time');
+let total_duration = document.querySelector('.total-duration');
+let wave = document.getElementById('wave');
+let randomIcon = document.querySelector('.fa-random');
+let curr_track = document.createElement('audio');
+
+let track_index = 0;
+let isPlaying = false;
+let isRandom = false;
+let updateTimer;
 
 const music_list = [
     {
@@ -1271,7 +1162,7 @@ function setUpdate() {
     }
 }
 
-
+}
 
 
 
