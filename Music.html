@@ -1003,7 +1003,6 @@ function loadTrack(track_index) {
     now_playing.textContent = `Playing music ${track_index + 1} of ${music_list.length}`;
 
     updateTimer = setInterval(setUpdate, 1000);
-
     curr_track.addEventListener('ended', nextTrack);
     random_bg_color();
 }
@@ -1062,15 +1061,11 @@ function pauseTrack() {
     isPlaying = false;
     track_art.classList.remove('rotate');
     wave.classList.remove('loader');
-    playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
+    playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x'></i>';
 }
 
 function nextTrack() {
-    if (isRandom) {
-        track_index = Math.floor(Math.random() * music_list.length);
-    } else {
-        track_index = (track_index + 1) % music_list.length;
-    }
+    track_index = isRandom ? Math.floor(Math.random() * music_list.length) : (track_index + 1) % music_list.length;
     loadTrack(track_index);
     playTrack();
 }
@@ -1105,6 +1100,7 @@ function setUpdate() {
         total_duration.textContent = formatTime(curr_track.duration);
     }
 }
+
 
 
 
