@@ -1,244 +1,308 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2461833982432030"
+     crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKUK - Music Player</title>
+     <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <script src="https://kit.fontawesome.com/28d9a85d09.js" crossorigin="anonymous"></script>
+  <meta name="description" content="IKUK Music">
+  <meta name="keywords" content="Music, IKUK">
+  <meta name="author" content="Vera Titus">
+ 
+    
+      <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IKUK Music Player</title>
-    <meta name="description" content="IKUK Music">
-    <meta name="keywords" content="Music, IKUK">
-    <meta name="author" content="Vera Titus">
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <title>Music</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/28d9a85d09.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="script.js" defer></script>
     <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(to right, #9a1d86, #1595be);
-            color: #fff;
-            margin: 0;
-            font-family: 'Comic Sans MS', 'Comic', Helvetica, sans-serif;
-            font-weight: bold;
-            padding: 10px;
-        }
-        .container {
-            text-align: center;
-            padding: 20px;
-            border: 2px solid #444;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
-            width: 100%;
-        }
-        h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 1em;
-            margin: 15px 0;
-        }
-        a {
-            color: #1e90ff;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        .email, .donate {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            background-color: #1e90ff;
-            color: #fff;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        .email:hover, .donate:hover {
-            background-color: #1595be;
-        }
-        .player {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: center;
-            height: 90vh;
-            max-width: 100%;
-        }
-        .wrapper {
-            padding: 20px;
-            border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0px 19px 38px rgba(0, 0, 0, 0.3), 0px 15px 12px rgba(0, 0, 0, 0.22);
-            text-align: center;
-            width: 100%;
-        }
-        .details {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .track-art {
-            margin: 10px;
-            height: 150px;
-            width: 150px;
-            border: 2px solid #FFFAFA;
-            background-size: cover;
-            background-position: center;
-            border-radius: 50%;
-            box-shadow: 0px 6px 5px black;
-        }
-        .now-playing {
-            font-size: 1rem;
-            margin-bottom: 10px;
-        }
-        .track-name {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        .track-artist {
-            font-size: 1.2rem;
-            color: #ddd;
-        }
-        .slider_container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        .seek_slider, .volume_slider {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            height: 5px;
-            background: #83A9FF;
-            transition: opacity 0.2s;
-            margin: 0 10px;
-            border-radius: 5px;
-        }
-        .seek_slider::-webkit-slider-thumb,
-        .volume_slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            width: 15px;
-            height: 15px;
-            background: white;
-            border: 3px solid #3774FF;
-            cursor: pointer;
-            border-radius: 50%;
-        }
-        .seek_slider:hover,
-        .volume_slider:hover {
-            opacity: 1.0;
-        }
-        .seek_slider {
-            width: 80%;
-        }
-        .volume_slider {
-            width: 30%;
-        }
-        .current-time,
-        .total-duration {
-            padding: 10px;
-            font-size: 1rem;
-        }
-        .buttons {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            margin-bottom: 30px;
-        }
-        .buttons div {
-            padding: 20px;
-            opacity: 0.8;
-            transition: opacity 0.2s;
-        }
-        .buttons div:hover {
-            opacity: 1.0;
-        }
-        .randomActive {
-            color: black;
-        }
-        #wave {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
-        .stroke {
-            background: #f1f1f1;
-            height: 100%;
-            width: 10px;
-            border-radius: 50px;
-            margin: 0 5px;
-            animation: animate 1.4s linear infinite;
-        }
-        @keyframes rotation {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(359deg);
-            }
-        }
-        @keyframes animate {
-            50% {
-                height: 20%;
-                background: #4286f4;
-            }
-            100% {
-                background: #4286f4;
-                height: 100%;
-            }
-        }
-        .stroke:nth-child(1) { animation-delay: 0s; }
-        .stroke:nth-child(2) { animation-delay: 0.3s; }
-        .stroke:nth-child(3) { animation-delay: 0.6s; }
-        .stroke:nth-child(4) { animation-delay: 0.9s; }
-        .stroke:nth-child(5) { animation-delay: 0.6s; }
-        .stroke:nth-child(6) { animation-delay: 0.3s; }
-        .stroke:nth-child(7) { animation-delay: 0s; }
+
+body {
+    font-family: 'Comic Sans MS', 'Comic', Helvetica, sans-serif;
+    background: linear-gradient(to right, #9a1d86, #1595be);
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 95vh;
+}
+
+.wrapper {
+    border: 1px solid transparent;
+    padding: 30px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    text-align: center;
+}
+
+.details {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.track-art {
+    margin: 25px;
+    height: 250px;
+    width: 250px;
+    border: 2px solid #FFFAFA;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    box-shadow: 0px 6px 5px black;
+    animation: rotation 8s infinite linear;
+}
+
+.now-playing {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.track-name {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.track-artist {
+    font-size: 1.5rem;
+    color: #ddd;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.active {
+    color: black;
+}
+
+.repeat-track,
+.random-track,
+.playpause-track,
+.prev-track,
+.next-track {
+    padding: 20px;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.repeat-track:hover,
+.random-track:hover,
+.playpause-track:hover,
+.prev-track:hover,
+.next-track:hover {
+    opacity: 1.0;
+}
+
+.slider_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin-bottom: 20px;
+}
+
+.seek_slider, .volume_slider {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 5px;
+    background: #83A9FF;
+    transition: opacity 0.2s;
+    margin: 0 10px;
+    border-radius: 5px;
+}
+
+.seek_slider::-webkit-slider-thumb,
+.volume_slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: white;
+    border: 3px solid #3774FF;
+    cursor: grab;
+    border-radius: 50%;
+}
+
+.seek_slider:hover,
+.volume_slider:hover {
+    opacity: 1.0;
+}
+
+.seek_slider {
+    width: 60%;
+}
+
+.volume_slider {
+    width: 30%;
+}
+
+.current-time,
+.total-duration {
+    padding: 10px;
+    font-size: 1rem;
+}
+
+i.fa-volume-down,
+i.fa-volume-up {
+    padding: 10px;
+}
+
+i,
+i.fa-play-circle,
+i.fa-pause-circle,
+i.fa-step-forward,
+i.fa-step-backward,
+p {
+    cursor: pointer;
+}
+
+.randomActive {
+    color: black;
+}
+
+.loader {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader .stroke {
+    background: #f1f1f1;
+    height: 150%;
+    width: 10px;
+    border-radius: 50px;
+    margin: 0 5px;
+    animation: animate 1.4s linear infinite;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+@keyframes animate {
+    50% {
+        height: 20%;
+        background: #4286f4;
+    }
+
+    100% {
+        background: #4286f4;
+        height: 100%;
+    }
+}
+
+.stroke:nth-child(1) {
+    animation-delay: 0s;
+}
+.stroke:nth-child(2) {
+    animation-delay: 0.3s;
+}
+.stroke:nth-child(3) {
+    animation-delay: 0.6s;
+}
+.stroke:nth-child(4) {
+    animation-delay: 0.9s;
+}
+.stroke:nth-child(5) {
+    animation-delay: 0.6s;
+}
+.stroke:nth-child(6) {
+    animation-delay: 0.3s;
+}
+.stroke:nth-child(7) {
+    animation-delay: 0s;
+}
+
+    
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1>IKUK Music Player</h1>
+    </head>
+   <body>
+
+
+        
+        
+        
         <div class="player">
-            <div class="wrapper">
-                <div class="details">
-                    <div class="now-playing">PLAYING x OF y</div>
-                    <div class="track-art"></div>
-                    <div class="track-name">Track Name</div>
-                    <div class="track-artist">Track Artist</div>
+       <div class="wrapper">
+           <div class="details">
+               <div class="now-playing">PLAYING x OF y</div>
+               <div class="track-art"></div>
+               <div class="track-name">Track Name</div>
+               <div class="track-artist">Track Artist</div>
+           </div>
+
+           <div class="slider_container">
+               <div class="current-time">00:00</div>
+                <input type="range" min="1" max="100" value="0" class="seek_slider" onchange="seekTo()">
+                <div class="total-duration">00:00</div>
+           </div>
+
+           <div class="slider_container">
+               <i class="fa fa-volume-down"></i>
+                <input type="range" min="1" max="100" value="99" class="volume_slider" onchange="setVolume()">
+                <i class="fa fa-volume-up"></i>
+           </div>
+
+           <div class="buttons">
+               <div class="random-track" onclick="randomTrack()">
+                   <i class="fas fa-random fa-2x" title="random"></i>
+               </div>
+               <div class="prev-track" onclick="prevTrack()">
+                    <i class="fa fa-step-backward fa-2x"></i>
                 </div>
-                <div class="slider_container">
-                    <div class="current-time">00:00</div>
-                    <input type="range" min="1" max="100" value="0" class="seek_slider" onchange="seekTo()">
-                    <div class="total-duration">00:00</div>
+                <div class="playpause-track" onclick="playpauseTrack()">
+                    <i class="fa fa-play-circle fa-5x"></i>
                 </div>
-                <div class="slider_container">
-                    <i class="fa fa-volume-down"></i>
-                    <input type="range" min="1" max="100" value="99" class="volume_slider" onchange="setVolume()">
-                    <i class="fa fa-volume-up"></i>
+                <div class="next-track" onclick="nextTrack()">
+                    <i class="fa fa-step-forward fa-2x"></i>
                 </div>
-                <div class="buttons">
-                    <div class="random-track" onclick="randomTrack()">
-                        <i class="fas fa-random fa-2x" title="random"></i>
-                    </div>
-                    <div class="prev-track" onclick="prevTrack()">
-                        <i class="fa fa-step-backward fa-2x"></i>
-                    </div>
-                    <div class="play
+                <div class="repeat-track" onclick="repeatTrack()">
+                    <i class="fa fa-repeat fa-2x" title="repeat"></i>
+                </div>
+           </div>
+
+            <div id="wave">
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+            </div>  
+       </div>
+   </div>
+  
        
 
 <script>
@@ -939,6 +1003,7 @@ function loadTrack(track_index) {
     now_playing.textContent = `Playing music ${track_index + 1} of ${music_list.length}`;
 
     updateTimer = setInterval(setUpdate, 1000);
+
     curr_track.addEventListener('ended', nextTrack);
     random_bg_color();
 }
@@ -997,11 +1062,15 @@ function pauseTrack() {
     isPlaying = false;
     track_art.classList.remove('rotate');
     wave.classList.remove('loader');
-    playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x'></i>';
+    playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
 }
 
 function nextTrack() {
-    track_index = isRandom ? Math.floor(Math.random() * music_list.length) : (track_index + 1) % music_list.length;
+    if (isRandom) {
+        track_index = Math.floor(Math.random() * music_list.length);
+    } else {
+        track_index = (track_index + 1) % music_list.length;
+    }
     loadTrack(track_index);
     playTrack();
 }
@@ -1036,7 +1105,6 @@ function setUpdate() {
         total_duration.textContent = formatTime(curr_track.duration);
     }
 }
-
 
 
 
