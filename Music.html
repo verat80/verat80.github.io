@@ -318,27 +318,165 @@ p {
 
 <script>
        
-       const now_playing = document.querySelector('.now-playing');
+      // Querying DOM elements
+const now_playing = document.querySelector('.now-playing');
 const track_art = document.querySelector('.track-art');
 const track_name = document.querySelector('.track-name');
 const track_artist = document.querySelector('.track-artist');
-
 const playpause_btn = document.querySelector('.playpause-track');
 const next_btn = document.querySelector('.next-track');
 const prev_btn = document.querySelector('.prev-track');
-
 const seek_slider = document.querySelector('.seek_slider');
 const volume_slider = document.querySelector('.volume_slider');
 const curr_time = document.querySelector('.current-time');
 const total_duration = document.querySelector('.total-duration');
 const wave = document.getElementById('wave');
 const randomIcon = document.querySelector('.fa-random');
+
+// Initializing audio element
 const curr_track = new Audio();
 
+// State variables
 let track_index = 0;
 let isPlaying = false;
 let isRandom = false;
 let updateTimer;
+
+// Ensuring elements are present before assigning listeners and actions
+document.addEventListener("DOMContentLoaded", () => {
+    if (now_playing && track_art && track_name && track_artist && playpause_btn && next_btn && prev_btn && seek_slider && volume_slider && curr_time && total_duration && wave && randomIcon) {
+        playpause_btn.addEventListener('click', playpauseTrack);
+        next_btn.addEventListener('click', nextTrack);
+        prev_btn.addEventListener('click', prevTrack);
+        seek_slider.addEventListener('change', seekTo);
+        volume_slider.addEventListener('change', setVolume);
+        randomIcon.addEventListener('click', randomTrack);
+
+        // Initial track load
+        loadTrack(track_index);
+    } else {
+        console.error("One or more elements are not present in the DOM.");
+    }
+});
+
+const loadTrack = (track_index) => {
+    clearInterval(updateTimer);
+    reset();
+
+    const track = music_list[track_index];
+    if (track) {
+        curr_track.src = track.music;
+        curr_track.load();
+
+        track_art.style.backgroundImage = `url(${track.img})`;
+        track_name.textContent = track.name;
+        track_artist.textContent = track.artist;
+        now_playing.textContent = `Playing music ${track_index + 1} of ${music_list.length}`;
+
+        updateTimer = setInterval(setUpdate, 1000);
+        curr_track.addEventListener('ended', nextTrack);
+        randomBgColor();
+    } else {
+        console.error("Track not found.");
+    }
+};
+
+const randomBgColor = () => {
+    const hex = '0123456789abcdef'.split('');
+
+    const generateColor = () => {
+        return Array.from({ length: 6 }).map(() => hex[Math.floor(Math.random() * 16)]).join('');
+    };
+
+    const color1 = `#${generateColor()}`;
+    const color2 = `#${generateColor()}`;
+    const gradient = `linear-gradient(to right, ${color1}, ${color2})`;
+
+    document.body.style.background = gradient;
+};
+
+const reset = () => {
+    curr_time.textContent = "00:00";
+    total_duration.textContent = "00:00";
+    seek_slider.value = 0;
+};
+
+const randomTrack = () => {
+    isRandom ? pauseRandom() : playRandom();
+};
+
+const playRandom = () => {
+    isRandom = true;
+    randomIcon.classList.add('randomActive');
+};
+
+const pauseRandom = () => {
+    isRandom = false;
+    randomIcon.classList.remove('randomActive');
+};
+
+const repeatTrack = () => {
+    loadTrack(track_index);
+    playTrack();
+};
+
+const playpauseTrack = () => {
+    isPlaying ? pauseTrack() : playTrack();
+};
+
+const playTrack = () => {
+    curr_track.play();
+    isPlaying = true;
+    track_art.classList.add('rotate');
+    wave.classList.add('loader');
+    playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
+};
+
+const pauseTrack = () => {
+    curr_track.pause();
+    isPlaying = false;
+    track_art.classList.remove('rotate');
+    wave.classList.remove('loader');
+    playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
+};
+
+const nextTrack = () => {
+    track_index = isRandom ? Math.floor(Math.random() * music_list.length) : (track_index + 1) % music_list.length;
+    loadTrack(track_index);
+    playTrack();
+};
+
+const prevTrack = () => {
+    track_index = track_index > 0 ? track_index - 1 : music_list.length - 1;
+    loadTrack(track_index);
+    playTrack();
+};
+
+const seekTo = () => {
+    const seekto = curr_track.duration * (seek_slider.value / 100);
+    curr_track.currentTime = seekto;
+};
+
+const setVolume = () => {
+    curr_track.volume = volume_slider.value / 100;
+};
+
+const setUpdate = () => {
+    if (!isNaN(curr_track.duration)) {
+        const seekPosition = (curr_track.currentTime / curr_track.duration) * 100;
+        seek_slider.value = seekPosition;
+
+        const formatTime = (time) => {
+            const minutes = Math.floor(time / 60).toString().padStart(2, '0');
+            const seconds = Math.floor(time % 60).toString().padStart(2, '0');
+            return `${minutes}:${seconds}`;
+        };
+
+        curr_time.textContent = formatTime(curr_track.currentTime);
+        total_duration.textContent = formatTime(curr_track.duration);
+    }
+};
+
 
 
 
