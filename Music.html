@@ -370,8 +370,12 @@ function randomTrack() {
                 curr_time.textContent = formatTime(curr_track.currentTime);
                 total_duration.textContent = formatTime(curr_track.duration);
             }
+            
+            
             function searchSongs() { const searchInput = document.getElementById('search-input').value.toLowerCase(); const filteredTracks = tracks.filter(track => track.title.toLowerCase().includes(searchInput) || track.artist.toLowerCase().includes(searchInput) );}
-        }
+        
+        
+         }
 
         function formatTime(seconds) {
             const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
