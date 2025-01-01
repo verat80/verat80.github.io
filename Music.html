@@ -978,8 +978,8 @@ const music_list = [
 document.querySelector('.playpause-track').addEventListener('click', playpauseTrack);
 document.querySelector('.next-track').addEventListener('click', nextTrack);
 document.querySelector('.prev-track').addEventListener('click', prevTrack);
-document.querySelector('.seek_slider').addEventListener('change', seekTo);
-document.querySelector('.volume_slider').addEventListener('change', setVolume);
+document.querySelector('.seek_slider').addEventListener('input', seekTo);
+document.querySelector('.volume_slider').addEventListener('input', setVolume);
 
 loadTrack(track_index);
 
@@ -993,7 +993,7 @@ function loadTrack(index) {
     document.querySelector('.track-artist').textContent = music_list[index].artist;
 
     curr_track.addEventListener('ended', nextTrack);
-    setInterval(updateProgress, 1000);
+    updateProgressInterval = setInterval(updateProgress, 1000);
 }
 
 function reset() {
@@ -1027,11 +1027,13 @@ function prevTrack() {
 }
 
 function seekTo() {
-    curr_track.currentTime = curr_track.duration * (document.querySelector('.seek_slider').value / 100);
+    const seekValue = document.querySelector('.seek_slider').value;
+    curr_track.currentTime = curr_track.duration * (seekValue / 100);
 }
 
 function setVolume() {
-    curr_track.volume = document.querySelector('.volume_slider').value / 100;
+    const volumeValue = document.querySelector('.volume_slider').value;
+    curr_track.volume = volumeValue / 100;
 }
 
 function updateProgress() {
@@ -1058,6 +1060,15 @@ function playTrack() {
     isPlaying = true;
     document.querySelector('.playpause-track').innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
 }
+
+// Clear the update progress interval when the track is paused or changed
+let updateProgressInterval;
+curr_track.addEventListener('pause', () => clearInterval(updateProgressInterval));
+curr_track.addEventListener('play', () => {
+    clearInterval(updateProgressInterval);
+    updateProgressInterval = setInterval(updateProgress, 1000);
+});
+
 
 
 
