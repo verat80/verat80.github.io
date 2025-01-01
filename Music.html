@@ -1031,7 +1031,7 @@ const music_list = [
             img: 'favicon.png'
          },
  {
-            name: 'Don't Give Up On Me (Rendition)',
+            name: 'Dont Give Up',
             artist: 'Grace Idowu',
             music: 'The King Will Come - God Dont Give Up On Me Yet (Grace Idowu Rendition).mp3',
             img: 'favicon.png'
@@ -1048,129 +1048,87 @@ const music_list = [
 ];
 
 
+
+
+document.querySelector('.playpause-track').addEventListener('click', playpauseTrack);
+document.querySelector('.next-track').addEventListener('click', nextTrack);
+document.querySelector('.prev-track').addEventListener('click', prevTrack);
+document.querySelector('.seek_slider').addEventListener('change', seekTo);
+document.querySelector('.volume_slider').addEventListener('change', setVolume);
+
 loadTrack(track_index);
 
-function loadTrack(track_index) {
-    clearInterval(updateTimer);
+function loadTrack(index) {
     reset();
-
-    if (track_index < 0 || track_index >= music_list.length) {
-        console.error("Invalid track index.");
-        return;
-    }
-
-    const track = music_list[track_index];
-    curr_track.src = track.music;
+    curr_track.src = music_list[index].music;
     curr_track.load();
 
-    track_art.style.backgroundImage = `url(${track.img})`;
-    track_name.textContent = track.name;
-    track_artist.textContent = track.artist;
-    now_playing.textContent = `Playing music ${track_index + 1} of ${music_list.length}`;
-
-    updateTimer = setInterval(setUpdate, 1000);
+    document.querySelector('.track-art').style.backgroundImage = `url(${music_list[index].img})`;
+    document.querySelector('.track-name').textContent = music_list[index].name;
+    document.querySelector('.track-artist').textContent = music_list[index].artist;
 
     curr_track.addEventListener('ended', nextTrack);
-    random_bg_color();
-}
-
-function random_bg_color() {
-    const hex = '0123456789abcdef';
-    const generateColor = () => {
-        return Array.from({ length: 6 }).map(() => hex[Math.floor(Math.random() * 16)]).join('');
-    };
-
-    const color1 = `#${generateColor()}`;
-    const color2 = `#${generateColor()}`;
-    const gradient = `linear-gradient(to right, ${color1}, ${color2})`;
-    document.body.style.background = gradient;
+    setInterval(updateProgress, 1000);
 }
 
 function reset() {
-    curr_time.textContent = "00:00";
-    total_duration.textContent = "00:00";
-    seek_slider.value = 0;
-}
-
-function randomTrack() {
-    isRandom ? pauseRandom() : playRandom();
-}
-
-function playRandom() {
-    isRandom = true;
-    randomIcon.classList.add('randomActive');
-}
-
-function pauseRandom() {
-    isRandom = false;
-    randomIcon.classList.remove('randomActive');
-}
-
-function repeatTrack() {
-    loadTrack(track_index);
-    playTrack();
+    document.querySelector('.current-time').textContent = "00:00";
+    document.querySelector('.total-duration').textContent = "00:00";
+    document.querySelector('.seek_slider').value = 0;
 }
 
 function playpauseTrack() {
-    isPlaying ? pauseTrack() : playTrack();
-}
-
-function playTrack() {
-    curr_track.play();
-    isPlaying = true;
-    track_art.classList.add('rotate');
-    wave.classList.add('loader');
-    playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
-}
-
-function pauseTrack() {
-    curr_track.pause();
-    isPlaying = false;
-    track_art.classList.remove('rotate');
-    wave.classList.remove('loader');
-    playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
+    isPlaying ? curr_track.pause() : curr_track.play();
+    isPlaying = !isPlaying;
+    document.querySelector('.playpause-track').innerHTML = isPlaying ? '<i class="fa fa-pause-circle fa-5x"></i>' : '<i class="fa fa-play-circle fa-5x"></i>';
 }
 
 function nextTrack() {
-    if (isRandom) {
-        track_index = Math.floor(Math.random() * music_list.length);
-    } else {
-        track_index = (track_index + 1) % music_list.length;
-    }
+    track_index = (track_index + 1) % music_list.length;
     loadTrack(track_index);
     playTrack();
 }
 
 function prevTrack() {
-    track_index = track_index > 0 ? track_index - 1 : music_list.length - 1;
+    track_index = (track_index - 1 + music_list.length) % music_list.length;
     loadTrack(track_index);
     playTrack();
 }
 
 function seekTo() {
-    const seekto = curr_track.duration * (seek_slider.value / 100);
-    curr_track.currentTime = seekto;
+    curr_track.currentTime = curr_track.duration * (document.querySelector('.seek_slider').value / 100);
 }
 
 function setVolume() {
-    curr_track.volume = volume_slider.value / 100;
+    curr_track.volume = document.querySelector('.volume_slider').value / 100;
 }
 
-function setUpdate() {
+function updateProgress() {
     if (!isNaN(curr_track.duration)) {
         const seekPosition = (curr_track.currentTime / curr_track.duration) * 100;
-        seek_slider.value = seekPosition;
+        document.querySelector('.seek_slider').value = seekPosition;
 
-        const formatTime = (time) => {
-            const minutes = Math.floor(time / 60).toString().padStart(2, '0');
-            const seconds = Math.floor(time % 60).toString().padStart(2, '0');
-            return `${minutes}:${seconds}`;
-        };
+        const currentTime = formatTime(curr_track.currentTime);
+        const durationTime = formatTime(curr_track.duration);
 
-        curr_time.textContent = formatTime(curr_track.currentTime);
-        total_duration.textContent = formatTime(curr_track.duration);
+        document.querySelector('.current-time').textContent = currentTime;
+        document.querySelector('.total-duration').textContent = durationTime;
     }
 }
+
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const sec = Math.floor(seconds % 60).toString().padStart(2, '0');
+    return `${minutes}:${sec}`;
+}
+
+function playTrack() {
+    curr_track.play();
+    isPlaying = true;
+    document.querySelector('.playpause-track').innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
+}
+
+
 
 
 
