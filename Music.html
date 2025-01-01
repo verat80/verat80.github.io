@@ -308,6 +308,79 @@ let isPlaying = false;
 let isRandom = false;
 let updateTimer;
 
+function randomTrack() {
+            isRandom = !isRandom;
+            randomIcon.classList.toggle('active');
+        }
+
+        function repeatTrack() {
+            curr_track.currentTime = 0;
+            playTrack();
+        }
+
+        function playpauseTrack() {
+            if (isPlaying) {
+                curr_track.pause();
+                isPlaying = false;
+                document.querySelector('.playpause-track i').classList.replace('fa-pause-circle', 'fa-play-circle');
+            } else {
+                curr_track.play();
+                isPlaying = true;
+                document.querySelector('.playpause-track i').classList.replace('fa-play-circle', 'fa-pause-circle');
+            }
+        }
+
+        function nextTrack() {
+            track_index = isRandom ? Math.floor(Math.random() * musicList.length) : (track_index + 1) % musicList.length;
+            loadTrack(track_index);
+            playTrack();
+        }
+
+        function prevTrack() {
+            track_index = (track_index - 1 + musicList.length) % musicList.length;
+            loadTrack(track_index);
+            playTrack();
+        }
+
+        function loadTrack(index) {
+            reset();
+            curr_track.src = musicList[index].music;
+            curr_track.load();
+
+            track_art.style.backgroundImage = `url(${musicList[index].img})`;
+            track_name.textContent = musicList[index].name;
+            track_artist.textContent = musicList[index].artist;
+            now_playing.textContent = `Playing ${index + 1} of ${musicList.length}`;
+
+            curr_track.addEventListener('ended', nextTrack);
+            updateTimer = setInterval(updateProgress, 1000);
+        }
+
+        function reset() {
+            curr_time.textContent = "00:00";
+            total_duration.textContent = "00:00";
+            seek_slider.value = 0;
+        }
+
+        function updateProgress() {
+            if (!isNaN(curr_track.duration)) {
+                const seekPosition = (curr_track.currentTime / curr_track.duration) * 100;
+                seek_slider.value = seekPosition;
+
+                curr_time.textContent = formatTime(curr_track.currentTime);
+                total_duration.textContent = formatTime(curr_track.duration);
+            }
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const sec = Math.floor(seconds % 60).toString().padStart(2, '0');
+            return `${minutes}:${sec}`;
+        }
+
+        window.onload = () => loadTrack(track_index);
+
+
 const musicList = [
     {
         name: 'Do It Again',
