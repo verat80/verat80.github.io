@@ -247,7 +247,7 @@ p {
         <div class="player">
        <div class="wrapper">
            <div class="details">
-               <div class="now-playing">PLAYING....</div>
+               <div class="now-playing"> x of y </div>
                <div class="track-art"></div>
                <div class="track-name">Track Name</div>
                <div class="track-artist">Track Artist</div>
@@ -1078,9 +1078,15 @@ function reset() {
 }
 
 function playpauseTrack() {
-    isPlaying ? curr_track.pause() : curr_track.play();
-    isPlaying = !isPlaying;
-    document.querySelector('.playpause-track').innerHTML = isPlaying ? '<i class="fa fa-pause-circle fa-5x"></i>' : '<i class="fa fa-play-circle fa-5x"></i>';
+    if (isPlaying) {
+        curr_track.pause();
+        isPlaying = false;
+        document.querySelector('.playpause-track').innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
+    } else {
+        curr_track.play();
+        isPlaying = true;
+        document.querySelector('.playpause-track').innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
+    }
 }
 
 function nextTrack() {
@@ -1127,6 +1133,7 @@ function playTrack() {
     isPlaying = true;
     document.querySelector('.playpause-track').innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
 }
+
 
 
 
