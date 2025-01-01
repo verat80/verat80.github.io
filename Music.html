@@ -372,7 +372,26 @@ function randomTrack() {
             }
             
             
-            function searchSongs() { const searchInput = document.getElementById('search-input').value.toLowerCase(); const filteredTracks = tracks.filter(track => track.title.toLowerCase().includes(searchInput) || track.artist.toLowerCase().includes(searchInput) );}
+            function searchSongs() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    const resultsContainer = document.getElementById('results');
+    const filteredTracks = tracks.filter(track => track.title.toLowerCase().includes(searchInput) || track.artist.toLowerCase().includes(searchInput));
+
+    resultsContainer.innerHTML = ''; // Clear previous results
+
+    if (filteredTracks.length > 0) {
+        filteredTracks.forEach(track => {
+            const trackElement = document.createElement('div');
+            trackElement.textContent = `${track.title} by ${track.artist}`;
+            resultsContainer.appendChild(trackElement);
+        });
+    } else {
+        resultsContainer.textContent = 'No results found.';
+    }
+    <div id="results"></div>
+
+}
+
         
         
          }
