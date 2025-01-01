@@ -290,48 +290,61 @@ p {
          </div>
        </div>
        
-       <script> const now_playing = document.querySelector('.now-playing'); const track_art = document.querySelector('.track-art'); const track_name = document.querySelector('.track-name'); const track_artist = document.querySelector('.track-artist'); const seek_slider = document.querySelector('.seek_slider'); const volume_slider = document.querySelector('.volume_slider'); const curr_time = document.querySelector('.current-time'); const total_duration = document.querySelector('.total-duration'); const wave = document.getElementById('wave'); const randomIcon = document.querySelector('.fa-random'); const curr_track = new Audio(); let track_index = 0; let isPlaying = false; let isRandom = false; let updateTimer; const musicList = [ { name: 'Do It Again', artist: 'Elevation Worship', music: 'Do It Again _ Live _ Elevation Worship.mp3', img: 'favicon.png' } ]; function randomTrack() { isRandom = !isRandom; randomIcon.classList.toggle('active'); } function repeatTrack() { curr_track.currentTime = 0; playTrack(); } function playpauseTrack() { if (isPlaying) { curr_track.pause(); isPlaying = false; document.querySelector('.playpause-track i').classList.replace('fa-pause-circle', 'fa-play-circle'); } else { curr_track.play(); isPlaying = true; document.querySelector('.playpause-track i').classList.replace('fa-play-circle', 'fa-pause-circle'); } } function nextTrack() { track_index = isRandom ? Math.floor(Math.random() * musicList.length) : (track_index + 1) % musicList.length; loadTrack(track_index); playTrack(); } function prevTrack() { track_index = (track_index - 1 + musicList.length) % musicList.length; loadTrack(track_index); playTrack(); } function loadTrack(index) { reset(); curr_track.src = musicList[index].music; curr_track.load(); track_art.style.backgroundImage = `url(${musicList[index].img})`; track_name.textContent = musicList[index].name; track_artist.textContent = musicList[index].artist; now_playing.textContent = `Playing ${index + 1} of ${musicList.length}`; curr_track.addEventListener('ended', nextTrack); updateTimer = setInterval(updateProgress, 1000); } function reset() { curr_time.textContent = "00:00"; total_duration.textContent = "00:00"; seek_slider.value = 0; } function updateProgress() { if (!isNaN(curr_track.duration)) { const seekPosition = (curr_track.currentTime / curr_track.duration) * 100; seek_slider.value = seekPosition; curr_time.textContent = formatTime(curr_track.currentTime); total_duration.textContent = formatTime(curr_track.duration); } } function formatTime(seconds) { const minutes = Math.floor(seconds / 60).toString().padStart(2, '0'); const sec = Math.floor(seconds % 60).toString().padStart(2, '0'); return `${minutes}:${sec}`; } window.onload = () => loadTrack(track_index); </script>
-       
+       <script>
+        const now_playing = document.querySelector('.now-playing');
+const track_art = document.querySelector('.track-art');
+const track_name = document.querySelector('.track-name');
+const track_artist = document.querySelector('.track-artist');
+const seek_slider = document.querySelector('.seek_slider');
+const volume_slider = document.querySelector('.volume_slider');
+const curr_time = document.querySelector('.current-time');
+const total_duration = document.querySelector('.total-duration');
+const wave = document.getElementById('wave');
+const randomIcon = document.querySelector('.fa-random');
+const curr_track = new Audio();
 
-const music_list = [
+let track_index = 0;
+let isPlaying = false;
+let isRandom = false;
+let updateTimer;
+
+const musicList = [
     {
-       
-        name : 'Do It Again',
-        artist : 'Elevation Worship',
-        music : 'Do It Again _ Live _ Elevation Worship.mp3',
-        img : 'favicon.png'
+        name: 'Do It Again',
+        artist: 'Elevation Worship',
+        music: 'Do It Again _ Live _ Elevation Worship.mp3',
+        img: 'favicon.png'
     },
     {
-            name: 'The Blessing',
-            artist: 'Elevation Worship ',
-            music: 'spotifydown.com - The Blessing - Live.mp3',
-             img: 'favicon.png'
-         },
-        {
-            name: 'Jehovah ',
-            artist: 'Elevation Worship',
-            music: 'Jehovah (feat. Chris Brown) _ Elevation Worship.mp3',
-            img: 'favicon.png'
-         },
-        {
-            name: 'Jireh',
-            artist: 'Elevation Worship',
-            music: 'spotifydown.com - Jireh (feat. Chandler Moore & Naomi Raine).mp3',
-            img: 'favicon.png'
-         },
-        {
-            name: 'Praise ',
-            artist: 'Elevation Worship',
-            music: 'Praise (feat. Brandon Lake, Chris Brown & Chandler Moore) _ Elevation Worship.mp3',
-            img: 'favicon.png'
-         },
-        
-         {
-            name: 'What A Miracle ',
-            artist: 'Elevation Worship',
-            music: ' What A Miracle (Chris Brown & Leeland) _ Elevation Worship (1).mp3',
-            img: 'favicon.png'
-         },
+        name: 'The Blessing',
+        artist: 'Elevation Worship',
+        music: 'spotifydown.com - The Blessing - Live.mp3',
+        img: 'favicon.png'
+    },
+    {
+        name: 'Jehovah',
+        artist: 'Elevation Worship',
+        music: 'Jehovah (feat. Chris Brown) _ Elevation Worship.mp3',
+        img: 'favicon.png'
+    },
+    {
+        name: 'Jireh',
+        artist: 'Elevation Worship',
+        music: 'spotifydown.com - Jireh (feat. Chandler Moore & Naomi Raine).mp3',
+        img: 'favicon.png'
+    },
+    {
+        name: 'Praise',
+        artist: 'Elevation Worship',
+        music: 'Praise (feat. Brandon Lake, Chris Brown & Chandler Moore) _ Elevation Worship.mp3',
+        img: 'favicon.png'
+    },
+    {
+        name: 'What A Miracle',
+        artist: 'Elevation Worship',
+        music: 'What A Miracle (Chris Brown & Leeland) _ Elevation Worship (1).mp3',
+        img: 'favicon.png',
+    },
          {
             name: 'Hold On To Me',
             artist: 'Lauren Daigle',
@@ -1038,11 +1051,6 @@ const music_list = [
 
 
        
-  </script>
-   </body>
-
-</html>   
-
 
 
 
