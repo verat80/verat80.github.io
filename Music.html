@@ -353,6 +353,9 @@ function loadTrack(index) {
 
     curr_track.addEventListener('ended', nextTrack);
     updateTimer = setInterval(updateProgress, 1000);
+    curr_track.play();
+    isPlaying = true; 
+    document.querySelector('.playpause-track i').classList.replace('fa-play-circle', 'fa-pause-circle');
 }
 
 function reset() {
