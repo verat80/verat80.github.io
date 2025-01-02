@@ -291,21 +291,19 @@ p {
        </div>
        
        <script>
-        const now_playing = document.querySelector('.now-playing');
+        let isRandom = false;
+let isPlaying = false;
+let track_index = 0;
+
+const curr_track = document.createElement('audio');
+const randomIcon = document.querySelector('.random-icon');
 const track_art = document.querySelector('.track-art');
 const track_name = document.querySelector('.track-name');
 const track_artist = document.querySelector('.track-artist');
-const seek_slider = document.querySelector('.seek_slider');
-const volume_slider = document.querySelector('.volume_slider');
+const now_playing = document.querySelector('.now-playing');
+const seek_slider = document.querySelector('.seek-slider');
 const curr_time = document.querySelector('.current-time');
 const total_duration = document.querySelector('.total-duration');
-const wave = document.getElementById('wave');
-const randomIcon = document.querySelector('.fa-random');
-const curr_track = new Audio();
-
-let isRandom = false;
-let isPlaying = false;
-let track_index = 0;
 
 function randomTrack() {
     isRandom = !isRandom;
@@ -353,6 +351,9 @@ function loadTrack(index) {
 
     curr_track.addEventListener('ended', nextTrack);
     updateTimer = setInterval(updateProgress, 1000);
+    curr_track.play(); // Ensure the track plays after loading
+    isPlaying = true;
+    document.querySelector('.playpause-track i').classList.replace('fa-play-circle', 'fa-pause-circle');
 }
 
 function reset() {
@@ -378,6 +379,7 @@ function formatTime(seconds) {
 }
 
 window.onload = () => loadTrack(track_index);
+
 
 
 
