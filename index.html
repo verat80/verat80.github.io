@@ -27,9 +27,10 @@
 
     <header>
       <nav>
-        <img src="Gray and Black Simple Studio Logo.png" alt="Girl in a jacket" width="200" height="200">
-        <i class="fas fa-bars" id="ham-menu"></i>
-        <ul id="nav-bar">
+        <div class="image-wrap r1">
+  <img class="round" src="Gray and Black Simple Studio Logo.png" width="200" height="200" alt="round Pic">
+</div>
+       
         
           <li>
             <a href="./Music"><h1>Music</h1> </a>
@@ -178,6 +179,25 @@ nav ul.active {
   background-attachment: fixed;
   background-position: center; 
   background-size: auto ;
+}
+        .image-wrap {
+  width: 100px;
+  aspect-ratio: 1 /1;
+  margin: 1rem;
+}
+.image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid red;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
+}
+.r2 {
+  width: 20%;
+}
+.r3 {
+  width: 15%;
 }
       </style>
       <script>
