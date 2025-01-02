@@ -372,8 +372,7 @@ function randomTrack() {
             }
             
             
-            function searchSongs() { const searchInput = document.getElementById('search-input').value.toLowerCase(); const filteredTracks = musicList.filter(track => track.name.toLowerCase().includes(searchInput) || track.artist.toLowerCase().includes(searchInput) ); const songList = document.getElementById('song-list'); songList.innerHTML = ''; filteredTracks.forEach(track => { const li = document.createElement('li'); li.textContent = `${track.name} by ${track.artist}`; songList.appendChild(li); }); musicList = filteredTracks; track_index = 0;}}
-
+            
         function formatTime(seconds) {
             const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
             const sec = Math.floor(seconds % 60).toString().padStart(2, '0');
