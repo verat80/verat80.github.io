@@ -15,16 +15,18 @@
     <script src="script.js" defer></script>
     <style>
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap');
+
 body {
-    font-family: 'Comic Sans MS', 'Comic', Helvetica, sans-serif;
-    background: linear-gradient(to right, #891d9a, #bc831a);
-    font-weight: bold;
-    color: #000000;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #1f1c2c, #928dab);
+    color: #ffffff;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    transition: background 0.5s ease;
 }
 
 .player {
@@ -36,11 +38,11 @@ body {
 }
 
 .wrapper {
-    border: 1px solid transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 30px;
     border-radius: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
 
@@ -55,27 +57,29 @@ body {
     margin: 25px;
     height: 250px;
     width: 250px;
-    border: 2px solid #FFFAFA;
+    border: 2px solid #ffffff;
     background-size: cover;
     background-position: center;
     border-radius: 50%;
-    box-shadow: 0px 6px 5px black;
-    animation: rotation 8s infinite linear;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+    animation: rotation 10s infinite linear;
 }
 
 .now-playing {
     font-size: 1.2rem;
     margin-bottom: 10px;
+    color: #bbb;
 }
 
 .track-name {
     font-size: 2.5rem;
     margin-bottom: 10px;
+    font-weight: 700;
 }
 
 .track-artist {
     font-size: 1.5rem;
-    color: #000000;
+    color: #ccc;
 }
 
 .buttons {
@@ -85,18 +89,14 @@ body {
     margin-bottom: 30px;
 }
 
-.active {
-    color: black;
-}
-
 .repeat-track,
 .random-track,
 .playpause-track,
 .prev-track,
 .next-track {
-    padding: 20px;
-    opacity: 0.8;
-    transition: opacity 0.2s;
+    padding: 15px;
+    opacity: 0.7;
+    transition: opacity 0.2s, transform 0.2s;
 }
 
 .repeat-track:hover,
@@ -105,6 +105,7 @@ body {
 .prev-track:hover,
 .next-track:hover {
     opacity: 1.0;
+    transform: scale(1.1);
 }
 
 .slider_container {
@@ -133,107 +134,13 @@ body {
     appearance: none;
     width: 15px;
     height: 15px;
-    background: white;
+    background: #ffffff;
     border: 3px solid #3774FF;
-    cursor: grab;
+    cursor: pointer;
     border-radius: 50%;
 }
 
-.seek_slider:hover,
-.volume_slider:hover {
-    opacity: 1.0;
-}
 
-.seek_slider {
-    width: 60%;
-}
-
-.volume_slider {
-    width: 30%;
-}
-
-.current-time,
-.total-duration {
-    padding: 10px;
-    font-size: 1rem;
-}
-
-i.fa-volume-down,
-i.fa-volume-up {
-    padding: 10px;
-}
-
-i,
-i.fa-play-circle,
-i.fa-pause-circle,
-i.fa-step-forward,
-i.fa-step-backward,
-p {
-    cursor: pointer;
-}
-
-.randomActive {
-    color: black;
-}
-
-.loader {
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.loader .stroke {
-    background: #628465;
-    height: 150%;
-    width: 10px;
-    border-radius: 50px;
-    margin: 0 5px;
-    animation: animate 1.4s linear infinite;
-}
-
-@keyframes rotation {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(359deg);
-    }
-}
-
-@keyframes animate {
-    50% {
-        height: 20%;
-        background: #4286f4;
-    }
-
-    100% {
-        background: #ad2aab;
-        height: 100%;
-    }
-}
-
-.stroke:nth-child(1) {
-    animation-delay: 0s;
-}
-.stroke:nth-child(2) {
-    animation-delay: 0.3s;
-}
-.stroke:nth-child(3) {
-    animation-delay: 0.6s;
-}
-.stroke:nth-child(4) {
-    animation-delay: 0.9s;
-}
-.stroke:nth-child(5) {
-    animation-delay: 0.6s;
-}
-.stroke:nth-child(6) {
-    animation-delay: 0.3s;
-}
-.stroke:nth-child(7) {
-    animation-delay: 0s;
-}
 
     
     </style>
