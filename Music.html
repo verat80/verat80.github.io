@@ -993,7 +993,21 @@ const musicList = [
             img: 'ikik logo.png'
          },
 ];
-let currentIndex = 0;
+let currentTrackIndex = 0;
+
+
+// Get the total number of songs
+const totalSongs = musicList.length;
+
+// Update the song count display
+function updateSongCount() {
+    const nowPlaying = document.querySelector('.now-playing');
+    nowPlaying.textContent = `Playing music ${currentTrackIndex + 1} of ${totalSongs}`;
+}
+
+// Call this function when you want to update the count
+updateSongCount();
+
         let isPlaying = false;
         let isShuffle = false;
         const audio = new Audio();
