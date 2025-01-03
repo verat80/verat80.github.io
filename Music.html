@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Player</title>
+    <title>Music</title>
     <link rel="shortcut icon" href="Black White Simple Monochrome Initial Name Logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -138,7 +138,19 @@
 
 
     <script>
-      
+              const playpauseBtn = document.querySelector('.playpause-track');
+        const nextBtn = document.querySelector('.next-track');
+        const prevBtn = document.querySelector('.prev-track');
+        const randomBtn = document.querySelector('.random-track');
+        const seekSlider = document.querySelector('.seek_slider');
+        const volumeSlider = document.querySelector('.volume_slider');
+        const currentTimeElem = document.querySelector('.current-time');
+        const totalDurationElem = document.querySelector('.total-duration');
+        const trackArt = document.querySelector('.track-art');
+        const trackName = document.querySelector('.track-name');
+        const trackArtist = document.querySelector('.track-artist');
+        const nowPlaying = document.querySelector('.now-playing');
+
 
 
 
@@ -972,25 +984,11 @@ const musicList = [
             img: 'ikik logo.png'
          },
 ];
-const playpauseBtn = document.querySelector('.playpause-track');
-        const nextBtn = document.querySelector('.next-track');
-        const prevBtn = document.querySelector('.prev-track');
-        const randomBtn = document.querySelector('.random-track');
-        const seekSlider = document.querySelector('.seek_slider');
-        const volumeSlider = document.querySelector('.volume_slider');
-        const currentTimeElem = document.querySelector('.current-time');
-        const totalDurationElem = document.querySelector('.total-duration');
-        const trackArt = document.querySelector('.track-art');
-        const trackName = document.querySelector('.track-name');
-        const trackArtist = document.querySelector('.track-artist');
-        const nowPlaying = document.querySelector('.now-playing');
-
-        let currentTrack = new Audio();
+       
+let currentTrack = new Audio();
         let trackIndex = 0;
         let isPlaying = false;
         let updateTimer;
-
-       
 
         function loadTrack(index) {
             clearInterval(updateTimer);
