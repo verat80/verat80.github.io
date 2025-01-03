@@ -1,7 +1,4 @@
-
-
-  
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,98 +8,89 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <style>
         body {
-            min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
-            background: linear-gradient(to right, #1c1c1c, #383838);
-            color: white;
+            align-items: center;
+            min-height: 100vh;
             margin: 0;
-             font-family: 'Comic Sans MS', monospace;
+            background: linear-gradient(135deg, #1c1c1c, #383838);
+            font-family: 'Comic Sans MS', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
         }
         .container {
-            text-align: center;
-            padding: 30px;
-            border: 2px solid #444;
-            border-radius: 10px;
             background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
             max-width: 600px;
             width: 100%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+        .container:hover {
+            transform: scale(1.03);
         }
         h1 {
-            font-size: 3em;
+            font-size: 2.5em;
             margin-bottom: 20px;
+            color: #1e90ff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         p {
             font-size: 1.2em;
             margin: 15px 0;
         }
-        .email, .donate {
+        a {
             color: #1e90ff;
             text-decoration: none;
+            transition: color 0.3s ease;
         }
-        .email:hover, .donate:hover {
-            text-decoration: underline;
-        }
-        .donate {
+        a:hover {
             color: #ff6347;
         }
-
-      a:link {
-  color: #ADD8E6;
-  background-color: transparent;
-  text-decoration: none;
-}
-
-a:visited {
-  color: #ADD8E6;
-  background-color: transparent;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #ADD8E6;
-  background-color: transparent;
-  text-decoration: underline;
-}
-
-a:active {
-  color: #ADD8E6;
-  background-color: transparent;
-  text-decoration: underline;
-}
+        .cta {
+            margin-top: 20px;
+        }
+        .cta a {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 25px;
+            background: #1e90ff;
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+        .cta a:hover {
+            background: #ff6347;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>IKUK Contact</h1>
- 
-        <p></p>
-     
-         <font color="white"><p style="text-align:center;"><p>For more details  email us at  <font color="white"> <br>the1undestanding@gmail.com for any questions </font> Thank you all and see you real soon. <br>join the discord - <a href= "https://discord.gg/tTFyY3rS."> Vist Here. </a> </p>
-
-        <p>Thank you and God Bless</p>
-        <p> U.S. </p>
-
-
-</head>
-
+        <h1>Contact IKUK</h1>
+        <p>
+            Have questions? Reach out to us! For more details, email us at: 
+            <br>
+            <a href="mailto:the1undestanding@gmail.com" class="email">the1undestanding@gmail.com</a>
+        </p>
+        <p>Join our Discord community for more updates and to connect with others:</p>
+        <div class="cta">
+            <a href="https://discord.gg/tTFyY3rS" target="_blank">Visit Discord</a>
+        </div>
+        <p>Thank you for your support! God Bless!</p>
+        <footer>
+            © 2025 IKUK. All rights reserved.
+        </footer>
+    </div>
+</body>
 </html>
-
-
-
-  
-  
- 
-  
-  
-
-
-
-  
-
-
-
-
-      
