@@ -13,7 +13,6 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* General Reset */
         * {
             margin: 0;
             padding: 0;
@@ -121,7 +120,7 @@
 </head>
 <body>
     <div class="player">
-        <div class="now-playing">Playing music x of y</div>
+        <div class="now-playing">Playing music 1 of 2</div>
         <div class="track-art"></div>
         <div class="track-info">
             <div class="track-name">Track Name</div>
@@ -139,7 +138,11 @@
             <button class="random-track"><i class="fa fa-random"></i></button>
         </div>
     </div>
+
     <script>
+        const audio = new Audio(); // Create the audio element dynamically
+        let currentIndex = 0;
+
 
  
    
@@ -989,38 +992,39 @@ const playPauseButton = document.querySelector('.playpause-track');
         const nowPlaying = document.querySelector('.now-playing');
         const currentTimeEl = document.querySelector('.current-time');
         const totalTimeEl = document.querySelector('.total-duration');
+        const trackArt = document.querySelector('.track-art');
 
         function loadTrack(index) {
             const track = musicList[index];
             audio.src = track.music;
+            trackArt.style.backgroundImage = `url(${track.img})`;
             trackName.textContent = track.name;
             trackArtist.textContent = track.artist;
             nowPlaying.textContent = `Playing music ${index + 1} of ${musicList.length}`;
             audio.load();
+            audio.play();
         }
 
         function playPauseTrack() {
             if (audio.paused) {
                 audio.play();
                 playPauseButton.innerHTML = '<i class="fa fa-pause-circle"></i>';
+                trackArt.classList.add('playing');
             } else {
                 audio.pause();
                 playPauseButton.innerHTML = '<i class="fa fa-play-circle"></i>';
+                trackArt.classList.remove('playing');
             }
         }
 
         function prevTrack() {
             currentIndex = (currentIndex - 1 + musicList.length) % musicList.length;
             loadTrack(currentIndex);
-            audio.play();
-            playPauseButton.innerHTML = '<i class="fa fa-pause-circle"></i>';
         }
 
         function nextTrack() {
             currentIndex = (currentIndex + 1) % musicList.length;
             loadTrack(currentIndex);
-            audio.play();
-            playPauseButton.innerHTML = '<i class="fa fa-pause-circle"></i>';
         }
 
         function updateSeekBar() {
@@ -1055,8 +1059,7 @@ const playPauseButton = document.querySelector('.playpause-track');
 
         // Initial Load
         loadTrack(currentIndex);
-
-
     </script>
 </body>
 </html>
+
