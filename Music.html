@@ -1030,7 +1030,9 @@
             currentTrack.src = musicList[index].music;
             currentTrack.load();
 
-            trackArt.style.backgroundImage = `url(${musicList[index].img})`;
+            // Set the logo as the default background image
+            trackArt.style.backgroundImage = "url('Gray and Black Simple Studio Logo.png')";
+            
             trackName.textContent = musicList[index].name;
             trackArtist.textContent = musicList[index].artist;
             nowPlaying.textContent = `Playing music ${index + 1} of ${musicList.length}`;
@@ -1041,6 +1043,7 @@
 
             currentTrack.addEventListener('ended', nextTrack);
         }
+
 
         function resetValues() {
             currentTimeElem.textContent = "00:00";
