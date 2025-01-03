@@ -62,6 +62,27 @@
             color: #fff;
         }
 
+        .playlist {
+            margin-top: 15px;
+            max-height: 150px;
+            overflow-y: auto;
+            text-align: left;
+            color: #fff;
+            padding: 10px;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .playlist div {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .playlist div.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         .seek_slider, .volume_slider {
             width: 100%;
             margin: 10px 0;
@@ -102,7 +123,7 @@
 
         .controls button:hover {
             transform: scale(1.2);
-            color: #1273f3;
+            color: #f39c12;
         }
 
         @keyframes rotation {
@@ -117,7 +138,7 @@
 </head>
 <body>
     <div class="player">
-        <div class="now-playing">music x of y</div>
+        <div class="now-playing">Playing music 0 of 0</div>
         <div class="track-art"></div>
         <div class="track-info">
             <div class="track-name">Track Name</div>
@@ -133,15 +154,19 @@
             <button class="playpause-track"><i class="fas fa-play-circle"></i></button>
             <button class="next-track"><i class="fas fa-forward"></i></button>
             <button class="random-track"><i class="fas fa-random"></i></button>
+            <button class="repeat-track"><i class="fas fa-redo"></i></button>
         </div>
+        <div class="playlist"></div>
     </div>
 
 
+
     <script>
-              const playpauseBtn = document.querySelector('.playpause-track');
+     const playpauseBtn = document.querySelector('.playpause-track');
         const nextBtn = document.querySelector('.next-track');
         const prevBtn = document.querySelector('.prev-track');
         const randomBtn = document.querySelector('.random-track');
+        const repeatBtn = document.querySelector('.repeat-track');
         const seekSlider = document.querySelector('.seek_slider');
         const volumeSlider = document.querySelector('.volume_slider');
         const currentTimeElem = document.querySelector('.current-time');
@@ -150,6 +175,14 @@
         const trackName = document.querySelector('.track-name');
         const trackArtist = document.querySelector('.track-artist');
         const nowPlaying = document.querySelector('.now-playing');
+        const playlist = document.querySelector('.playlist');
+        let currentTrack = new Audio();
+        let trackIndex = 0;
+        let isPlaying = false;
+        let isRandom = false;
+        let isRepeat = false;
+        let updateTimer;
+
 
 
 
@@ -985,12 +1018,8 @@ const musicList = [
          },
 ];
        
-let currentTrack = new Audio();
-        let trackIndex = 0;
-        let isPlaying = false;
-        let updateTimer;
 
-        function loadTrack(index) {
+function loadTrack(index) {
             clearInterval(updateTimer);
             resetValues();
 
@@ -1001,6 +1030,8 @@ let currentTrack = new Audio();
             trackName.textContent = trackList[index].name;
             trackArtist.textContent = trackList[index].artist;
             nowPlaying.textContent = `Playing music ${index + 1} of ${trackList.length}`;
+
+            updatePlaylistUI(index);
 
             updateTimer = setInterval(setUpdate, 1000);
 
@@ -1033,8 +1064,12 @@ let currentTrack = new Audio();
         }
 
         function nextTrack() {
-            if (trackIndex < trackList.length - 1) trackIndex += 1;
-            else trackIndex = 0;
+            if (isRandom) {
+                playRandomTrack();
+            } else {
+                if (trackIndex < trackList.length - 1) trackIndex += 1;
+                else trackIndex = 0;
+            }
             loadTrack(trackIndex);
             playTrack();
         }
@@ -1044,6 +1079,36 @@ let currentTrack = new Audio();
             else trackIndex = trackList.length - 1;
             loadTrack(trackIndex);
             playTrack();
+        }
+
+        function playRandomTrack() {
+            let randomIndex = Math.floor(Math.random() * trackList.length);
+            while (randomIndex === trackIndex) {
+                randomIndex = Math.floor(Math.random() * trackList.length);
+            }
+            trackIndex = randomIndex;
+            loadTrack(trackIndex);
+            playTrack();
+        }
+
+        function toggleRandom() {
+            isRandom = !isRandom;
+            randomBtn.classList.toggle('active', isRandom);
+        }
+
+        function toggleRepeat() {
+            isRepeat = !isRepeat;
+            repeatBtn.classList.toggle('active', isRepeat);
+        }
+
+        function updatePlaylistUI(currentIndex) {
+            playlist.innerHTML = trackList
+                .map((track, index) => `
+                    <div class="${index === currentIndex ? 'active' : ''}" onclick="loadTrack(${index}); playTrack();">
+                        ${track.name} - ${track.artist}
+                    </div>
+                `)
+                .join('');
         }
 
         function setUpdate() {
@@ -1068,6 +1133,27 @@ let currentTrack = new Audio();
             }
         }
 
+        function seekTo() {
+            let seekTo = currentTrack.duration * (seekSlider.value / 100);
+            currentTrack.currentTime = seekTo;
+        }
+
+        function setVolume() {
+            currentTrack.volume = volumeSlider.value / 100;
+            localStorage.setItem('volume', volumeSlider.value);
+        }
+
+        seekSlider.addEventListener('input', seekTo);
+        volumeSlider.addEventListener('input', setVolume);
+        randomBtn.addEventListener('click', toggleRandom);
+        repeatBtn.addEventListener('click', toggleRepeat);
+
+        const savedVolume = localStorage.getItem('volume');
+        if (savedVolume) {
+            volumeSlider.value = savedVolume;
+            setVolume();
+        }
+
         loadTrack(trackIndex);
 
         playpauseBtn.addEventListener('click', playpauseTrack);
@@ -1076,5 +1162,3 @@ let currentTrack = new Audio();
     </script>
 </body>
 </html>
-
-
