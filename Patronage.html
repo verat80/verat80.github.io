@@ -15,29 +15,34 @@
             background: linear-gradient(to right, #1c1c1c, #383838);
             color: white;
             margin: 0;
-             font-family: 'Comic Sans MS', monospace;
+            font-family: 'Comic Sans MS', sans-serif;
         }
         .container {
             text-align: center;
-            padding: 30px;
+            padding: 40px;
             border: 2px solid #444;
-            border-radius: 10px;
+            border-radius: 15px;
             background: rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             max-width: 600px;
             width: 100%;
+            backdrop-filter: blur(10px);
         }
         h1 {
-            font-size: 3em;
+            font-size: 3.5em;
             margin-bottom: 20px;
+            color: #ff6347;
         }
         p {
             font-size: 1.2em;
             margin: 15px 0;
+            line-height: 1.6;
         }
         .email, .donate {
             color: #1e90ff;
             text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
         }
         .email:hover, .donate:hover {
             text-decoration: underline;
@@ -45,38 +50,47 @@
         .donate {
             color: #ff6347;
         }
-         a:link {
-  color:  blue;
-  background-color: transparent;
-  text-decoration: none;
-}
-
-a:visited {
-  color:  #ADD8E6;
-  background-color: transparent;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #ADD8E6;
-  background-color: transparent;
-  text-decoration: underline;
-}
-
-a:active {
-  color: #ADD8E6;
-  background-color: transparent;
-  text-decoration: underline;
-}
+        a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .button-link {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px 0;
+            background-color: #ff6347;
+            color: white;
+            border-radius: 5px;
+            font-size: 1.2em;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .button-link:hover {
+            background-color: #ff4500;
+            transform: scale(1.05);
+        }
+        .button-link:active {
+            transform: scale(1);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Your Support Matters</h1>
-        <p>To contribute to our simple cause, please support us. Even a simple prayer is more than enough.</p>
-        <p>Please supprt at <a href="https://ko-fi.com/understandingsimple">understandingsimple</a> </p>
-        <p>Thank you and God Bless</p>
-        <p> U.S. </p>
+        <p>We appreciate your kindness in supporting our cause. Whether it's through a simple prayer or a donation, your contribution makes a difference.</p>
         
-        <p> Songs requests can also be added here.</p>
-        <p style="color:blue";><a href="https://docs.google.com/forms/d/e/1FAIpQLSdZOVz8ZIk1pITjDcGxrunHYNAQ2Q_5OMe1--GXUWFF3nhvuw/viewform">Here</a></p>
+        <p>Support us today via <a href="https://ko-fi.com/understandingsimple" class="donate">Ko-Fi</a>!</p>
+        
+        <p>If you would like to make a song request, please use the link below:</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdZOVz8ZIk1pITjDcGxrunHYNAQ2Q_5OMe1--GXUWFF3nhvuw/viewform" class="button-link">Make a Song Request</a>
+        
+        <p>Thank you for your support and God Bless!</p>
+        <p>- U.S.</p>
+    </div>
+</body>
+</html>
