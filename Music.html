@@ -1004,147 +1004,120 @@
         ];
 
         function loadTrack(index) {
-    clearInterval(updateTimer);
-    resetValues();
+            clearInterval(updateTimer);
+            resetValues();
 
-    currentTrack.src = musicList[index].music;
-    currentTrack.load();
+            currentTrack.src = trackList[index].music;
+            currentTrack.load();
 
-    trackArt.style.backgroundImage = `url(${musicList[index].img})`;
-    trackName.textContent = musicList[index].name;
-    trackArtist.textContent = musicList[index].artist;
-    nowPlaying.textContent = `Playing music ${index + 1} of ${musicList.length}`;
+            trackArt.style.backgroundImage = `url(${trackList[index].img})`;
+            trackName.textContent = trackList[index].name;
+            trackArtist.textContent = trackList[index].artist;
+            nowPlaying.textContent = `Playing music ${index + 1} of ${trackList.length}`;
 
-    updatePlaylistUI(index);
+            updatePlaylistUI(index);
 
-    updateTimer = setInterval(setUpdate, 1000);
+            updateTimer = setInterval(setUpdate, 1000);
 
-    currentTrack.addEventListener('ended', nextTrack);
-}
+            currentTrack.addEventListener('ended', nextTrack);
+        }
 
-function resetValues() {
-    currentTimeElem.textContent = "00:00";
-    totalDurationElem.textContent = "00:00";
-    seekSlider.value = 0;
-}
+        function resetValues() {
+            currentTimeElem.textContent = "00:00";
+            totalDurationElem.textContent = "00:00";
+            seekSlider.value = 0;
+        }
 
-function playpauseTrack() {
-    if (!isPlaying) playTrack();
-    else pauseTrack();
-}
+        function playpauseTrack() {
+            if (!isPlaying) playTrack();
+            else pauseTrack();
+        }
 
-function playTrack() {
-    currentTrack.play();
-    isPlaying = true;
-    trackArt.classList.add('playing');
-    playpauseBtn.innerHTML = '<i class="fas fa-pause-circle"></i>';
-}
+        function playTrack() {
+            currentTrack.play();
+            isPlaying = true;
+            trackArt.classList.add('playing');
+            playpauseBtn.innerHTML = '<i class="fas fa-pause-circle"></i>';
+        }
 
-function pauseTrack() {
-    currentTrack.pause();
-    isPlaying = false;
-    trackArt.classList.remove('playing');
-    playpauseBtn.innerHTML = '<i class="fas fa-play-circle"></i>';
-}
+        function pauseTrack() {
+            currentTrack.pause();
+            isPlaying = false;
+            trackArt.classList.remove('playing');
+            playpauseBtn.innerHTML = '<i class="fas fa-play-circle"></i>';
+        }
 
-function nextTrack() {
-    if (isRandom) {
-        playRandomTrack();
-    } else {
-        if (trackIndex < musicList.length - 1) trackIndex += 1;
-        else trackIndex = 0;
-    }
-    loadTrack(trackIndex);
-    playTrack();
-}
+        function nextTrack() {
+            if (isRandom) {
+                playRandomTrack();
+            } else {
+                if (trackIndex < trackList.length - 1) trackIndex += 1;
+                else trackIndex = 0;
+            }
+            loadTrack(trackIndex);
+            playTrack();
+        }
 
-function prevTrack() {
-    if (trackIndex > 0) trackIndex -= 1;
-    else trackIndex = musicList.length - 1;
-    loadTrack(trackIndex);
-    playTrack();
-}
+        function prevTrack() {
+            if (trackIndex > 0) trackIndex -= 1;
+            else trackIndex = trackList.length - 1;
+            loadTrack(trackIndex);
+            playTrack();
+        }
 
-function playRandomTrack() {
-    let randomIndex = Math.floor(Math.random() * musicList.length);
-    while (randomIndex === trackIndex) {
-        randomIndex = Math.floor(Math.random() * musicList.length);
-    }
-    trackIndex = randomIndex;
-    loadTrack(trackIndex);
-    playTrack();
-}
+        function playRandomTrack() {
+            let randomIndex = Math.floor(Math.random() * trackList.length);
+            while (randomIndex === trackIndex) {
+                randomIndex = Math.floor(Math.random() * trackList.length);
+            }
+            trackIndex = randomIndex;
+            loadTrack(trackIndex);
+            playTrack();
+        }
 
-function toggleRandom() {
-    isRandom = !isRandom;
-    randomBtn.classList.toggle('active', isRandom);
-}
+        function restartTrack() {
+            currentTrack.currentTime = 0; // Restart the song from the beginning
+            playTrack(); // Play the track again
+        }
 
-function toggleRepeat() {
-    isRepeat = !isRepeat;
-    repeatBtn.classList.toggle('active', isRepeat);
-}
+        function setUpdate() {
+            let seekPosition = 0;
 
-function updatePlaylistUI(currentIndex) {
-    playlist.innerHTML = musicList
-        .map((track, index) => 
-            `<div class="${index === currentIndex ? 'active' : ''}" onclick="loadTrack(${index}); playTrack();">
-                ${track.name} - ${track.artist}
-            </div>`
-        )
-        .join('');
-}
+            if (!isNaN(currentTrack.duration)) {
+                seekPosition = currentTrack.currentTime * (100 / currentTrack.duration);
+                seekSlider.value = seekPosition;
 
-function setUpdate() {
-    let seekPosition = 0;
+                let currentMinutes = Math.floor(currentTrack.currentTime / 60);
+                let currentSeconds = Math.floor(currentTrack.currentTime - currentMinutes * 60);
+                let durationMinutes = Math.floor(currentTrack.duration / 60);
+                let durationSeconds = Math.floor(currentTrack.duration - durationMinutes * 60);
 
-    if (!isNaN(currentTrack.duration)) {
-        seekPosition = currentTrack.currentTime * (100 / currentTrack.duration);
-        seekSlider.value = seekPosition;
+                if (currentSeconds < 10) currentSeconds = `0${currentSeconds}`;
+                if (durationSeconds < 10) durationSeconds = `0${durationSeconds}`;
 
-        let currentMinutes = Math.floor(currentTrack.currentTime / 60);
-        let currentSeconds = Math.floor(currentTrack.currentTime - currentMinutes * 60);
-        let durationMinutes = Math.floor(currentTrack.duration / 60);
-        let durationSeconds = Math.floor(currentTrack.duration - durationMinutes * 60);
+                currentTimeElem.textContent = `${currentMinutes}:${currentSeconds}`;
+                totalDurationElem.textContent = `${durationMinutes}:${durationSeconds}`;
+            }
+        }
 
-        if (currentSeconds < 10) currentSeconds = `0${currentSeconds}`;
-        if (durationSeconds < 10) durationSeconds = `0${durationSeconds}`;
-        if (currentMinutes < 10) currentMinutes = `0${currentMinutes}`;
-        if (durationMinutes < 10) durationMinutes = `0${durationMinutes}`;
+        function updatePlaylistUI(index) {
+            const playlistItems = playlist.querySelectorAll('div');
+            playlistItems.forEach(item => item.classList.remove('active'));
+            playlistItems[index].classList.add('active');
+        }
 
-        currentTimeElem.textContent = `${currentMinutes}:${currentSeconds}`;
-        totalDurationElem.textContent = `${durationMinutes}:${durationSeconds}`;
-    }
-}
+        playpauseBtn.addEventListener('click', playpauseTrack);
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', prevTrack);
+        randomBtn.addEventListener('click', () => { isRandom = !isRandom; });
+        repeatBtn.addEventListener('click', () => { isRepeat = !isRepeat; });
+        restartBtn.addEventListener('click', restartTrack); // Add restart functionality
+        seekSlider.addEventListener('input', () => {
+            const seekTo = currentTrack.duration * (seekSlider.value / 100);
+            currentTrack.currentTime = seekTo;
+        });
 
-function seekTo() {
-    let seekTo = currentTrack.duration * (seekSlider.value / 100);
-    currentTrack.currentTime = seekTo;
-}
-
-function setVolume() {
-    currentTrack.volume = volumeSlider.value / 100;
-    localStorage.setItem('volume', volumeSlider.value);
-}
-
-seekSlider.addEventListener('input', seekTo);
-volumeSlider.addEventListener('input', setVolume);
-randomBtn.addEventListener('click', toggleRandom);
-repeatBtn.addEventListener('click', toggleRepeat);
-
-const savedVolume = localStorage.getItem('volume');
-if (savedVolume) {
-    volumeSlider.value = savedVolume;
-    setVolume();
-}
-
-loadTrack(trackIndex);
-
-playpauseBtn.addEventListener('click', playpauseTrack);
-nextBtn.addEventListener('click', nextTrack);
-prevBtn.addEventListener('click', prevTrack);
-restartBtn.addEventListener('click', restartTrack); 
-
+        loadTrack(trackIndex);  // Load the first track
     </script>
 </body>
 </html>
