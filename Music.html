@@ -143,7 +143,7 @@
             <button class="playpause-track"><i class="fas fa-play-circle"></i></button>
             <button class="next-track"><i class="fas fa-forward"></i></button>
             <button class="random-track"><i class="fas fa-random"></i></button>
-            <button class="repeat-track"><i class="fas fa-redo"></i></button>
+            <button class="restart-track"><i class="fas fa-redo"></i></button>
         </div>
         <div class="playlist"></div>
     </div>
@@ -163,6 +163,7 @@
         const trackArtist = document.querySelector('.track-artist');
         const nowPlaying = document.querySelector('.now-playing');
         const totalTracksElem = document.querySelector('.total-tracks');
+        const restartBtn = document.querySelector('.restart-track');
         const playlist = document.querySelector('.playlist');
         
         let currentTrack = new Audio();
