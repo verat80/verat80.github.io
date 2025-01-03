@@ -150,7 +150,7 @@
 
     <script>
         const audio = new Audio(); // Create the audio element dynamically
-        let currentIndex = 0;
+        'currentIndex' = 0;
 
 
 
@@ -984,7 +984,7 @@ const musicList = [
             img: 'ikik logo.png'
          },
 ];
-let currentindex = 0;
+let currentIndex = 0;
         let isPlaying = false;
         let isShuffle = false;
 
@@ -994,7 +994,7 @@ let currentindex = 0;
             document.querySelector(".track-name").textContent = track.name;
             document.querySelector(".track-artist").textContent = track.artist;
             document.querySelector(".now-playing").textContent = `Playing music ${index + 1} of ${tracks.length}`;
-            document.querySelector(".track-art").style.backgroundImage = `url('cover${index + 1}.jpg')`; // Assuming image names like cover1.jpg, cover2.jpg, etc.
+            document.querySelector(".track-art").style.backgroundImage = `url('${track.art}')`; // Use the image name
         }
 
         function playPauseTrack() {
@@ -1040,6 +1040,22 @@ let currentindex = 0;
 
         // Initial load
         loadTrack(currentIndex);
+
+        // Update time info
+        audio.addEventListener("timeupdate", function() {
+            const currentTime = Math.floor(audio.currentTime);
+            const totalDuration = Math.floor(audio.duration);
+            document.querySelector(".current-time").textContent = formatTime(currentTime);
+            document.querySelector(".total-duration").textContent = formatTime(totalDuration);
+            const seekValue = (currentTime / totalDuration) * 100;
+            document.querySelector(".seek_slider").value = seekValue;
+        });
+
+        function formatTime(time) {
+            const minutes = Math.floor(time / 60);
+            const seconds = time % 60;
+            return `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+        }
     </script>
 
 </body>
