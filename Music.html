@@ -121,7 +121,7 @@
 </head>
 <body>
     <div class="player">
-        <div class="now-playing">Playing music 1 of 140</div>
+        <div class="now-playing">Playing music x of y</div>
         <div class="track-art"></div>
         <div class="track-info">
             <div class="track-name">Track Name</div>
@@ -979,65 +979,83 @@ const musicList = [
          },
 ];
 
-        const trackArt = document.querySelector('.track-art');
-        const trackName = document.querySelector('.track-name');
-        const trackArtist = document.querySelector('.track-artist');
+const playPauseButton = document.querySelector('.playpause-track');
+        const prevButton = document.querySelector('.prev-track');
+        const nextButton = document.querySelector('.next-track');
         const seekSlider = document.querySelector('.seek_slider');
         const volumeSlider = document.querySelector('.volume_slider');
+        const trackName = document.querySelector('.track-name');
+        const trackArtist = document.querySelector('.track-artist');
+        const nowPlaying = document.querySelector('.now-playing');
         const currentTimeEl = document.querySelector('.current-time');
-        const totalDurationEl = document.querySelector('.total-duration');
-        const playPauseBtn = document.querySelector('.playpause-track');
-        const prevBtn = document.querySelector('.prev-track');
-        const nextBtn = document.querySelector('.next-track');
-        const randomBtn = document.querySelector('.random-track');
-
-        let currentTrack = document.createElement('audio');
-        let isPlaying = false;
-        let trackIndex = 0;
+        const totalTimeEl = document.querySelector('.total-duration');
 
         function loadTrack(index) {
             const track = musicList[index];
-            currentTrack.src = track.music;
-            currentTrack.load();
-
-            trackArt.style.backgroundImage = `url(${track.img})`;
+            audio.src = track.music;
             trackName.textContent = track.name;
             trackArtist.textContent = track.artist;
-
-            currentTrack.addEventListener('ended', nextTrack);
+            nowPlaying.textContent = `Playing music ${index + 1} of ${musicList.length}`;
+            audio.load();
         }
 
-        function playTrack() {
-            currentTrack.play();
-            isPlaying = true;
-            playPauseBtn.innerHTML = '<i class="fa fa-pause-circle"></i>';
-            trackArt.classList.add('playing');
-        }
-
-        function pauseTrack() {
-            currentTrack.pause();
-            isPlaying = false;
-            playPauseBtn.innerHTML = '<i class="fa fa-play-circle"></i>';
-            trackArt.classList.remove('playing');
-        }
-
-        function nextTrack() {
-            trackIndex = (trackIndex + 1) % musicList.length;
-            loadTrack(trackIndex);
-            playTrack();
+        function playPauseTrack() {
+            if (audio.paused) {
+                audio.play();
+                playPauseButton.innerHTML = '<i class="fa fa-pause-circle"></i>';
+            } else {
+                audio.pause();
+                playPauseButton.innerHTML = '<i class="fa fa-play-circle"></i>';
+            }
         }
 
         function prevTrack() {
-            trackIndex = (trackIndex - 1 + musicList.length) % musicList.length;
-            loadTrack(trackIndex);
-            playTrack();
+            currentIndex = (currentIndex - 1 + musicList.length) % musicList.length;
+            loadTrack(currentIndex);
+            audio.play();
+            playPauseButton.innerHTML = '<i class="fa fa-pause-circle"></i>';
         }
 
-        playPauseBtn.addEventListener('click', () => (isPlaying ? pauseTrack() : playTrack()));
-        nextBtn.addEventListener('click', nextTrack);
-        prevBtn.addEventListener('click', prevTrack);
+        function nextTrack() {
+            currentIndex = (currentIndex + 1) % musicList.length;
+            loadTrack(currentIndex);
+            audio.play();
+            playPauseButton.innerHTML = '<i class="fa fa-pause-circle"></i>';
+        }
 
-        loadTrack(trackIndex);
+        function updateSeekBar() {
+            seekSlider.value = (audio.currentTime / audio.duration) * 100 || 0;
+            currentTimeEl.textContent = formatTime(audio.currentTime);
+            totalTimeEl.textContent = formatTime(audio.duration);
+        }
+
+        function seekTo() {
+            const seekToTime = (seekSlider.value / 100) * audio.duration;
+            audio.currentTime = seekToTime;
+        }
+
+        function setVolume() {
+            audio.volume = volumeSlider.value / 100;
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            seconds = Math.floor(seconds % 60);
+            return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+        }
+
+        // Event Listeners
+        playPauseButton.addEventListener('click', playPauseTrack);
+        prevButton.addEventListener('click', prevTrack);
+        nextButton.addEventListener('click', nextTrack);
+        seekSlider.addEventListener('input', seekTo);
+        volumeSlider.addEventListener('input', setVolume);
+        audio.addEventListener('timeupdate', updateSeekBar);
+        audio.addEventListener('ended', nextTrack);
+
+        // Initial Load
+        loadTrack(currentIndex);
+
 
     </script>
 </body>
