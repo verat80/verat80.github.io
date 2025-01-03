@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="ezoic-site-verification" content="QBj1cwZG0DfYjIAtPRXG4nUhx8KaPV" />
     <meta charset="UTF-8">
-    <meta name="description" content="Music">
-    <meta name="keywords" content="randomizes good and authentic songs, IKUK">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Music Player">
+    <meta name="keywords" content="music, player, random songs">
     <meta name="author" content="Vera Titus and Genesis Erahbor">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IKUK.org</title>
-    <link rel="shortcut icon" type="image/png" href="Black White Simple Monochrome Initial Name Logo.png"/>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <title>IKUK Music Player</title>
+    <link rel="shortcut icon" href="Black White Simple Monochrome Initial Name Logo.png" type="image/png">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-
+        /* General Reset */
         * {
-            padding: 0;
             margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
@@ -26,270 +24,89 @@
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
             color: #fff;
-            margin: 0;
             display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        header {
-            position: fixed;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 2rem 5rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-        }
-
-        nav a {
-            font-size: 1.8rem;
-            text-decoration: none;
-            color: #fff;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #e0e0e0;
-        }
-
-        nav ul a:hover {
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        section#home {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 1rem;
-            background: url("Black White Simple Monochrome Initial Name Logo.png") no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        h1 {
-            font-size: 4rem;
-        }
-
-        p {
-            font-size: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        img {
-            border-radius: 50%;
-        }
-
-        .image-wrap {
-            width: 100px;
-            aspect-ratio: 1 / 1;
-            margin: 1rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .image-wrap:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .image-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid white;
-            box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
-        }
-
-        #ham-menu {
-            display: none;
-        }
-
-        nav ul.active {
-            left: 0;
-        }
-
-        @media only screen and (max-width: 991px) {
-            html {
-                font-size: 56.25%;
-            }
-
-            header {
-                padding: 2.2rem 5rem;
-            }
-        }
-
-        @media only screen and (max-width: 767px) {
-            html {
-                font-size: 50%;
-            }
-
-            #ham-menu {
-                display: block;
-                color: #fff;
-                font-size: 3.2rem;
-            }
-
-            nav ul {
-                background-color: rgba(0, 0, 0, 0.8);
-                position: fixed;
-                left: -100vw;
-                top: 73.6px;
-                width: 100vw;
-                height: calc(100vh - 73.6px);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-around;
-                transition: 1s;
-                gap: 0;
-            }
-        }
-
-        @media only screen and (max-width: 575px) {
-            html {
-                font-size: 46.87%;
-            }
-
-            header {
-                padding: 2rem 3rem;
-            }
-
-            nav ul {
-                top: 65.18px;
-                height: calc(100vh - 65.18px);
-            }
+            height: 100vh;
+            overflow: hidden;
         }
 
         .player {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: center;
-            height: 95vh;
-        }
-
-        .wrapper {
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 30px;
-            border-radius: 20px;
-            background-color: rgba(0, 0, 0, 0.5);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             text-align: center;
-        }
-
-        .details {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: center;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 400px;
         }
 
         .track-art {
-            margin: 25px;
-            height: 250px;
-            width: 250px;
-            border: 2px solid #ffffff;
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            border-radius: 50%;
+            background: #333;
             background-size: cover;
             background-position: center;
-            border-radius: 50%;
-            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
-            animation: rotation 10s infinite linear;
+            border: 3px solid #fff;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+            animation: rotation 10s linear infinite paused;
         }
 
-        .now-playing, .track-artist, .track-name {
-            margin-bottom: 10px;
-            color: #bbb;
+        .track-art.playing {
+            animation-play-state: running;
         }
 
-        .track-name {
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-
-        .track-artist {
-            font-size: 1.5rem;
-            color: #ccc;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            margin-bottom: 30px;
-        }
-
-        .repeat-track,
-        .random-track,
-        .playpause-track,
-        .prev-track,
-        .next-track {
-            padding: 15px;
-            opacity: 0.7;
-            transition: opacity 0.2s, transform 0.2s;
-        }
-
-        .repeat-track:hover,
-        .random-track:hover,
-        .playpause-track:hover,
-        .prev-track:hover,
-        .next-track:hover {
-            opacity: 1.0;
-            transform: scale(1.1);
-        }
-
-        .slider_container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 80%;
+        .track-info {
             margin-bottom: 20px;
         }
 
-        .seek_slider, .volume_slider {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            height: 5px;
-            background: #288fa8;
-            transition: opacity 0.2s;
-            margin: 0 10px;
-            border-radius: 5px;
+        .track-name, .track-artist {
+            font-size: 1.5rem;
+            margin: 10px 0;
         }
 
-        .seek_slider::-webkit-slider-thumb,
-        .volume_slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
+        .seek_slider, .volume_slider {
+            width: 100%;
+            margin: 10px 0;
+            background: #555;
+            height: 5px;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .seek_slider::-webkit-slider-thumb, .volume_slider::-webkit-slider-thumb {
             width: 15px;
             height: 15px;
-            background: #ffffff;
-            border: 3px solid #3774FF;
-            cursor: pointer;
+            background: #fff;
+            border: 2px solid #3774FF;
             border-radius: 50%;
+            cursor: pointer;
         }
 
-        .current-time,
-        .total-duration {
-            padding: 10px;
+        .time-info {
             font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .controls button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .controls button:hover {
+            transform: scale(1.2);
         }
 
         @keyframes rotation {
@@ -297,54 +114,33 @@
                 transform: rotate(0deg);
             }
             to {
-                transform: rotate(359deg);
+                transform: rotate(360deg);
             }
         }
-
-        #wave {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .stroke {
-            background: #3774FF;
-            width: 10px;}
-
-
-
-
-
-    
     </style>
-    </head>
-   <body>
+</head>
+<body>
+    <div class="player">
+        <div class="now-playing">Playing music x of y</div>
+        <div class="track-art"></div>
+        <div class="track-info">
+            <div class="track-name">Track Name</div>
+            <div class="track-artist">Artist Name</div>
+        </div>
+        <input type="range" class="seek_slider" min="0" max="100" value="0">
+        <div class="time-info">
+            <span class="current-time">00:00</span> / <span class="total-duration">00:00</span>
+        </div>
+        <input type="range" class="volume_slider" min="0" max="100" value="50">
+        <div class="controls">
+            <button class="prev-track"><i class="fa fa-backward"></i></button>
+            <button class="playpause-track"><i class="fa fa-play-circle"></i></button>
+            <button class="next-track"><i class="fa fa-forward"></i></button>
+            <button class="random-track"><i class="fa fa-random"></i></button>
+        </div>
+    </div>
+    <script>
 
-
-        
-        
-        
-      <div class="player">
-         <div class="now-playing">Playing music x of y</div>
-         <div class="track-art"></div>
-         <div class="track-info">
-             <div class="track-name">Track Name</div>
-             <div class="track-artist">Artist Name</div>
-         </div>
-         <input type="range" class="seek_slider" min="0" max="100" value="0">
-         <div class="time-info">
-             <span class="current-time">00:00</span> / <span class="total-duration">00:00</span>
-         </div>
-         <input type="range" class="volume_slider" min="0" max="100" value="50">
-         <div id="wave" class="wave"></div>
-         <div class="controls">
-             <button class="prev-track"><i class="fa fa-backward"></i></button>
-             <button class="playpause-track"><i class="fa fa-play-circle fa-2x"></i></button>
-             <button class="next-track"><i class="fa fa-forward"></i></button>
-             <button class="fa-random"><i class="fa fa-random"></i></button>
-         </div>
-     </div>
-     <script>
  
    
  
