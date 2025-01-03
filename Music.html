@@ -1074,6 +1074,13 @@ function playRandomTrack() {
     loadTrack(trackIndex);
     playTrack();
 }
+function restartTrack() {
+        currentTrack.currentTime = 0; // Reset to the start
+        if (!isPlaying) {
+            playTrack(); // Play if paused
+        }
+    }
+
 
 function toggleRandom() {
     isRandom = !isRandom;
