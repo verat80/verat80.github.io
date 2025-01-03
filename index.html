@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
         body, html {
             margin: 0;
             padding: 0;
@@ -27,7 +26,10 @@
             padding: 1rem 2rem;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             z-index: 1000;
-            transition: all 0.3s ease;
+            transition: background 0.3s ease;
+        }
+        header.scrolled {
+            background: rgba(0, 0, 0, 1);
         }
         nav {
             display: flex;
@@ -37,6 +39,11 @@
         nav ul {
             display: flex;
             list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav li {
+            margin: 0 1rem;
         }
         nav a {
             color: #fff;
@@ -47,39 +54,9 @@
         nav a:hover {
             color: #1DB954;
         }
-        .hero {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: url('hero-image.jpg') no-repeat center center/cover;
-            position: relative;
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        .hero p {
-            font-size: 1.2rem;
-        }
         .image-wrap {
             width: 80px;
             height: 80px;
-            margin-right: 1rem;
         }
         .image-wrap img {
             border-radius: 50%;
@@ -117,13 +94,43 @@
                 display: block;
             }
         }
+        .hero {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: url('hero-image.jpg') no-repeat center center/cover;
+            position: relative;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
     <header>
         <nav>
             <div class="image-wrap">
-                <img src="Gray and Black Simple Studio Logo.png" alt="round Pic">
+                <img src="Gray and Black Simple Studio Logo.png" alt="Round Logo">
             </div>
             <ul id="nav-bar">
                 <li><a href="./Music">Music</a></li>
@@ -135,11 +142,27 @@
             <i id="ham-menu" class="fas fa-bars"></i>
         </nav>
     </header>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Welcome to IKUK</h1>
+            <p>Discover, Support, and Connect.</p>
+        </div>
+    </div>
     <script>
         const hamMenuIcon = document.getElementById('ham-menu');
         const navBar = document.getElementById('nav-bar');
+        const header = document.querySelector('header');
+
         hamMenuIcon.addEventListener('click', () => {
             navBar.classList.toggle('active');
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
         });
     </script>
 </body>
