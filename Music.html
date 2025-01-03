@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Player</title>
-    <link rel="shortcut icon" href="Black White Simple Monochrome Initial Name Logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -28,7 +27,7 @@
             text-align: center;
             padding: 20px;
             border-radius: 15px;
-            background: #222; /* Darker background for contrast */
+            background: #222;
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.8);
             width: 100%;
             max-width: 400px;
@@ -98,6 +97,20 @@
             font-size: 1rem;
             margin: 10px 0;
         }
+
+        .dropdown {
+            margin-top: 20px;
+        }
+
+        .dropdown select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #333;
+            color: #fff;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -119,6 +132,11 @@
             <button class="next-track"><i class="fas fa-forward"></i></button>
             <button class="restart-track"><i class="fas fa-redo"></i></button>
         </div>
+        <div class="dropdown">
+            <select id="song-selector">
+                <!-- Options will be dynamically added -->
+            </select>
+        </div>
     </div>
 
     <script>
@@ -134,6 +152,8 @@
         const trackName = document.querySelector('.track-name');
         const trackArtist = document.querySelector('.track-artist');
         const nowPlaying = document.querySelector('.now-playing');
+        const songSelector = document.getElementById('song-selector');
+
 
 
         const musicList = [
@@ -425,546 +445,7 @@
             music: ' TobyMac - Feel It ft. Mr. TalkBox.mp3',
             img: 'ikik logo.png'
          },
-                  {
-            name: 'On The Way',
-            artist: 'TobyMac',
-            music: 'TobyMac - Help Is On The Way (Maybe Midnight).mp3 ',
-           img: 'ikik logo.png'
-         },
-         {
-            name: ' Need You',
-            artist: 'TobyMac ',
-            music: 'TobyMac - I just need U..mp3 ',
-            img: 'ikik logo.png'
-         },
-          {
-            name: 'Made To Love',
-            artist: 'TobyMac',
-            music: 'TobyMac - Made To Love (Lyric Video).mp3 ',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Glorious Day',
-            artist: ' Kristian Stanfill',
-            music: 'Passion - Glorious Day (Live) ft. Kristian Stanfill.mp3 ',
-            img: 'ikik logo.png'
-         },
-          {
-            name: 'Even So Come',
-            artist: ' Kristian Stanfill',
-            music: ' Passion ft. Kristian Stanfill - Even So Come (Live).mp3',
-            img: 'ikik logo.png'
-         },
-                  {
-            name: ' Youre So Good',
-            artist: 'Kristian Stanfill',
-            music: ' Passion, Kristian Stanfill - God, Youre So Good (Live) ft. Melodie Malone.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Mountains Tremble',
-            artist: 'Kristian Stanfill ',
-            music: 'Did You Feel the Mountains Tremble_  Kristian Stanfill  Worship Circle FOUNDATIONS.mp3 ',
-            img: 'ikik logo.png'
-         },
-          {
-            name: 'Abide With Me',
-            artist: 'Audrey Assad',
-            music: 'Abide With Me - Audrey Assad.mp3 ',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Thou My Vision',
-            artist: 'Audrey Assad',
-            music: 'Be Thou My Vision - Audrey Assad.mp3 ',
-            img: 'ikik logo.png'
-         },
-          {
-            name: 'It Is Well',
-            artist: 'Audrey Assad',
-            music: ' noname.mp3',
-            img: 'ikik logo.png'
-         },
-                  {
-            name: 'Shall Not Want',
-            artist: 'Audrey Assad',
-            music: 'I Shall Not Want.mp3 ',
-           img: 'ikik logo.png'
-         },
-         {
-            name: 'Fall On Me',
-            artist: 'NEEDTOBREATHE',
-            music: 'NEEDTOBREATHE - Fall On Me (feat. Carly Pearce) [Official Music Video].mp3 ',
-            img: 'ikik logo.png'
-         },
-          {
-            name: 'Multiplied',
-            artist: 'NEEDTOBREATHE',
-            music: ' NEEDTOBREATHE - Multiplied [Official Video].mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'The Heart',
-            artist: 'NEEDTOBREATHE',
-            music: 'NEEDTOBREATHE - The Heart [Official Video].mp3 ',
-           img: 'ikik logo.png'
-         },
-          {
-            name: 'Who Am I',
-            artist: 'NEEDTOBREATHE',
-            music: 'NEEDTOBREATHE - Who Am I [Official Video].mp3 ',
-           img: 'ikik logo.png'
-         },
-        {
-            name: 'Jerusalem',
-            artist: 'Aaron Shust',
-            music: 'Jerusalem [Official Lyric Video].mp3 ',
-           img: 'ikik logo.png'
-         },
-         {
-            name: 'Shadow of Shaddai',
-            artist: 'Aaron Shust',
-            music: ' Aaron Shust - Shadow of Shaddai (Psalm 91) [Audio Video].mp3',
-            img: 'ikik logo.png'
-         },
-          {
-            name: 'ZION',
-            artist: 'Aaron Shust',
-            music : 'ZION [Official Lyric Video].mp3 ',
-            img: 'ikik logo.png'
-         },
-        {
-            name: 'Majestic',
-            artist: 'Aaron Shust',
-            music: ' Majestic (Psalm 8) [Official Lyric Video].mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Baby Son',
-            artist: 'John Mark McMillan',
-            music: ' John Mark McMillan - Baby Son.mp3',
-           img: 'ikik logo.png'
-         },
-          {
-            name: 'Christ Jesus ',
-            artist: ' John Mark McMillan',
-            music: ' Christ Jesus  John Mark McMillan  Official Homemade Lyric Video.mp3',
-            img: 'ikik logo.png'
-         },
-        {
-            name: 'How He Loves',
-            artist: 'John Mark McMillan',
-            music: ' How He Loves - Live Performance Video.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: ' In His Grave',
-            artist: 'John Mark McMillan',
-            music: ' John Mark McMillan - Death In His Grave (Live) ft. Bryan Torwalt.mp3',
-            img: 'ikik logo.png'
-         },
-          {
-            name: 'Father',
-            artist: 'Jason Lavik',
-            music: 'Jason Lavik - Father.mp3 ',
-            img: 'ikik logo.png'
-         },
-        {
-            name: ' I have decided',
-            artist: 'Jadon Lavik',
-            music: 'Jadon Lavik - I have decided to follow Jesus  - Music Video.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Come Thou Fount',
-            artist: 'Jadon Lavik',
-            music: 'Come Thou Fount.mp3 ',
-            img: 'ikik logo.png'
-         },
-          {
-            name: ' I Surrender All.',
-            artist: 'Jadon Lavik',
-            music: ' I Surrender All.mp3',
-            img: 'ikik logo.png'
-         },
-     {
-            name: ' Worthy ',
-            artist: 'Dunsin Oyekan  ',
-            music: ' Worthy of My Praise.mp3',
-            img: 'ikik logo.png'
-         },
-      {
-            name: 'True ',
-            artist: 'Hulvey ',
-            music: 'Hulvey - True (Official Audio).mp3 ',
-            img: 'ikik logo.png'
-         },
-     
-      {
-            name: 'Beautiful  ',
-            artist: 'Hulvey ',
-            music: 'Hulvey - Beautiful (Official Video).mp3 ',
-            img: 'ikik logo.png'
-         },
-      {
-            name: ' Miracle Worker ',
-            artist: ' Forrest Frank ',
-            music: ' Forrest Frank, Tori Kelly - Miracle Worker (Official Lyric Video).mp3',
-            img: 'ikik logo.png'
-         },
-      {
-            name: 'Altar ',
-            artist: ' Forrest Frank',
-            music: 'Hulvey, Forrest Frank - Altar (Official Music Video).mp3 ',
-            img: 'ikik logo.png'
-         },
-
-      {
-            name: 'UP!  ',
-            artist: 'Connor Price & Forrest Frank ',
-            music: ' Connor Price & Forrest Frank - UP! (Official Video).mp3',
-            img: 'ikik logo.png'
-         },
-     
-      {
-            name: 'Hallelujah',
-            artist: ' Pentatonix',
-            music: ' Pentatonix - Hallelujah (Official Video).mp3',
-            img: 'ikik logo.png'
-         },
-        {
-            name: ' I am Yours',
-            artist: 'Seeker & Servant  ',
-            music: ' I am Yours and You are mine.mp3',
-            img: 'ikik logo.png'
-         },
-        {
-            name: ' O Come to the Altar',
-            artist: ' Elevation Worship ',
-            music: 'O Come to the Altar  Live  Elevation Worship.mp3 ',
-            img: 'ikik logo.png'
-         },
-        {
-            name: ' Love God ',
-            artist: 'Danny Gokey ',
-            music: ' Danny Gokey - Love God Love People.mp3',
-            img: 'ikik logo.png'
-         },
-        {
-            name: ' The King',
-            artist: 'yet ',
-            music: 'the King will come - yet (official lyric video).mp3 ',
-            img: 'ikik logo.png'
-         },
-        {
-            name: 'Goodness of God ',
-            artist: ' TRIBL & Maverick City ',
-            music: 'Goodness of God (feat. Cecily) - TRIBL & Maverick City Music.mp3 ',
-            img: 'ikik logo.png'
-         },
-     
-      {
-            name: ' Truth Be Told ',
-            artist: ' Matthew West ',
-            music: 'spotifydown.com - Truth Be Told.mp3',
-            img: 'ikik logo.png'
-         },
-      {
-            name: ' What If ',
-            artist: '  Matthew West',
-            music: 'Matthew West - What If (Official Music Video).mp3 ',
-            img: 'ikik logo.png'
-         },
-      {
-            name: 'God Stays ',
-            artist: 'Matthew West   ',
-            music: 'Matthew West - The God Who Stays (Official Music Video).mp3 ',
-          img: 'ikik logo.png'
-         },
-      {
-            name: ' Too Many Reasons',
-            artist: ' Mercy Chinwo ',
-            music: 'Mercy Chinwo - Too Many Reasons ft Chioma Jesus (Official Video).mp3 ',
-            img: 'ikik logo.png'
-         },
-      {
-            name: ' We Move ',
-            artist: ' Mercy Chinwo ',
-            music: 'Mercy Chinwo - We Move (Official Video).mp3 ',
-            img: 'ikik logo.png'
-         },
-      {
-            name: 'Wonder ',
-            artist: ' Mercy Chinwo ',
-            music: 'Mercy Chinwo - Wonder (Official Video).mp3 ',
-            img: 'ikik logo.png'
-         },
-     {
-            name: ' VICTORY ',
-            artist: 'SINACH ',
-            music: ' VICTORY IS MY NAME.mp3',
-            img: 'ikik logo.png'
-         },
-      {
-            name: 'WAY MAKER  ',
-            artist: ' SINACH',
-            music: 'SINACH  WAY MAKER   OFFICIAL VIDEO.mp3 ',
-            img: 'ikik logo.png'
-         },
-      {
-            name: ' WHO I AM',
-            artist: ' SINACH ',
-            music: 'SINACH - I KNOW WHO I AM (official video).mp3 ',
-           img: 'ikik logo.png'
-         },
-      {
-            name: 'No Longer Slaves ',
-            artist: 'Jonathan David and Melissa Helser  ',
-            music: 'No Longer Slaves (Official Lyric Video) - Jonathan David and Melissa Helser  We Will Not Be Shaken.mp3 ',
-           img: 'ikik logo.png'
-         },
-      {
-            name: 'JEHOVAH SHAMMAH ',
-            artist: ' Nathaniel Bassey',
-            music: ' Nathaniel Bassey - JEHOVAH SHAMMAH.mp3',
-            img: 'ikik logo.png'
-         },
-      {
-            name: ' Yahweh Sabaoth',
-            artist: 'Nathaniel Bassey',
-            music: ' Yahweh Sabaoth  Nathaniel Bassey.mp3',
-            img: 'ikik logo.png'
-         },
-      {
-            name: 'JESUS IYE  ',
-            artist: ' NATHANIEL BASSEY',
-            music: 'spotifydown.com - Jesus Iye.mp3 ',
-          img: 'ikik logo.png'
-         },
-      
-      {
-            name: 'Take It Easy',
-            artist: 'Dustin Coleman ',
-            music: 'Take It Easy on Me.mp3 ',
-            img: 'ikik logo.png'
-         },
-
-         {
-            name: 'Good Day',
-            artist: 'Forest Frank',
-            music: 'spotifydown.com - GOOD DAY.mp3',
-            img: 'ikik logo.png'
-         },
-         
-         {
-            name: 'Fragrance of Fire',
-            artist: 'Dunsin Oyekan',
-            music: 'spotifydown.com - Fragrance to Fire.mp3',
-            img: 'ikik logo.png'
-         },
- {
-            name: 'Jireh (My Provider)',
-            artist: 'Limboblaze',
-            music: 'Limoblaze, Lecrae, Happi - Jireh (My Provider) [Official Video].mp3',
-          img: 'ikik logo.png'
-         },
-{
-            name: 'Jehovah Overdo',
-            artist: 'Chidinma',
-            music: 'CHIDINMA - Jehovah Overdo (Official Video).mp3',
-           img: 'ikik logo.png'
-         },
- 
-          {
-            name: 'Asegun',
-            artist: 'Praise Factor',
-            music: 'Aségun.mp3',
-            img: 'ikik logo.png'
-         },
-           {
-            name: 'Rehoboth',
-            artist: 'Praise Factor',
-            music: 'Rehoboth.mp3',
-           img: 'ikik logo.png'
-         },
-         
-{
-            name: 'Ese Baba',
-            artist: 'Limboblaze & Ankle',
-            music: 'Baba Ese.mp3',
-            img: 'ikik logo.png'
-         },
-{
-            name: 'Ore Ofe Sha',
-            artist: 'Rotimikeys',
-            music: 'Ore Òfé Shá by Rotimikeys.mp3',
-           img: 'ikik logo.png'
-         },
-{
-            name: 'Praise Jehovah',
-            artist: 'Beverly Crawford',
-            music: 'Beverly Crawford - Praise Jehovah.mp3',
-           img: 'ikik logo.png'
-         },
- {
-            name: 'What A Wonder',
-            artist: 'Juanita Bynum',
-            music: 'Jesus, What A Wonder You Are   Juanita Bynum.mp3',
-            img: 'ikik logo.png'
-         },
-
- {
-            name: 'Imole De',
-            artist: 'Dunsin Oyekan',
-            music: 'IMOLE DE by Dunsin Oyekan.mp3',
-            img: 'ikik logo.png'
-         },
-  {
-            name: 'The Son of God',
-            artist: 'Nathaniel Bassey',
-            music: 'NATHANIEL BASSEY -THE SON OF GOD.mp3',
-            img: 'ikik logo.png'
-         },
- {
-            name: 'Dont Give Up',
-            artist: 'Grace Idowu',
-            music: 'The King Will Come - God Dont Give Up On Me Yet (Grace Idowu Rendition).mp3',
-            img: 'ikik logo.png'
-         },
-  {
-            name: 'Your Holy Face',
-            artist: 'Theophilus Sunday',
-            music: 'The King Will Come - God Dont Give Up On Me Yet (Grace Idowu Rendition).mp3',
-           img: 'ikik logo.png'
-         },
-         {
-            name: 'Even If',
-            artist: 'Mercy Me',
-            music: 'spotifydown.com - Even If.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Sparrows',
-            artist: 'Cory Asbury',
-            music: 'spotifydown.com - Sparrows.mp3',
-           img: 'ikik logo.png'
-         },
-         {
-            name: 'I Need You',
-            artist: 'Math Maher',
-            music: 'spotifydown.com - Lord, I Need You.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Image of God',
-            artist: 'We are Messenger',
-            music: 'spotifydown.com - Image Of God.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Chanin Breaker',
-            artist: 'Zach William',
-            music: 'spotifydown.com - Chain Breaker.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Love of God',
-            artist: 'Andrew Rip',
-            music: 'spotifydown.com - For the Love of God.mp3',
-            img: 'ikik logo.png'
-         },
-      
-         {
-            name: 'Fighting for Me',
-            artist: 'Riley Clemmons',
-            music: 'spotifydown.com - Fighting For Me.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Miracles',
-            artist: 'Colton Dixon',
-            music: 'spotifydown.com - Miracles.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Big God',
-            artist: 'Terrian',
-            music: 'spotifydown.com - Big God.mp3',
-            img: 'ikik logo.png'
-         },
-{
-            name: 'I Smile',
-            artist: 'Kirk Franklin',
-            music: 'spotifydown.com - I Smile.mp3',
-           img: 'ikik logo.png'
-         },
-      
-         {
-            name: 'Reckeless Love',
-            artist: 'Cory Ausbury',
-            music: 'spotifydown.com - Reckless Love.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Never Would Have Made it',
-            artist: 'Marvin Sapp',
-            music: 'spotifydown.com - Never Would Have Made It.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Break Every Chain',
-            artist: 'Tasha Cobbs Leomard',
-            music: 'spotifydown.com - Break Every Chain - Live.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'In Your Hands',
-            artist: 'Gods Property',
-            music: 'spotifydown.com - My Life Is In Your Hands.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Who You are',
-            artist: 'Vicky Yohe',
-            music: 'spotifydown.com - Because Of Who You Are.mp3',
-           img: 'ikik logo.png'
-         },
-         {
-            name: 'In the Sanctuary',
-            artist: 'Kurt Carr and Co.',
-            music: 'spotifydown.com - In the Sanctuary - Live.mp3',
-           img: 'ikik logo.png'
-         },
-         {
-            name: 'Amazing',
-            artist: 'Pastor Mike Jr.',
-            music: 'spotifydown.com - Amazing.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Only Imagine',
-            artist: 'Tamela mann',
-            music: 'spotifydown.com - I Can Only Imagine.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Only Imagine',
-            artist: 'Tamela mann',
-            music: 'spotifydown.com - I Can Only Imagine.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Never Get Used to This',
-            artist: 'Forrest Frank',
-            music: 'spotifydown.com - NEVER GET USED TO THIS.mp3',
-            img: 'ikik logo.png'
-         },
-         {
-            name: 'Never Left My Side',
-            artist: 'Forrest Frank',
-            music: 'spotifydown.com - NEVER LEFT MY SIDE.mp3',
-            img: 'ikik logo.png'
-         },
+               
         ];
 
         let currentTrack = new Audio();
@@ -978,6 +459,7 @@
             trackName.textContent = musicList[index].name;
             trackArtist.textContent = musicList[index].artist;
             nowPlaying.textContent = `Playing music ${index + 1} of ${musicList.length}`;
+            songSelector.value = index; // Sync dropdown
         }
 
         function playTrack() {
@@ -1013,7 +495,21 @@
             if (!isPlaying) playTrack();
         }
 
+        function populateDropdown() {
+            songSelector.innerHTML = musicList
+                .map((track, index) => `<option value="${index}">${track.name} - ${track.artist}</option>`)
+                .join('');
+        }
+
+        songSelector.addEventListener('change', (e) => {
+            trackIndex = parseInt(e.target.value);
+            loadTrack(trackIndex);
+            playTrack();
+        });
+
         loadTrack(trackIndex);
+        populateDropdown();
+
         playpauseBtn.addEventListener('click', playpauseTrack);
         nextBtn.addEventListener('click', nextTrack);
         prevBtn.addEventListener('click', prevTrack);
