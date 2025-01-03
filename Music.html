@@ -3,7 +3,7 @@
 <head>
     <meta name="ezoic-site-verification" content="QBj1cwZG0DfYjIAtPRXG4nUhx8KaPV" />
     <meta charset="UTF-8">
-    <meta name="description" content="IKUK.org">
+    <meta name="description" content="Music">
     <meta name="keywords" content="randomizes good and authentic songs, IKUK">
     <meta name="author" content="Vera Titus and Genesis Erahbor">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -369,10 +369,10 @@
              </div>
          </div>
      </div>
- 
-       
-       <script>
-        const now_playing = document.querySelector('.now-playing');
+     
+ <script>
+
+const now_playing = document.querySelector('.now-playing');
 const track_art = document.querySelector('.track-art');
 const track_name = document.querySelector('.track-name');
 const track_artist = document.querySelector('.track-artist');
@@ -388,6 +388,32 @@ const curr_track = new Audio();
 let isRandom = false;
 let isPlaying = false;
 let track_index = 0;
+const music_list = [
+    {
+        img: 'path/to/image1.jpg',
+        name: 'Track Name 1',
+        artist: 'Artist 1',
+        music: 'path/to/music1.mp3'
+    },
+    {
+        img: 'path/to/image2.jpg',
+        name: 'Track Name 2',
+        artist: 'Artist 2',
+        music: 'path/to/music2.mp3'
+    }
+];
+
+function loadTrack(track_index) {
+    reset();
+    curr_track.src = music_list[track_index].music;
+    curr_track.load();
+    track_art.style.backgroundImage = "url(" + music_list[track_index].img + ")";
+    track_name.textContent = music_list[track_index].name;
+    track_artist.textContent = music_list[track_index].artist;
+    now_playing.textContent = "Playing music " + (track_index + 1) + " of " + music_list.length;
+    curr_track.addEventListener('ended', nextTrack);
+    setUpdate();
+}
 
 function reset() {
     curr_time.textContent = "00:00";
@@ -484,6 +510,8 @@ function setUpdate() {
 }
 
 window.onload = () => loadTrack(track_index);
+setInterval(setUpdate, 1000);
+
 
 
 
