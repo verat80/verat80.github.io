@@ -1104,6 +1104,11 @@
             isRepeat = !isRepeat;
             repeatBtn.classList.toggle('active', isRepeat);
         }
+        function restartTrack() {
+            currentTrack.currentTime = 0; // Restart the song from the beginning
+            playTrack(); // Play the track again
+        }
+
 
         function updatePlaylistUI(currentIndex) {
             playlist.innerHTML = musicList
