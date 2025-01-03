@@ -3,143 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music</title>
+    <title>Music Player</title>
     <link rel="shortcut icon" href="Black White Simple Monochrome Initial Name Logo.png" type="image/png">
-    <!-- Font Awesome -->
-    
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-      * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-      body {
-          font-family: 'Poppins', sans-serif;
-          background: url('background-image.jpg') no-repeat center center fixed;
-          background-size: cover;
-          color: #000000;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-          overflow: hidden;
-      }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('background-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-      .player {
-          text-align: center;
-          padding: 20px;
-          border-radius: 15px;
-          background: rgba(0, 0, 0, 0.7); /* Transparent dark background */
-          box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.8);
-          width: 100%;
-          max-width: 400px;
-          transition: all 0.3s ease;
-      }
+        .player {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.8);
+            width: 100%;
+            max-width: 400px;
+        }
 
-      /* Responsive Player */
-      @media screen and (max-width: 600px) {
-          .player {
-              width: 90%;
-              max-width: 350px;
-          }
+        .track-art {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            border-radius: 50%;
+            background: #333;
+            background-size: cover;
+            background-position: center;
+            border: 3px solid #fff;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.7);
+            animation: rotation 10s linear infinite paused;
+        }
 
-          .track-art {
-              width: 180px;
-              height: 180px;
-          }
-      }
+        .track-art.playing {
+            animation-play-state: running;
+        }
 
-      .track-art {
-          width: 200px;
-          height: 200px;
-          margin: 20px auto;
-          border-radius: 50%;
-          background: #333;
-          background-size: cover;
-          background-position: center;
-          border: 3px solid #fff;
-          box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.7);
-          animation: rotation 10s linear infinite paused;
-      }
+        .track-info {
+            margin-bottom: 20px;
+        }
 
-      .track-art.playing {
-          animation-play-state: running;
-      }
+        .track-name, .track-artist {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            color: #fff;
+        }
 
-      .track-info {
-          margin-bottom: 20px;
-      }
+        .seek_slider, .volume_slider {
+            width: 100%;
+            margin: 10px 0;
+            background: #000000;
+            height: 5px;
+            border-radius: 5px;
+            outline: none;
+        }
 
-      .track-name, .track-artist {
-          font-size: 1.5rem;
-          margin: 10px 0;
-          color: #fff;
-      }
+        .seek_slider::-webkit-slider-thumb, .volume_slider::-webkit-slider-thumb {
+            width: 15px;
+            height: 15px;
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 50%;
+            cursor: pointer;
+        }
 
-      .seek_slider, .volume_slider {
-          width: 100%;
-          margin: 10px 0;
-          background: #000000;
-          height: 5px;
-          border-radius: 5px;
-          outline: none;
-      }
+        .time-info {
+            font-size: 1rem;
+            margin: 10px 0;
+        }
 
-      .seek_slider::-webkit-slider-thumb, .volume_slider::-webkit-slider-thumb {
-          width: 15px;
-          height: 15px;
-          background: #fff;
-          border: 2px solid #000;
-          border-radius: 50%;
-          cursor: pointer;
-      }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
 
-      .time-info {
-          font-size: 1rem;
-          margin: 10px 0;
-      }
+        .controls button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
 
-      .controls {
-          display: flex;
-          justify-content: center;
-          gap: 15px;
-      }
+        .controls button:hover {
+            transform: scale(1.2);
+            color: #f39c12;
+        }
 
-      .controls button {
-          background: none;
-          border: none;
-          color: #fff;
-          font-size: 1.5rem;
-          cursor: pointer;
-          transition: transform 0.2s;
-      }
-
-      .controls button:hover {
-          transform: scale(1.2);
-          color: #000000;
-      }
-
-      .controls button:active {
-          transform: scale(1);
-          color: #fff;
-      }
-
-      @keyframes rotation {
-          from {
-              transform: rotate(0deg);
-          }
-          to {
-              transform: rotate(360deg);
-          }
-         }
+        @keyframes rotation {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
-
 </head>
 <body>
     <div class="player">
-        <div class="now-playing">Playing music x of y</div>
+        <div class="now-playing">Playing music 0 of 0</div>
         <div class="track-art"></div>
         <div class="track-info">
             <div class="track-name">Track Name</div>
@@ -151,12 +129,13 @@
         </div>
         <input type="range" class="volume_slider" min="0" max="100" value="50">
         <div class="controls">
-            <button class="prev-track"><i class="fa fa-backward"></i></button>
-            <button class="playpause-track"><i class="fa fa-play-circle"></i></button>
-            <button class="next-track"><i class="fa fa-forward"></i></button>
-            <button class="random-track"><i class="fa fa-random"></i></button>
+            <button class="prev-track"><i class="fas fa-backward"></i></button>
+            <button class="playpause-track"><i class="fas fa-play-circle"></i></button>
+            <button class="next-track"><i class="fas fa-forward"></i></button>
+            <button class="random-track"><i class="fas fa-random"></i></button>
         </div>
     </div>
+
 
     <script>
       
@@ -993,92 +972,111 @@ const musicList = [
             img: 'ikik logo.png'
          },
 ];
-let currentTrackIndex = 0;
+const playpauseBtn = document.querySelector('.playpause-track');
+        const nextBtn = document.querySelector('.next-track');
+        const prevBtn = document.querySelector('.prev-track');
+        const randomBtn = document.querySelector('.random-track');
+        const seekSlider = document.querySelector('.seek_slider');
+        const volumeSlider = document.querySelector('.volume_slider');
+        const currentTimeElem = document.querySelector('.current-time');
+        const totalDurationElem = document.querySelector('.total-duration');
+        const trackArt = document.querySelector('.track-art');
+        const trackName = document.querySelector('.track-name');
+        const trackArtist = document.querySelector('.track-artist');
+        const nowPlaying = document.querySelector('.now-playing');
 
-
-// Update the song count display
-function updateSongCount() {
-    const nowPlaying = document.querySelector('.now-playing');
-    nowPlaying.textContent = `Playing music ${currentTrackIndex + 1} of ${totalSongs}`;
-}
-
-// Call this function when you want to update the count
-updateSongCount();
-
+        let currentTrack = new Audio();
+        let trackIndex = 0;
         let isPlaying = false;
-        let isShuffle = false;
-        const audio = new Audio();
+        let updateTimer;
+
+       
 
         function loadTrack(index) {
-            const track = tracks[index];
-            audio.src = track.src;
-            document.querySelector(".track-name").textContent = track.name;
-            document.querySelector(".track-artist").textContent = track.artist;
-            document.querySelector(".now-playing").textContent = `Playing music ${index + 1} of ${tracks.length}`;
-            document.querySelector(".track-art").style.backgroundImage = `url('${track.art}')`; // Use the image name
+            clearInterval(updateTimer);
+            resetValues();
+
+            currentTrack.src = trackList[index].path;
+            currentTrack.load();
+
+            trackArt.style.backgroundImage = `url(${trackList[index].image})`;
+            trackName.textContent = trackList[index].name;
+            trackArtist.textContent = trackList[index].artist;
+            nowPlaying.textContent = `Playing music ${index + 1} of ${trackList.length}`;
+
+            updateTimer = setInterval(setUpdate, 1000);
+
+            currentTrack.addEventListener('ended', nextTrack);
         }
 
-        function playPauseTrack() {
-            if (isPlaying) {
-                audio.pause();
-                document.querySelector(".playpause-track i").classList.replace("fa-pause-circle", "fa-play-circle");
-            } else {
-                audio.play();
-                document.querySelector(".playpause-track i").classList.replace("fa-play-circle", "fa-pause-circle");
-            }
-            isPlaying = !isPlaying;
+        function resetValues() {
+            currentTimeElem.textContent = "00:00";
+            totalDurationElem.textContent = "00:00";
+            seekSlider.value = 0;
+        }
+
+        function playpauseTrack() {
+            if (!isPlaying) playTrack();
+            else pauseTrack();
+        }
+
+        function playTrack() {
+            currentTrack.play();
+            isPlaying = true;
+            trackArt.classList.add('playing');
+            playpauseBtn.innerHTML = '<i class="fas fa-pause-circle"></i>';
+        }
+
+        function pauseTrack() {
+            currentTrack.pause();
+            isPlaying = false;
+            trackArt.classList.remove('playing');
+            playpauseBtn.innerHTML = '<i class="fas fa-play-circle"></i>';
         }
 
         function nextTrack() {
-            currentIndex = (currentIndex + 1) % tracks.length;
-            loadTrack(currentIndex);
-            audio.play();
+            if (trackIndex < trackList.length - 1) trackIndex += 1;
+            else trackIndex = 0;
+            loadTrack(trackIndex);
+            playTrack();
         }
 
         function prevTrack() {
-            currentIndex = (currentIndex - 1 + tracks.length) % tracks.length;
-            loadTrack(currentIndex);
-            audio.play();
+            if (trackIndex > 0) trackIndex -= 1;
+            else trackIndex = trackList.length - 1;
+            loadTrack(trackIndex);
+            playTrack();
         }
 
-        function shuffleTrack() {
-            isShuffle = !isShuffle;
-            if (isShuffle) {
-                // Shuffle the tracks
-                currentIndex = Math.floor(Math.random() * tracks.length);
-            } else {
-                // Reset to the current song if shuffle is turned off
-                currentIndex = currentIndex;
+        function setUpdate() {
+            let seekPosition = 0;
+
+            if (!isNaN(currentTrack.duration)) {
+                seekPosition = currentTrack.currentTime * (100 / currentTrack.duration);
+                seekSlider.value = seekPosition;
+
+                let currentMinutes = Math.floor(currentTrack.currentTime / 60);
+                let currentSeconds = Math.floor(currentTrack.currentTime - currentMinutes * 60);
+                let durationMinutes = Math.floor(currentTrack.duration / 60);
+                let durationSeconds = Math.floor(currentTrack.duration - durationMinutes * 60);
+
+                if (currentSeconds < 10) currentSeconds = `0${currentSeconds}`;
+                if (durationSeconds < 10) durationSeconds = `0${durationSeconds}`;
+                if (currentMinutes < 10) currentMinutes = `0${currentMinutes}`;
+                if (durationMinutes < 10) durationMinutes = `0${durationMinutes}`;
+
+                currentTimeElem.textContent = `${currentMinutes}:${currentSeconds}`;
+                totalDurationElem.textContent = `${durationMinutes}:${durationSeconds}`;
             }
-            loadTrack(currentIndex);
-            audio.play();
         }
 
-        document.querySelector(".playpause-track").addEventListener("click", playPauseTrack);
-        document.querySelector(".next-track").addEventListener("click", nextTrack);
-        document.querySelector(".prev-track").addEventListener("click", prevTrack);
-        document.querySelector(".random-track").addEventListener("click", shuffleTrack);
+        loadTrack(trackIndex);
 
-        // Initial load
-        loadTrack(currentIndex);
-
-        // Update time info
-        audio.addEventListener("timeupdate", function() {
-            const currentTime = Math.floor(audio.currentTime);
-            const totalDuration = Math.floor(audio.duration);
-            document.querySelector(".current-time").textContent = formatTime(currentTime);
-            document.querySelector(".total-duration").textContent = formatTime(totalDuration);
-            const seekValue = (currentTime / totalDuration) * 100;
-            document.querySelector(".seek_slider").value = seekValue;
-        });
-
-        function formatTime(time) {
-            const minutes = Math.floor(time / 60);
-            const seconds = time % 60;
-            return `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-        }
+        playpauseBtn.addEventListener('click', playpauseTrack);
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', prevTrack);
     </script>
-
 </body>
 </html>
+
 
