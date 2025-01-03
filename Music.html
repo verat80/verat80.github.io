@@ -117,6 +117,7 @@
             <button class="playpause-track"><i class="fas fa-play-circle"></i></button>
             <button class="next-track"><i class="fas fa-forward"></i></button>
             <button class="shuffle-track"><i class="fas fa-random"></i></button>
+            <button class="replay-track"><i class="fas fa-redo"></i></button>
         </div>
         <div class="dropdown">
             <select id="song-selector"></select>
@@ -129,6 +130,7 @@
         const nextBtn = document.querySelector('.next-track');
         const prevBtn = document.querySelector('.prev-track');
         const shuffleBtn = document.querySelector('.shuffle-track');
+        const replayBtn = document.querySelector('.replay-track');
         const seekSlider = document.querySelector('.seek_slider');
         const volumeSlider = document.querySelector('.volume_slider');
         const currentTimeElem = document.querySelector('.current-time');
@@ -138,6 +140,7 @@
         const trackArtist = document.querySelector('.track-artist');
         const nowPlaying = document.querySelector('.now-playing');
         const songSelector = document.getElementById('song-selector');
+
 
 
         const musicList = [
@@ -432,6 +435,7 @@
                
         ];
 
+        
         let currentTrack = new Audio();
         let trackIndex = 0;
         let isPlaying = false;
@@ -479,6 +483,11 @@
             playTrack();
         }
 
+        function replayTrack() {
+            currentTrack.currentTime = 0;
+            playTrack();
+        }
+
         function toggleShuffle() {
             isShuffle = !isShuffle;
             shuffleBtn.style.color = isShuffle ? 'rgb(18, 217, 243)' : '#fff';
@@ -501,10 +510,4 @@
         nextBtn.addEventListener('click', nextTrack);
         prevBtn.addEventListener('click', prevTrack);
         shuffleBtn.addEventListener('click', toggleShuffle);
-
-        // Initialize
-        loadTrack(trackIndex);
-        populateDropdown();
-    </script>
-</body>
-</html>
+        replayBtn.addEventListener('click', replayTrack);
