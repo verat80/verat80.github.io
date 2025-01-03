@@ -1,181 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="ezoic-site-verification" content="QBj1cwZG0DfYjIAtPRXG4nUhx8KaPV" />
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="IKUK">
-    <meta name="keywords" content="randomizes good and authentic songs, IKUK">
     <meta name="author" content="Vera Titus and Genesis Erahbor">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IKUK.org</title>
-    <link rel="shortcut icon" type="image/png" href="Black White Simple Monochrome Initial Name Logo.png"/>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
-    <!-- Stylesheet -->
+    <link rel="shortcut icon" type="image/png" href="Black White Simple Monochrome Initial Name Logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-
-        * {
+        body, html {
+            margin: 0;
             padding: 0;
-            margin: 0;
             box-sizing: border-box;
-        }
-
-        body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            background: #121212;
             color: #fff;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
-
         header {
             position: fixed;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             padding: 1rem 2rem;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             z-index: 1000;
             transition: all 0.3s ease;
         }
-
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
         nav ul {
-            list-style: none;
             display: flex;
-            gap: 1rem;
+            list-style: none;
         }
-
         nav a {
-            font-size: 1.4rem;
-            text-decoration: none;
             color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
             transition: color 0.3s;
         }
-
         nav a:hover {
-            color: #e0e0e0;
+            color: #1DB954;
         }
-
-        nav ul a:hover {
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        section#home {
-            height: calc(100vh - 6rem);
+        .hero {
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 1rem;
-            background: url("Black White Simple Monochrome Initial Name Logo.png") no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: url('hero-image.jpg') no-repeat center center/cover;
+            position: relative;
         }
-
-        h1 {
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .hero h1 {
             font-size: 3rem;
-            margin: 1rem 0;
+            margin-bottom: 1rem;
         }
-
-        p {
+        .hero p {
             font-size: 1.2rem;
-            margin-top: 0.5rem;
         }
-
-        img {
-            border-radius: 50%;
-        }
-
         .image-wrap {
             width: 80px;
-            aspect-ratio: 1 / 1;
-            margin: 0.5rem;
-            transition: transform 0.3s, box-shadow 0.3s;
+            height: 80px;
+            margin-right: 1rem;
         }
-
-        .image-wrap:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-        }
-
         .image-wrap img {
+            border-radius: 50%;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid white;
-            box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
+        .image-wrap img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
         #ham-menu {
             display: none;
+            font-size: 2rem;
+            cursor: pointer;
         }
-
-        nav ul.active {
-            left: 0;
-        }
-
-        @media only screen and (max-width: 991px) {
-            html {
-                font-size: 56.25%;
+        @media (max-width: 991px) {
+            nav ul {
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.85);
+                justify-content: center;
+                align-items: center;
+                transition: left 0.3s;
             }
-
-            header {
-                padding: 1.5rem 3rem;
+            nav ul.active {
+                left: 0;
             }
-        }
-
-        @media only screen and (max-width: 767px) {
-            html {
-                font-size: 50%;
-            }
-
             #ham-menu {
                 display: block;
-                color: #fff;
-                font-size: 2.5rem;
-            }
-
-            nav ul {
-                background-color: rgba(0, 0, 0, 0.8);
-                position: fixed;
-                left: -100vw;
-                top: 73.6px;
-                width: 100vw;
-                height: calc(100vh - 73.6px);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-around;
-                transition: 1s;
-                gap: 0;
-            }
-        }
-
-        @media only screen and (max-width: 575px) {
-            html {
-                font-size: 46.87%;
-            }
-
-            header {
-                padding: 1rem 2rem;
-            }
-
-            nav ul {
-                top: 65.18px;
-                height: calc(100vh - 65.18px);
             }
         }
     </style>
@@ -183,34 +122,24 @@
 <body>
     <header>
         <nav>
-            <div class="image-wrap r1">
-                <img class="round" src="Gray and Black Simple Studio Logo.png" width="80" height="80" alt="round Pic">
+            <div class="image-wrap">
+                <img src="Gray and Black Simple Studio Logo.png" alt="round Pic">
             </div>
             <ul id="nav-bar">
-                <li><a href="./Music"><h1>Music</h1></a></li>
-                <li><a href="./Patronage"><h1>Support U.S.</h1></a></li>
-                <li><a href="./Services"><h1>More of U.S.</h1></a></li>
-                <li><a href="./about"><h1>About U.S.</h1></a></li>
-                <li><a href="./Contact"><h1>Contact U.S.</h1></a></li>
+                <li><a href="./Music">Music</a></li>
+                <li><a href="./Patronage">Support U.S.</a></li>
+                <li><a href="./Services">More of U.S.</a></li>
+                <li><a href="./about">About U.S.</a></li>
+                <li><a href="./Contact">Contact U.S.</a></li>
             </ul>
             <i id="ham-menu" class="fas fa-bars"></i>
         </nav>
     </header>
     <script>
-        let hamMenuIcon = document.getElementById("ham-menu");
-        let navBar = document.getElementById("nav-bar");
-        let navLinks = navBar.querySelectorAll("li");
-
-        hamMenuIcon.addEventListener("click", () => {
-            navBar.classList.toggle("active");
-            hamMenuIcon.classList.toggle("fa-times");
-        });
-
-        navLinks.forEach((navLinks) => {
-            navLinks.addEventListener("click", () => {
-                navBar.classList.remove("active");
-                hamMenuIcon.classList.toggle("fa-times");
-            });
+        const hamMenuIcon = document.getElementById('ham-menu');
+        const navBar = document.getElementById('nav-bar');
+        hamMenuIcon.addEventListener('click', () => {
+            navBar.classList.toggle('active');
         });
     </script>
 </body>
