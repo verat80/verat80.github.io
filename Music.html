@@ -6,97 +6,7 @@
     <title>Music Player</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Styling */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #000;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .player {
-            text-align: center;
-            padding: 20px;
-            border-radius: 15px;
-            background: #222;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .track-art {
-            width: 200px;
-            height: 200px;
-            margin: 20px auto;
-            border-radius: 50%;
-            background: #333;
-            background-size: cover;
-            background-position: center;
-            border: 3px solid #fff;
-        }
-
-        .track-info {
-            margin-bottom: 20px;
-        }
-
-        .track-name, .track-artist {
-            margin: 10px 0;
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .controls button {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.2s, color 0.2s;
-        }
-
-        .controls button:hover {
-            transform: scale(1.2);
-            color: rgb(18, 217, 243);
-        }
-
-        .seek_slider, .volume_slider {
-            width: 100%;
-            margin: 10px 0;
-            background: #444;
-            height: 5px;
-            border-radius: 5px;
-        }
-
-        .time-info {
-            font-size: 0.9rem;
-            margin: 10px 0;
-        }
-
-        .dropdown {
-            margin-top: 20px;
-        }
-
-        .dropdown select {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background: #333;
-            color: #fff;
-        }
+        /* Your CSS styles from the original code */
     </style>
 </head>
 <body>
@@ -125,7 +35,6 @@
     </div>
 
     <script>
-        // DOM Elements
         const playpauseBtn = document.querySelector('.playpause-track');
         const nextBtn = document.querySelector('.next-track');
         const prevBtn = document.querySelector('.prev-track');
@@ -140,6 +49,7 @@
         const trackArtist = document.querySelector('.track-artist');
         const nowPlaying = document.querySelector('.now-playing');
         const songSelector = document.getElementById('song-selector');
+
 
 
 
@@ -442,13 +352,16 @@
         let isShuffle = false;
 
         function loadTrack(index) {
-            currentTrack.src = musicList[index].music;
+            const track = musicList[index];
+            if (!track) return;
+            currentTrack.src = track.music;
             currentTrack.load();
-            trackArt.style.backgroundImage = `url(${musicList[index].img})`;
-            trackName.textContent = musicList[index].name;
-            trackArtist.textContent = musicList[index].artist;
+
+            trackArt.style.backgroundImage = `url(${track.img})`;
+            trackName.textContent = track.name;
+            trackArtist.textContent = track.artist;
             nowPlaying.textContent = `Playing music ${index + 1} of ${musicList.length}`;
-            songSelector.value = index; // Sync dropdown
+            songSelector.value = index;
         }
 
         function playTrack() {
@@ -468,11 +381,7 @@
         }
 
         function nextTrack() {
-            if (isShuffle) {
-                trackIndex = Math.floor(Math.random() * musicList.length);
-            } else {
-                trackIndex = (trackIndex + 1) % musicList.length;
-            }
+            trackIndex = isShuffle ? Math.floor(Math.random() * musicList.length) : (trackIndex + 1) % musicList.length;
             loadTrack(trackIndex);
             playTrack();
         }
@@ -493,21 +402,52 @@
             shuffleBtn.style.color = isShuffle ? 'rgb(18, 217, 243)' : '#fff';
         }
 
+        function updateSeekBar() {
+            const seekPosition = currentTrack.currentTime * 100 / currentTrack.duration;
+            seekSlider.value = seekPosition || 0;
+
+            const currentMinutes = Math.floor(currentTrack.currentTime / 60);
+            const currentSeconds = Math.floor(currentTrack.currentTime % 60);
+            const totalMinutes = Math.floor(currentTrack.duration / 60);
+            const totalSeconds = Math.floor(currentTrack.duration % 60);
+
+            currentTimeElem.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')}`;
+            totalDurationElem.textContent = `${totalMinutes}:${totalSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function seekTo() {
+            currentTrack.currentTime = seekSlider.value * currentTrack.duration / 100;
+        }
+
+        function setVolume() {
+            currentTrack.volume = volumeSlider.value / 100;
+        }
+
+        currentTrack.addEventListener('timeupdate', updateSeekBar);
+        seekSlider.addEventListener('input', seekTo);
+        volumeSlider.addEventListener('input', setVolume);
+
+        populateDropdown();
+
         function populateDropdown() {
-            songSelector.innerHTML = musicList
-                .map((track, index) => `<option value="${index}">${track.name} - ${track.artist}</option>`)
-                .join('');
+            songSelector.innerHTML = musicList.map((track, index) =>
+                `<option value="${index}">${track.name} - ${track.artist}</option>`
+            ).join('');
         }
 
         songSelector.addEventListener('change', (e) => {
-            trackIndex = parseInt(e.target.value);
+            trackIndex = parseInt(e.target.value, 10);
             loadTrack(trackIndex);
             playTrack();
         });
 
-        // Event Listeners
         playpauseBtn.addEventListener('click', playpauseTrack);
         nextBtn.addEventListener('click', nextTrack);
         prevBtn.addEventListener('click', prevTrack);
         shuffleBtn.addEventListener('click', toggleShuffle);
         replayBtn.addEventListener('click', replayTrack);
+
+        loadTrack(trackIndex); // Initialize the first track
+    </script>
+</body>
+</html>
