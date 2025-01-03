@@ -979,48 +979,66 @@ const musicList = [
          },
 ];
 
-let track_index = 0;
-        let isPlaying = false;
+        const trackArt = document.querySelector('.track-art');
+        const trackName = document.querySelector('.track-name');
+        const trackArtist = document.querySelector('.track-artist');
+        const seekSlider = document.querySelector('.seek_slider');
+        const volumeSlider = document.querySelector('.volume_slider');
+        const currentTimeEl = document.querySelector('.current-time');
+        const totalDurationEl = document.querySelector('.total-duration');
+        const playPauseBtn = document.querySelector('.playpause-track');
+        const prevBtn = document.querySelector('.prev-track');
+        const nextBtn = document.querySelector('.next-track');
+        const randomBtn = document.querySelector('.random-track');
 
-        const track_art = document.querySelector('.track-art');
-        const track_name = document.querySelector('.track-name');
-        const track_artist = document.querySelector('.track-artist');
-        const seek_slider = document.querySelector('.seek_slider');
-        const volume_slider = document.querySelector('.volume_slider');
-        const current_time = document.querySelector('.current-time');
-        const total_duration = document.querySelector('.total-duration');
-        const playpause_btn = document.querySelector('.playpause-track i');
-        const curr_track = new Audio();
+        let currentTrack = document.createElement('audio');
+        let isPlaying = false;
+        let trackIndex = 0;
 
         function loadTrack(index) {
-            const track = music_list[index];
-            curr_track.src = track.music;
-            curr_track.load();
-            track_art.style.backgroundImage = `url(${track.img})`;
-            track_name.textContent = track.name;
-            track_artist.textContent = track.artist;
-            document.querySelector('.now-playing').textContent = `Playing music ${index + 1} of ${music_list.length}`;
+            const track = musicList[index];
+            currentTrack.src = track.music;
+            currentTrack.load();
+
+            trackArt.style.backgroundImage = `url(${track.img})`;
+            trackName.textContent = track.name;
+            trackArtist.textContent = track.artist;
+
+            currentTrack.addEventListener('ended', nextTrack);
         }
 
         function playTrack() {
-            curr_track.play();
+            currentTrack.play();
             isPlaying = true;
-            track_art.classList.add('playing');
-            playpause_btn.className = "fa fa-pause-circle";
+            playPauseBtn.innerHTML = '<i class="fa fa-pause-circle"></i>';
+            trackArt.classList.add('playing');
         }
 
         function pauseTrack() {
-            curr_track.pause();
+            currentTrack.pause();
             isPlaying = false;
-            track_art.classList.remove('playing');
-            playpause_btn.className = "fa fa-play-circle";
+            playPauseBtn.innerHTML = '<i class="fa fa-play-circle"></i>';
+            trackArt.classList.remove('playing');
         }
 
-        document.querySelector('.playpause-track').addEventListener('click', () => {
-            isPlaying ? pauseTrack() : playTrack();
-        });
+        function nextTrack() {
+            trackIndex = (trackIndex + 1) % musicList.length;
+            loadTrack(trackIndex);
+            playTrack();
+        }
 
-        loadTrack(track_index);
+        function prevTrack() {
+            trackIndex = (trackIndex - 1 + musicList.length) % musicList.length;
+            loadTrack(trackIndex);
+            playTrack();
+        }
+
+        playPauseBtn.addEventListener('click', () => (isPlaying ? pauseTrack() : playTrack()));
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', prevTrack);
+
+        loadTrack(trackIndex);
+
     </script>
 </body>
 </html>
