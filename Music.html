@@ -6,7 +6,7 @@
     <meta name="description" content="Music Player">
     <meta name="keywords" content="music, player, random songs">
     <meta name="author" content="Vera Titus and Genesis Erahbor">
-    <title>IKUK Music Player</title>
+    <title>Music</title>
     <link rel="shortcut icon" href="Black White Simple Monochrome Initial Name Logo.png" type="image/png">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -22,7 +22,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            background: #000;
             color: #fff;
             display: flex;
             align-items: center;
@@ -35,8 +35,8 @@
             text-align: center;
             padding: 20px;
             border-radius: 15px;
-            background: rgba(0, 0, 0, 0.8);
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.85);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
             width: 90%;
             max-width: 400px;
         }
@@ -50,7 +50,7 @@
             background-size: cover;
             background-position: center;
             border: 3px solid #fff;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.7);
             animation: rotation 10s linear infinite paused;
         }
 
@@ -65,6 +65,7 @@
         .track-name, .track-artist {
             font-size: 1.5rem;
             margin: 10px 0;
+            color: #fff;
         }
 
         .seek_slider, .volume_slider {
@@ -80,7 +81,7 @@
             width: 15px;
             height: 15px;
             background: #fff;
-            border: 2px solid #3774FF;
+            border: 2px solid #000;
             border-radius: 50%;
             cursor: pointer;
         }
@@ -107,6 +108,12 @@
 
         .controls button:hover {
             transform: scale(1.2);
+            color: #3774FF;
+        }
+
+        .controls button:active {
+            transform: scale(1);
+            color: #fff;
         }
 
         @keyframes rotation {
@@ -118,6 +125,7 @@
             }
         }
     </style>
+
 </head>
 <body>
     <div class="player">
@@ -982,85 +990,64 @@ const musicList = [
             img: 'ikik logo.png'
          },
 ];
-
-const playPauseButton = document.querySelector('.playpause-track');
-        const prevButton = document.querySelector('.prev-track');
-        const nextButton = document.querySelector('.next-track');
-        const seekSlider = document.querySelector('.seek_slider');
-        const volumeSlider = document.querySelector('.volume_slider');
-        const trackName = document.querySelector('.track-name');
-        const trackArtist = document.querySelector('.track-artist');
-        const nowPlaying = document.querySelector('.now-playing');
-        const currentTimeEl = document.querySelector('.current-time');
-        const totalTimeEl = document.querySelector('.total-duration');
-        const trackArt = document.querySelector('.track-art');
+let currentindex = 0;
+        let isPlaying = false;
+        let isShuffle = false;
 
         function loadTrack(index) {
-            const track = musicList[index];
-            audio.src = track.music;
-            trackArt.style.backgroundImage = `url(${track.img})`;
-            trackName.textContent = track.name;
-            trackArtist.textContent = track.artist;
-            nowPlaying.textContent = `Playing music ${index + 1} of ${musicList.length}`;
-            audio.load();
-            audio.play();
+            const track = tracks[index];
+            audio.src = track.src;
+            document.querySelector(".track-name").textContent = track.name;
+            document.querySelector(".track-artist").textContent = track.artist;
+            document.querySelector(".now-playing").textContent = `Playing music ${index + 1} of ${tracks.length}`;
+            document.querySelector(".track-art").style.backgroundImage = `url('cover${index + 1}.jpg')`; // Assuming image names like cover1.jpg, cover2.jpg, etc.
         }
 
         function playPauseTrack() {
-            if (audio.paused) {
-                audio.play();
-                playPauseButton.innerHTML = '<i class="fa fa-pause-circle"></i>';
-                trackArt.classList.add('playing');
-            } else {
+            if (isPlaying) {
                 audio.pause();
-                playPauseButton.innerHTML = '<i class="fa fa-play-circle"></i>';
-                trackArt.classList.remove('playing');
+                document.querySelector(".playpause-track i").classList.replace("fa-pause-circle", "fa-play-circle");
+            } else {
+                audio.play();
+                document.querySelector(".playpause-track i").classList.replace("fa-play-circle", "fa-pause-circle");
             }
-        }
-
-        function prevTrack() {
-            currentIndex = (currentIndex - 1 + musicList.length) % musicList.length;
-            loadTrack(currentIndex);
+            isPlaying = !isPlaying;
         }
 
         function nextTrack() {
-            currentIndex = (currentIndex + 1) % musicList.length;
+            currentIndex = (currentIndex + 1) % tracks.length;
             loadTrack(currentIndex);
+            audio.play();
         }
 
-        function updateSeekBar() {
-            seekSlider.value = (audio.currentTime / audio.duration) * 100 || 0;
-            currentTimeEl.textContent = formatTime(audio.currentTime);
-            totalTimeEl.textContent = formatTime(audio.duration);
+        function prevTrack() {
+            currentIndex = (currentIndex - 1 + tracks.length) % tracks.length;
+            loadTrack(currentIndex);
+            audio.play();
         }
 
-        function seekTo() {
-            const seekToTime = (seekSlider.value / 100) * audio.duration;
-            audio.currentTime = seekToTime;
+        function shuffleTrack() {
+            isShuffle = !isShuffle;
+            if (isShuffle) {
+                // Shuffle the tracks
+                currentIndex = Math.floor(Math.random() * tracks.length);
+            } else {
+                // Reset to the current song if shuffle is turned off
+                currentIndex = currentIndex;
+            }
+            loadTrack(currentIndex);
+            audio.play();
         }
 
-        function setVolume() {
-            audio.volume = volumeSlider.value / 100;
-        }
+        document.querySelector(".playpause-track").addEventListener("click", playPauseTrack);
+        document.querySelector(".next-track").addEventListener("click", nextTrack);
+        document.querySelector(".prev-track").addEventListener("click", prevTrack);
+        document.querySelector(".random-track").addEventListener("click", shuffleTrack);
 
-        function formatTime(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            seconds = Math.floor(seconds % 60);
-            return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-        }
-
-        // Event Listeners
-        playPauseButton.addEventListener('click', playPauseTrack);
-        prevButton.addEventListener('click', prevTrack);
-        nextButton.addEventListener('click', nextTrack);
-        seekSlider.addEventListener('input', seekTo);
-        volumeSlider.addEventListener('input', setVolume);
-        audio.addEventListener('timeupdate', updateSeekBar);
-        audio.addEventListener('ended', nextTrack);
-
-        // Initial Load
+        // Initial load
         loadTrack(currentIndex);
     </script>
+
 </body>
 </html>
 
