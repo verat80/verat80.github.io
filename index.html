@@ -81,8 +81,9 @@
 
         #ham-menu {
             display: none;
-            font-size: 2rem;
+            font-size: 2.5rem; /* Increased size */
             cursor: pointer;
+            color: #fff;
         }
 
         @media (max-width: 991px) {
@@ -97,6 +98,7 @@
                 justify-content: center;
                 align-items: center;
                 transition: left 0.3s;
+                padding: 0;
             }
 
             nav ul.active {
@@ -108,8 +110,15 @@
             }
 
             nav a {
-                font-size: 1.5rem;
-                padding: 1rem 2rem;
+                font-size: 1.5rem; /* Increased font size */
+                padding: 1rem 2rem; /* More padding for bigger tap area */
+                width: 100%; /* Make each menu item take full width */
+                text-align: center; /* Center the text */
+            }
+
+            nav a:hover {
+                color: #1DB954;
+                background-color: #000; /* Adding background for better visibility */
             }
         }
 
