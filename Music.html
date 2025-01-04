@@ -6,41 +6,40 @@
     <title>Music</title>
     <link rel="shortcut icon" href="Black White Simple Monochrome Initial Name Logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <img src="col.png" alt=".track-art">
     <style>
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to bottom, #1e3c72, #2a5298);
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #1e3c72, #2a5298);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-.player {
-    width: 350px;
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    position: relative;
-}
+        .player {
+            width: 350px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+        }
 
-.now-playing {
-    font-size: 14px;
-    color: #ccc;
-    margin-bottom: 10px;
-}
+        .now-playing {
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
 
-.track-art {
+        .track-art {
             width: 150px;
             height: 150px;
             margin: 0 auto;
-            background-image: url('col.png'); /* Make sure this image exists */
+            background-image: url('col.png'); /* Ensure this image exists */
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
@@ -49,119 +48,119 @@ body {
             margin-bottom: 20px;
         }
 
+        .track-info {
+            margin-bottom: 10px;
+        }
 
-.track-info {
-    margin-bottom: 10px;
-}
+        .track-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
 
-.track-name {
-    font-size: 18px;
-    font-weight: bold;
-}
+        .track-artist {
+            font-size: 14px;
+            color: #fff;
+        }
 
-.track-artist {
-    font-size: 14px;
-    color: #fff;
-}
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            margin: 15px 0;
+            background: transparent;
+        }
 
-input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    margin: 15px 0;
-    background: transparent;
-}
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 4px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 4px;
+        }
 
-input[type="range"]::-webkit-slider-runnable-track {
-    height: 4px;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 4px;
-}
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 14px;
+            width: 14px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-top: -5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
 
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 14px;
-    width: 14px;
-    background: #fff;
-    border-radius: 50%;
-    cursor: pointer;
-    margin-top: -5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-}
+        .time-info {
+            font-size: 12px;
+            color: #ccc;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
 
-.time-info {
-    font-size: 12px;
-    color: #ccc;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
-}
+        .controls button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
 
-.controls button {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 24px;
-    cursor: pointer;
-    margin: 0 10px;
-    transition: color 0.3s;
-}
+        .controls button:hover {
+            color: #1ed5f4;
+        }
 
-.controls button:hover {
-    color: #1ed5f4;
-}
+        .controls button:focus {
+            outline: none;
+        }
 
-.controls button:focus {
-    outline: none;
-}
+        .shuffle-track, .replay-track {
+            font-size: 20px;
+            margin-top: 10px;
+            color: #fff;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
 
-.shuffle-track, .replay-track {
-    font-size: 20px;
-    margin-top: 10px;
-    color: #fff;
-    cursor: pointer;
-    transition: color 0.3s;
-}
+        .shuffle-track:hover,
+        .replay-track:hover {
+            color: #1ed5f4;
+        }
 
-.shuffle-track:hover,
-.replay-track:hover {
-    color: #1ed5f4;
-}
+        .dropdown {
+            margin-top: 15px;
+        }
 
-.dropdown {
-    margin-top: 15px;
-}
+        #song-selector {
+            width: 100%;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.2);
+            color: #fff;
+            outline: none;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+        }
 
-#song-selector {
-    width: 100%;
-    padding: 5px;
-    border: none;
-    border-radius: 5px;
-    background: rgba(0, 0, 0, 0.2);
-    color: #fff;
-    outline: none;
-    font-size: 14px;
-    cursor: pointer;
-    text-align: center;
-}
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #000000;
+            text-align: center;
+        }
 
-footer {
-    margin-top: 20px;
-    font-size: 12px;
-    color: #000000;
-    text-align: center;
-}
+        footer a {
+            color: #000000;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
 
-footer a {
-    color: #000000;
-    text-decoration: none;
-    transition: color 0.3s;
-}
+        footer a:hover {
+            color: #000000;
+        }
 
-footer a:hover {
-    color: #000000;
-}
 
 
 
