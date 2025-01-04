@@ -1118,6 +1118,7 @@ footer a:hover {
         }
 
         currentTrack.addEventListener('timeupdate', updateSeekBar);
+        currentTrack.addEventListener('ended', nextTrack);
         seekSlider.addEventListener('input', seekTo);
         volumeSlider.addEventListener('input', setVolume);
 
