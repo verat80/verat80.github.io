@@ -184,20 +184,66 @@
 <style>
    #search-bar {
        width: 100%;
-       padding: 10px;
+       padding: 12px;
        margin-top: 10px;
        margin-bottom: 20px;
-       border: 1px solid #2b90a9;
-       border-radius: 5px;
+       border: 1px solid #ddd;
+       border-radius: 25px;
        font-size: 16px;
-       box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+       background-color: #f9f9f9;
+       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
        transition: all 0.3s ease-in-out;
    }
    
    #search-bar:focus {
-       border-color: #0066cc;
-       box-shadow: 0 0 8px rgba(0, 102, 204, 0.5);
+       border-color: #007bff;
+       background-color: #fff;
+       box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
        outline: none;
+   }
+   
+   .controls button {
+       background-color: #fff;
+       border: none;
+       border-radius: 50%;
+       padding: 10px;
+       margin: 5px;
+       font-size: 18px;
+       cursor: pointer;
+       transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+   }
+   
+   .controls button:hover {
+       background-color: #f1f1f1;
+       transform: scale(1.1);
+   }
+   
+   .controls button:active {
+       background-color: #e0e0e0;
+   }
+   
+   .track-info {
+       text-align: center;
+       margin-top: 10px;
+   }
+   
+   .track-name {
+       font-weight: bold;
+       font-size: 18px;
+       color: #333;
+   }
+   
+   .track-artist {
+       font-size: 14px;
+       color: #666;
+   }
+   
+   .time-info {
+       font-family: 'Courier New', Courier, monospace;
+       color: #555;
+       font-size: 14px;
+       text-align: center;
+       margin-top: 10px;
    }
    </style>
    
