@@ -172,12 +172,10 @@
        <button class="next-track"><i class="fas fa-forward"></i></button>
        <button class="shuffle-track"><i class="fas fa-random"></i></button>
        <button class="replay-track"><i class="fas fa-redo"></i></button>
-       <button onclick="toggleTheme()">Switch Theme</button>
    </div>
    <div class="dropdown">
        <select id="song-selector"></select>
    </div>
-   <div id="welcome"></div>
 </div>
 
 <style>
@@ -193,10 +191,8 @@
        transition: all 0.3s ease-in-out;
        display: block;
    }
-   .dark-theme {
-  background-color: #1a1a1a;
-  color: white;
-}
+   
+
    
    #search-bar:focus {
        border-color: #007bff;
@@ -1388,24 +1384,7 @@ document.getElementById("welcome").textContent = `Welcome, ${city} listener! ðŸŒ
          },
         ];
 
-        let audio = document.getElementById('audioPlayer');
-audio.addEventListener('ended', () => {
-  playNextTrack(); // define your logic here
-});
 
-function playNextTrack() {
-  // Example: Load next track and fade it in
-  audio.src = nextTrackUrl;
-  audio.volume = 0;
-  audio.play();
-  let fade = setInterval(() => {
-    if (audio.volume < 1) {
-      audio.volume += 0.1;
-    } else {
-      clearInterval(fade);
-    }
-  }, 200);
-}
         let currentTrack = new Audio();
         let trackIndex = 0;
         let isPlaying = false;
@@ -1455,9 +1434,7 @@ function playNextTrack() {
         function replayTrack() {
             currentTrack.currentTime = 0;
             playTrack();
-        }
-        function toggleTheme() {
-  document.body.classList.toggle('dark-theme');
+   
 }
 
         function toggleShuffle() {
