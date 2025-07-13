@@ -160,7 +160,12 @@
    <div class="track-info"><div class="track-name">Track Name</div>       
        <div class="track-artist">Artist Name</div>
    </div>
-   <div><input type="text" id="search-bar" placeholder="what's the vibe?" oninput="filterSongs()"></div>
+  <input type="text" id="search-bar" placeholder="what's the vibe?">
+<script>
+  document.getElementById('search-bar').addEventListener('input', filterSongs);
+</script>
+<input type="text" id="search-bar" autocorrect="off" autocomplete="off" spellcheck="false">
+<meta name="viewport" content="width=device-width, initial-scale=1">
    <div><input type="range" class="seek_slider" min="0" max="100" value="0"></div>
    <div class="time-info">
        <span class="current-time">00:00</span>  <span class="total-duration">00:00</span>
