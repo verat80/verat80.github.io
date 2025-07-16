@@ -20,7 +20,7 @@
         }
 
         .player {
-            width: 350px;
+            width: 400px;
             background: #000000;
             border-radius: 20px;
             padding: 20px;
@@ -1531,11 +1531,7 @@ musicList.forEach(song => {
             nowPlaying.textContent = `Playing music ${index + 1} of ${musicList.length}`;
             songSelector.value = index;
         }
-        function filterSongs() {for (let i = 0; i < options.length; i++) {
-    const songText = options[i].textContent.toLowerCase();
-    options[i].style.display = songText.includes(query) ? '' : 'none';
-  }
-}
+       
 
         function playTrack() {
             currentTrack.play();
