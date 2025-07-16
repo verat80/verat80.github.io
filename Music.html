@@ -246,6 +246,35 @@
         const searchBar = document.getElementById('search-bar');
          const query = searchBar.value.toLowerCase();
   const options = songSelector.options;
+  function filterSongs() {
+  const query = searchBar.value.toLowerCase();
+
+  // Clear dropdown first
+  songSelector.innerHTML = '';
+
+  // Filter songs that match query
+  const filteredSongs = musicList.filter(song => {
+    return (
+      song.name.toLowerCase().includes(query) ||
+      song.artist.toLowerCase().includes(query)
+    );
+  });
+
+  // Repopulate dropdown with filtered songs
+  if (filteredSongs.length > 0) {
+    filteredSongs.forEach((song, index) => {
+      const option = document.createElement('option');
+      option.textContent = `${song.name} - ${song.artist}`;
+      option.value = musicList.indexOf(song); // get original index
+      songSelector.appendChild(option);
+    });
+  } else {
+    const noMatch = document.createElement('option');
+    noMatch.textContent = 'No matching vibes found 🙁';
+    noMatch.disabled = true;
+    songSelector.appendChild(noMatch);
+  }
+}
 
 
 
