@@ -171,7 +171,7 @@
   style="width: 100%; font-size: 16px; padding: 10px; margin-bottom: 10px; border-radius: 25px; background-color: #000000; color: #ffffff; border: 1px solid #ffffff;"
 >
  <script>
-  document.getElementById('search-bar').addEventListener('input', filterSongs);
+  searchBar.addEventListener('input', filterSongs);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
    <div><input type="range" class="seek_slider" min="0" max="100" value="0"></div>
@@ -244,31 +244,27 @@
         const nowPlaying = document.querySelector('.now-playing');
         const songSelector = document.getElementById('song-selector');
         const searchBar = document.getElementById('search-bar');
-         const query = searchBar.value.toLowerCase();
-  const options = songSelector.options;
+     
   function filterSongs() {
   const query = searchBar.value.toLowerCase();
+  songSelector.innerHTML = ''; // clear previous results
 
-  // Clear dropdown first
-  songSelector.innerHTML = '';
+  let matchFound = false;
 
-  // Filter songs that match query
-  const filteredSongs = musicList.filter(song => {
-    return (
-      song.name.toLowerCase().includes(query) ||
-      song.artist.toLowerCase().includes(query)
-    );
+  musicList.forEach((track, index) => {
+    if (
+      track.name.toLowerCase().includes(query) ||
+      track.artist.toLowerCase().includes(query)
+    ) {
+      const option = document.createElement('option');
+      option.value = index; // crucial for playback
+      option.textContent = `${track.name} - ${track.artist}`;
+      songSelector.appendChild(option);
+      matchFound = true;
+    }
   });
 
-  // Repopulate dropdown with filtered songs
-  if (filteredSongs.length > 0) {
-    filteredSongs.forEach((song, index) => {
-      const option = document.createElement('option');
-      option.textContent = `${song.name} - ${song.artist}`;
-      option.value = musicList.indexOf(song); // get original index
-      songSelector.appendChild(option);
-    });
-  } else {
+  if (!matchFound) {
     const noMatch = document.createElement('option');
     noMatch.textContent = 'No matching vibes found 🙁';
     noMatch.disabled = true;
