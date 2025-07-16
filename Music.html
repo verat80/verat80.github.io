@@ -215,23 +215,16 @@
    }
    </style>
    
-   <script>
-   function filterSongs() {
-       let input = document.getElementById('search-bar');
-       let filter = input.value.toLowerCase();
-       let songSelector = document.getElementById('song-selector');
-       let options = songSelector.getElementsByTagName('option');
-   
-       for (let i = 0; i < options.length; i++) {
-           let txtValue = options[i].textContent || options[i].innerText;
-           if (txtValue.toLowerCase().indexOf(filter) > -1) {
-               options[i].style.display = "";
-           } else {
-               options[i].style.display = "none";
-           }
-       }
-   }
-   </script>
+ <script>
+    // Populate the song selector with songs
+    musicList.forEach((song, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = `${song.name} - ${song.artist}`;
+        songSelector.appendChild(option);
+    });
+</script>
+
    
    
     <script>
