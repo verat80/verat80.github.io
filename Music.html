@@ -155,122 +155,67 @@
 
 <body> 
    <div class="player">
-   <div class="now-playing" style="display: none;">Playing music 1 of <span class="total-tracks">0</span></div>
-   <div class="track-art"></div>
-   <div class="track-info"><div class="track-name">Track Name</div>       
-       <div class="track-artist">Artist Name</div>
-   </div>
-   <input 
-  type="text" 
-  id="search-bar" 
-  placeholder="what's the vibe?" 
-  autocorrect="on" 
-  autocomplete="on" 
-  spellcheck="true" 
-  name="vibeSearch"
-  style="width: 100%; font-size: 16px; padding: 10px; margin-bottom: 10px; border-radius: 25px; background-color: #000000; color: #ffffff; border: 1px solid #ffffff;"
->
- <script>
-  searchBar.addEventListener('input', filterSongs);
-</script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-   <div><input type="range" class="seek_slider" min="0" max="100" value="0"></div>
-   <div class="time-info">
-       <span class="current-time">00:00</span>  <span class="total-duration">00:00</span>
-   </div>
-   <input type="range" class="volume_slider" min="0" max="100" value="50">
-   <div class="controls">
-       <button class="prev-track"><i class="fas fa-backward"></i></button>
-       <button class="playpause-track"><i class="fas fa-play-circle"></i></button>
-       <button class="next-track"><i class="fas fa-forward"></i></button>
-       <button class="shuffle-track"><i class="fas fa-random"></i></button>
-       <button class="replay-track"><i class="fas fa-redo"></i></button>
-   </div>
-   <div class="dropdown">
-       <select id="song-selector"></select>
-   </div>
-</div>
+      <div class="now-playing" style="display: none;">Playing music 1 of <span class="total-tracks">0</span></div>
+      <div class="track-art"></div>
+      <div class="track-info">
+         <div class="track-name">Track Name</div>       
+         <div class="track-artist">Artist Name</div>
+      </div>
 
-<style>
-   #search-bar {
-       width: calc(90% - 24px);
-       padding: 12px;
-       margin: 10px auto;
-       border: 1px solid #000000;
-       border-radius: 25px;
-       font-size: 16px;
-       background-color: #000000;
-       box-shadow: 0 4px 6px rgb(0, 0, 0);
-       transition: all 0.3s ease-in-out;
-       display: block;
-   }
-   
+      <input 
+        type="text" 
+        id="search-bar" 
+        placeholder="what's the vibe?" 
+        autocorrect="on" 
+        autocomplete="on" 
+        spellcheck="true" 
+        name="vibeSearch"
+      >
 
-   
-   #search-bar:focus {
-       border-color: #007bff;
-       background-color: #ffffff;
-       box-shadow: 0 0 12px rgba(0, 123, 255, 0.782);
-       outline: none;
-   }
+      <div><input type="range" class="seek_slider" min="0" max="100" value="0"></div>
+      <div class="time-info">
+         <span class="current-time">00:00</span>  <span class="total-duration">00:00</span>
+      </div>
+      <input type="range" class="volume_slider" min="0" max="100" value="50">
+      <div class="controls">
+         <button class="prev-track"><i class="fas fa-backward"></i></button>
+         <button class="playpause-track"><i class="fas fa-play-circle"></i></button>
+         <button class="next-track"><i class="fas fa-forward"></i></button>
+         <button class="shuffle-track"><i class="fas fa-random"></i></button>
+         <button class="replay-track"><i class="fas fa-redo"></i></button>
+      </div>
+      <div class="dropdown">
+         <select id="song-selector"></select>
+      </div>
+   </div>
+
+   <style>
+      #search-bar {
+         width: calc(90% - 24px);
+         padding: 12px;
+         margin: 10px auto;
+         border: 1px solid #000000;
+         border-radius: 25px;
+         font-size: 16px;
+         background-color: #000000;
+         color: #ffffff;
+         display: block;
+         box-shadow: 0 4px 6px rgb(0, 0, 0);
+         transition: all 0.3s ease-in-out;
+      }
+
+      #search-bar:focus {
+         border-color: #007bff;
+         background-color: #ffffff;
+         box-shadow: 0 0 12px rgba(0, 123, 255, 0.782);
+         outline: none;
+         color: black;
+      }
    </style>
-   
- <script>
-    // Populate the song selector with songs
-    musicList.forEach((song, index) => {
-        const option = document.createElement('option');
-        option.value = index;
-        option.textContent = `${song.name} - ${song.artist}`;
-        songSelector.appendChild(option);
-    });
-</script>
-
    
    
     <script>
-      
-        const playpauseBtn = document.querySelector('.playpause-track');
-        const nextBtn = document.querySelector('.next-track');
-        const prevBtn = document.querySelector('.prev-track');
-        const shuffleBtn = document.querySelector('.shuffle-track');
-        const replayBtn = document.querySelector('.replay-track');
-        const seekSlider = document.querySelector('.seek_slider');
-        const volumeSlider = document.querySelector('.volume_slider');
-        const currentTimeElem = document.querySelector('.current-time');
-        const totalDurationElem = document.querySelector('.total-duration');
-        const trackArt = document.querySelector('.track-art');
-        const trackName = document.querySelector('.track-name');
-        const trackArtist = document.querySelector('.track-artist');
-        const nowPlaying = document.querySelector('.now-playing');
-        const songSelector = document.getElementById('song-selector');
-        const searchBar = document.getElementById('search-bar');
-     
-function filterSongs() {
-  const query = searchBar.value.toLowerCase();
-  songSelector.innerHTML = '';
 
-  let matchFound = false;
-
-  musicList.forEach((track, index) => {
-    if (
-      track.name.toLowerCase().includes(query) ||
-      track.artist.toLowerCase().includes(query)
-    ) {
-      const option = document.createElement('option');
-      option.value = index;
-      option.textContent = `${track.name} - ${track.artist}`;
-      songSelector.appendChild(option);
-      matchFound = true;
-    }
-  });
-
-  if (!matchFound) {
-    const noMatch = document.createElement('option');
-    noMatch.textContent = 'No matching vibes found 🙁';
-    noMatch.disabled = true;
-    songSelector.appendChild(noMatch);
-  }
-}
 
 
 
@@ -1507,118 +1452,155 @@ function filterSongs() {
          },
         ];
 
+        
+        const playpauseBtn = document.querySelector('.playpause-track');
+        const nextBtn = document.querySelector('.next-track');
+        const prevBtn = document.querySelector('.prev-track');
+        const shuffleBtn = document.querySelector('.shuffle-track');
+        const replayBtn = document.querySelector('.replay-track');
+        const seekSlider = document.querySelector('.seek_slider');
+        const volumeSlider = document.querySelector('.volume_slider');
+        const currentTimeElem = document.querySelector('.current-time');
+        const totalDurationElem = document.querySelector('.total-duration');
+        const trackArt = document.querySelector('.track-art');
+        const trackName = document.querySelector('.track-name');
+        const trackArtist = document.querySelector('.track-artist');
+        const nowPlaying = document.querySelector('.now-playing');
+        const songSelector = document.getElementById('song-selector');
+        const searchBar = document.getElementById('search-bar');
+     
 
-musicList.forEach(song => {
-  let option = document.createElement("option");
-  option.textContent = `${song.name} - ${song.artist}`;
-  option.value = song.music;
-  songSelector.appendChild(option);
-});
-        let currentTrack = new Audio();
-        let trackIndex = 0;
-        let isPlaying = false;
-        let isShuffle = false;
 
-        function loadTrack(index) {
-            const track = musicList[index];
-            if (!track) return;
-            currentTrack.src = track.music;
-            currentTrack.load();
+let currentTrack = new Audio();
+      let trackIndex = 0;
+      let isPlaying = false;
+      let isShuffle = false;
 
-            trackArt.style.backgroundImage = `url(${track.img})`;
-            trackName.textContent = track.name;
-            trackArtist.textContent = track.artist;
-            nowPlaying.textContent = `Playing music ${index + 1} of ${musicList.length}`;
-            songSelector.value = index;
-        }
-       
+      function populateDropdown() {
+         songSelector.innerHTML = '';
+         musicList.forEach((track, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = `${track.name} - ${track.artist}`;
+            songSelector.appendChild(option);
+         });
+      }
 
-        function playTrack() {
-            currentTrack.play();
-            isPlaying = true;
-            playpauseBtn.innerHTML = '<i class="fas fa-pause-circle"></i>';
-        }
+      function filterSongs() {
+         const query = searchBar.value.toLowerCase();
+         songSelector.innerHTML = '';
+         let found = false;
 
-        function pauseTrack() {
-            currentTrack.pause();
-            isPlaying = false;
-            playpauseBtn.innerHTML = '<i class="fas fa-play-circle"></i>';
-        }
+         musicList.forEach((track, index) => {
+            if (track.name.toLowerCase().includes(query) || track.artist.toLowerCase().includes(query)) {
+               const option = document.createElement('option');
+               option.value = index;
+               option.textContent = `${track.name} - ${track.artist}`;
+               songSelector.appendChild(option);
+               found = true;
+            }
+         });
 
-        function playpauseTrack() {
-            isPlaying ? pauseTrack() : playTrack();
-        }
+         if (!found) {
+            const noMatch = document.createElement('option');
+            noMatch.textContent = 'No matching vibes found 🙁';
+            noMatch.disabled = true;
+            songSelector.appendChild(noMatch);
+         }
+      }
 
-        function nextTrack() {
-            trackIndex = isShuffle ? Math.floor(Math.random() * musicList.length) : (trackIndex + 1) % musicList.length;
-            loadTrack(trackIndex);
-            playTrack();
-        }
+      function loadTrack(index) {
+         const track = musicList[index];
+         if (!track) return;
+         currentTrack.src = track.music;
+         currentTrack.load();
 
-        function prevTrack() {
-            trackIndex = (trackIndex - 1 + musicList.length) % musicList.length;
-            loadTrack(trackIndex);
-            playTrack();
-        }
+         // Optional: Use placeholder image if no img field
+         trackArt.style.backgroundImage = `url('${track.img || "https://via.placeholder.com/150"}')`;
+         trackName.textContent = track.name;
+         trackArtist.textContent = track.artist;
+         nowPlaying.style.display = 'block';
+         nowPlaying.textContent = `Playing music ${index + 1} of ${musicList.length}`;
+         songSelector.value = index;
+      }
 
-        function replayTrack() {
-            currentTrack.currentTime = 0;
-            playTrack();
-   
-}
+      function playTrack() {
+         currentTrack.play();
+         isPlaying = true;
+         playpauseBtn.innerHTML = '<i class="fas fa-pause-circle"></i>';
+      }
 
-        function toggleShuffle() {
-            isShuffle = !isShuffle;
-            shuffleBtn.style.color = isShuffle ? 'rgb(18, 217, 243)' : '#fff';
-        }
+      function pauseTrack() {
+         currentTrack.pause();
+         isPlaying = false;
+         playpauseBtn.innerHTML = '<i class="fas fa-play-circle"></i>';
+      }
 
-        function updateSeekBar() {
-            const seekPosition = currentTrack.currentTime * 100 / currentTrack.duration;
-            seekSlider.value = seekPosition || 0;
+      function playpauseTrack() {
+         isPlaying ? pauseTrack() : playTrack();
+      }
 
-            const currentMinutes = Math.floor(currentTrack.currentTime / 60);
-            const currentSeconds = Math.floor(currentTrack.currentTime % 60);
-            const totalMinutes = Math.floor(currentTrack.duration / 60);
-            const totalSeconds = Math.floor(currentTrack.duration % 60);
+      function nextTrack() {
+         trackIndex = isShuffle ? Math.floor(Math.random() * musicList.length) : (trackIndex + 1) % musicList.length;
+         loadTrack(trackIndex);
+         playTrack();
+      }
 
-            currentTimeElem.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')}`;
-            totalDurationElem.textContent = `${totalMinutes}:${totalSeconds.toString().padStart(2, '0')}`;
-        }
+      function prevTrack() {
+         trackIndex = (trackIndex - 1 + musicList.length) % musicList.length;
+         loadTrack(trackIndex);
+         playTrack();
+      }
 
-        function seekTo() {
-            currentTrack.currentTime = seekSlider.value * currentTrack.duration / 100;
-        }
+      function replayTrack() {
+         currentTrack.currentTime = 0;
+         playTrack();
+      }
 
-        function setVolume() {
-            currentTrack.volume = volumeSlider.value / 100;
-        }
+      function toggleShuffle() {
+         isShuffle = !isShuffle;
+         shuffleBtn.style.color = isShuffle ? 'rgb(18, 217, 243)' : '#fff';
+      }
 
-        currentTrack.addEventListener('timeupdate', updateSeekBar);
-        currentTrack.addEventListener('ended', nextTrack);
-        seekSlider.addEventListener('input', seekTo);
-        volumeSlider.addEventListener('input', setVolume);
+      function updateSeekBar() {
+         const seekPosition = currentTrack.currentTime * 100 / currentTrack.duration;
+         seekSlider.value = seekPosition || 0;
 
-        populateDropdown();
+         const currentMinutes = Math.floor(currentTrack.currentTime / 60);
+         const currentSeconds = Math.floor(currentTrack.currentTime % 60);
+         const totalMinutes = Math.floor(currentTrack.duration / 60);
+         const totalSeconds = Math.floor(currentTrack.duration % 60);
 
-        function populateDropdown() {
-            songSelector.innerHTML = musicList.map((track, index) =>
-                `<option value="${index}">${track.name} - ${track.artist}</option>`
-            ).join('');
-        }
+         currentTimeElem.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')}`;
+         totalDurationElem.textContent = `${totalMinutes}:${totalSeconds.toString().padStart(2, '0')}`;
+      }
 
-        songSelector.addEventListener('change', (e) => {
-            trackIndex = parseInt(e.target.value, 10);
-            loadTrack(trackIndex);
-            playTrack();
-        });
+      function seekTo() {
+         currentTrack.currentTime = seekSlider.value * currentTrack.duration / 100;
+      }
 
-        playpauseBtn.addEventListener('click', playpauseTrack);
-        nextBtn.addEventListener('click', nextTrack);
-        prevBtn.addEventListener('click', prevTrack);
-        shuffleBtn.addEventListener('click', toggleShuffle);
-        replayBtn.addEventListener('click', replayTrack);
+      function setVolume() {
+         currentTrack.volume = volumeSlider.value / 100;
+      }
 
-        loadTrack(trackIndex);
-    </script>
+      currentTrack.addEventListener('timeupdate', updateSeekBar);
+      currentTrack.addEventListener('ended', nextTrack);
+      seekSlider.addEventListener('input', seekTo);
+      volumeSlider.addEventListener('input', setVolume);
+      songSelector.addEventListener('change', (e) => {
+         trackIndex = parseInt(e.target.value, 10);
+         loadTrack(trackIndex);
+         playTrack();
+      });
+
+      playpauseBtn.addEventListener('click', playpauseTrack);
+      nextBtn.addEventListener('click', nextTrack);
+      prevBtn.addEventListener('click', prevTrack);
+      shuffleBtn.addEventListener('click', toggleShuffle);
+      replayBtn.addEventListener('click', replayTrack);
+      searchBar.addEventListener('input', filterSongs);
+
+      populateDropdown();
+      loadTrack(trackIndex);
+   </script>
 </body>
-</html>
