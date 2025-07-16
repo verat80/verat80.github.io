@@ -245,9 +245,9 @@
         const songSelector = document.getElementById('song-selector');
         const searchBar = document.getElementById('search-bar');
      
-  function filterSongs() {
+function filterSongs() {
   const query = searchBar.value.toLowerCase();
-  songSelector.innerHTML = ''; // clear previous results
+  songSelector.innerHTML = '';
 
   let matchFound = false;
 
@@ -257,7 +257,7 @@
       track.artist.toLowerCase().includes(query)
     ) {
       const option = document.createElement('option');
-      option.value = index; // crucial for playback
+      option.value = index;
       option.textContent = `${track.name} - ${track.artist}`;
       songSelector.appendChild(option);
       matchFound = true;
