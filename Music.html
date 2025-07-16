@@ -244,15 +244,8 @@
         const nowPlaying = document.querySelector('.now-playing');
         const songSelector = document.getElementById('song-selector');
         const searchBar = document.getElementById('search-bar');
-function filterSongs() {
-  const query = searchBar.value.toLowerCase();
+         const query = searchBar.value.toLowerCase();
   const options = songSelector.options;
-
-  for (let i = 0; i < options.length; i++) {
-    const songText = options[i].textContent.toLowerCase();
-    options[i].style.display = songText.includes(query) ? '' : 'none';
-  }
-}
 
 
 
@@ -1513,6 +1506,11 @@ musicList.forEach(song => {
             nowPlaying.textContent = `Playing music ${index + 1} of ${musicList.length}`;
             songSelector.value = index;
         }
+        function filterSongs() {for (let i = 0; i < options.length; i++) {
+    const songText = options[i].textContent.toLowerCase();
+    options[i].style.display = songText.includes(query) ? '' : 'none';
+  }
+}
 
         function playTrack() {
             currentTrack.play();
