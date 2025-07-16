@@ -160,16 +160,9 @@
    <div class="track-info"><div class="track-name">Track Name</div>       
        <div class="track-artist">Artist Name</div>
    </div>
- <input 
-  type="text" 
-  id="search-bar" 
-  placeholder="what's the vibe?" 
-  autocorrect="on" 
-  autocomplete="on" 
-  spellcheck="true" 
-  name="vibeSearch"
-  style="width: 100%; font-size: 16px; padding: 10px;"
->
+ <script>
+  document.getElementById('search-bar').addEventListener('input', filterSongs);
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
    <div><input type="range" class="seek_slider" min="0" max="100" value="0"></div>
    <div class="time-info">
@@ -253,7 +246,8 @@
 
 
 
-        const musicList = [
+        const musicList =
+         [
             
          {
             name: 'What An Awesome God',
@@ -1485,6 +1479,12 @@
         ];
 
 
+musicList.forEach(song => {
+  let option = document.createElement("option");
+  option.textContent = `${song.name} - ${song.artist}`;
+  option.value = song.music;
+  songSelector.appendChild(option);
+});
         let currentTrack = new Audio();
         let trackIndex = 0;
         let isPlaying = false;
